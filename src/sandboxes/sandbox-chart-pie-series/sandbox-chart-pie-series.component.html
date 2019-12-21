@@ -1,0 +1,20 @@
+<div class="chart-title">
+        <div>ENGLISH PREMIER LEAGUE 2018/2019 GAMES STATISTICS</div>
+        <div></div>WON
+        <div></div>DRAWN
+        <div></div>LOST
+    </div>
+    
+<div class="chart-container">
+    <div class="item" *ngFor="let chart of data; let i=index">
+        <div class="title">{{chart.club}}</div>
+        <app-chart>
+            <app-chart-series type="pie" [style]="style" [data]="[chart.won, chart.drawn, chart.lost]">
+            </app-chart-series>
+        </app-chart>
+        <div class="title stats">
+            <strong>W:</strong> {{chart.won}} <strong>D:&#x20;&#x20;</strong> {{chart.drawn}}
+            <strong>L: </strong> {{chart.lost}}
+        </div>
+    </div>
+</div>

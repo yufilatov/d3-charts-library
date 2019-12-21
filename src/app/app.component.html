@@ -1,0 +1,20 @@
+<div class="header">
+  <a href="#default" class="logo">D3-Chart-Library</a>
+  <div class="header-right">
+    <div>
+      <a *ngFor="let page of pages" [routerLink]="page">{{ page }}</a>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="navigation">
+    <ul>
+      <li *ngFor="let type of types; let i = index;">
+        <a [routerLink]="type.path" (click)="onClick(i)" [class.active]="i === activeChart">{{ type.path }}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="view">
+    <router-outlet></router-outlet>
+  </div>
+</div>
