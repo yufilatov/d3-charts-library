@@ -1,11 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import * as d3 from 'd3';
-import { nextId } from '../kit';
+import { nextId, getLineCurve } from '../kit';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE, createScaleX, createScaleY } from '../common/chart-series';
 import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
 import { ChartStyle } from '../chart-style/chart-style';
 import { ChartDrawFactory } from '../common/chart-draw.factory';
+import * as d3 from 'd3';
 
 export interface IChartPieSeriesState extends IChartSeriesState {
     range?: { x: number[], y: number[] };
@@ -52,7 +52,7 @@ export class ChartLineSeriesService implements OnDestroy {
         const line = d3.line()
             .x(d => scaleX(d[0]))
             .y(d => scaleY(d[1]))
-            .curve(this.getCurve(curveType));
+            .curve(getLineCurve(curveType));
 
         const lineStyle = style.compile(ChartStyle.line);
         const circleStyle = style.compile(ChartStyle.circle);
@@ -88,28 +88,5 @@ export class ChartLineSeriesService implements OnDestroy {
 
     ngOnDestroy() {
         this.disposable.finalize();
-    }
-
-    getCurve(type) {
-        switch (type) {
-            case 'curveMonotoneX': return d3.curveMonotoneX;
-            case 'curveMonotoneY': return d3.curveMonotoneY;
-            case 'curveLinear': return d3.curveLinear;
-            case 'curveBasis': return d3.curveBasis;
-            case 'curveBasisClosed': return d3.curveBasisClosed;
-            case 'curveBundle(0)': return d3.curveBundle.beta(0);
-            case 'curveBundle (ß=0.5)': return d3.curveBundle.beta(0.5);
-            case 'curveBundle (ß=1)': return d3.curveBundle.beta(1);
-            case 'curveCardinal (tension=0)': return d3.curveCardinal.tension(0);
-            case 'curveCardinal (tension=1)': return d3.curveCardinal.tension(1);
-            case 'curveCatmullRom (α=0)': return d3.curveCatmullRom.alpha(0);
-            case 'curveCatmullRom (α=0.5)': return d3.curveCatmullRom.alpha(0.5);
-            case 'curveCatmullRom (α=1)': return d3.curveCatmullRom.alpha(1);
-            case 'curveNatural': return d3.curveNatural;
-            case 'curveStep': return d3.curveStep;
-            case 'curveStepAfter': return d3.curveStepAfter;
-            case 'curveStepBefore': return d3.curveStepBefore;
-            default: return d3.curveLinear;
-        }
     }
 }

@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+
 let SEQUENCE_ID = 0;
 export function nextId() {
     return SEQUENCE_ID += 1;
@@ -73,5 +75,28 @@ export function findDescendants(node) {
         }
 
         return result;
+    }
+}
+
+export function getLineCurve(type) {
+    switch (type) {
+        case 'curveMonotoneX': return d3.curveMonotoneX;
+        case 'curveMonotoneY': return d3.curveMonotoneY;
+        case 'curveLinear': return d3.curveLinear;
+        case 'curveBasis': return d3.curveBasis;
+        case 'curveBasisClosed': return d3.curveBasisClosed;
+        case 'curveBundle(0)': return d3.curveBundle.beta(0);
+        case 'curveBundle (ß=0.5)': return d3.curveBundle.beta(0.5);
+        case 'curveBundle (ß=1)': return d3.curveBundle.beta(1);
+        case 'curveCardinal (tension=0)': return d3.curveCardinal.tension(0);
+        case 'curveCardinal (tension=1)': return d3.curveCardinal.tension(1);
+        case 'curveCatmullRom (α=0)': return d3.curveCatmullRom.alpha(0);
+        case 'curveCatmullRom (α=0.5)': return d3.curveCatmullRom.alpha(0.5);
+        case 'curveCatmullRom (α=1)': return d3.curveCatmullRom.alpha(1);
+        case 'curveNatural': return d3.curveNatural;
+        case 'curveStep': return d3.curveStep;
+        case 'curveStepAfter': return d3.curveStepAfter;
+        case 'curveStepBefore': return d3.curveStepBefore;
+        default: return d3.curveLinear;
     }
 }

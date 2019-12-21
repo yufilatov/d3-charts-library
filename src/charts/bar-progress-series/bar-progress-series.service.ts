@@ -45,25 +45,18 @@ export class ChartBarProgressSeriesService implements OnDestroy {
       data: [0, state.total],
     });
 
+    const scaleY = createScaleY('band', state);
+
     this.state = {
       ...this.state,
       ...state,
       scaleX,
+      scaleY,
     };
 
     const { rect, style, data, label, total, animation } = this.state;
     const barStyle = style.compile(ChartStyle.bar);
     const labelStyle = style.compile(ChartStyle.label);
-
-    const baseScaleY = createScaleY('band', this.state);
-    const scaleY: any = (i: number) => baseScaleY(i);
-    scaleY.domain = baseScaleY.domain;
-    scaleY.range = baseScaleY.range;
-
-    this.state = {
-      ...this.state,
-      scaleY,
-    };
 
     if (!rect.height || !rect.width) {
       return this.state;

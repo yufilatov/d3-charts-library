@@ -65,6 +65,7 @@ export interface IChartLabelStyle extends IChartStyle {
 }
 
 export interface IChartLineStyle extends IChartStyle {
+    fill?: string;
     stroke?: string;
     strokeWidth?: number;
 }
@@ -174,6 +175,7 @@ export abstract class ChartStyle {
     static get line(): IChartLineStyle {
         return {
             key: 'line',
+            fill: 'steelblue',
             stroke: '#000',
             strokeWidth: 1,
         };

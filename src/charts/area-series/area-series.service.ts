@@ -1,18 +1,17 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
-import { nextId } from '../kit';
+import { nextId, getLineCurve } from '../kit';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE, createScaleX, createScaleY } from '../common/chart-series';
 import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
 import { ChartStyle } from '../chart-style/chart-style';
 
 export interface IChartAreaSeriesState extends IChartSeriesState {
-    total?: number;
+    curveType?: string;
 }
 
 const DEFAULT_STATE: IChartAreaSeriesState = {
     ...CHART_DEFAULT_SERIES_STATE,
-    type: 'area',
 };
 
 @Injectable()
@@ -51,18 +50,16 @@ export class ChartAreaSeriesService implements OnDestroy {
             scaleY,
         };
 
-        const { data, style, rect } = this.state;
+        const { data, style, rect, curveType } = this.state;
 
         if (!rect.height || !rect.width) {
             return this.state;
         }
 
-        console.log('asdf');
-
         const line = d3.line()
             .x((d, i) => scaleX(i))
             .y(d => scaleY(d))
-            .curve(d3.curveCardinal.tension(0));
+            .curve(getLineCurve(curveType));
 
         const lineStyle = style.compile(ChartStyle.line);
         const circleStyle = style.compile(ChartStyle.circle);
@@ -75,7 +72,7 @@ export class ChartAreaSeriesService implements OnDestroy {
             .datum(data)
             .attr('d', line)
             .classed('line', true)
-            .attr('fill', 'steelblue')
+            .attr('fill', (d, i) => lineStyle(d, i).fill)
             .attr('stroke', (d, i) => lineStyle(d, i).stroke)
             .attr('stroke-width', (d, i) => lineStyle(d, i).strokeWidth);
 
