@@ -9,6 +9,10 @@ export const DATA = {
     }
 };
 
+export const DATA_TYPES = ['curveMonotoneX', 'curveMonotoneY', 'curveLinear', 'curveBasis', 'curveBasisClosed', 'curveBundle(0)', 'curveBundle (ß=0.5)', 'curveBundle (ß=1)',
+    'curveCardinal (tension=0)', 'curveCardinal (tension=1)', 'curveCatmullRom (α=0)', 'curveCatmullRom (α=0.5)', 'curveCatmullRom (α=1)',
+    'curveNatural', 'curveStep', 'curveStepAfter', 'curveStepBefore'];
+
 
 // [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5],
 // [10, 1, 4, 4, 7, 3, 4, 4, 7, 6, 4, 1, 1, 2, 3, 1, 3],

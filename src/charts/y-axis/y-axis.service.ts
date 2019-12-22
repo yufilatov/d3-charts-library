@@ -48,7 +48,7 @@ export class ChartYAxisService implements OnDestroy {
         this.root
             .append('g')
             .classed('axis', true)
-            .attr('transform', `translate(${margin.left}, 0)`)
+            .attr('transform', `translate(${margin.left}, ${margin.top})`)
             .call(y);
     }
 

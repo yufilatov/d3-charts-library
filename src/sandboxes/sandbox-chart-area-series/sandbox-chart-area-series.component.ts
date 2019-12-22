@@ -14,7 +14,7 @@ export class SandboxChartAreaSeriesComponent implements OnInit {
 
     goals = [63, 62, 85, 59, 83];
     points = [72, 70, 93, 50, 87];
-    margin = { left: 30, bottom: 40 };
+    margin = { left: 30, top: 10, right: 10, bottom: 40 };
 
     ticksX = [];
     ticksY = [];

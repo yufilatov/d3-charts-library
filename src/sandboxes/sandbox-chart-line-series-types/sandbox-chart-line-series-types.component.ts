@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnChanges } from '@angular/core';
 import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 import { ChartStyle } from 'src/charts/chart-style/chart-style';
-import { DATA } from './data';
+import { DATA, DATA_TYPES } from './data';
 
 @Component({
     selector: 'app-sandbox-chart-line-types',
@@ -19,10 +19,9 @@ export class SandboxChartLineSeriesTypesComponent implements OnInit {
     ticksX = DATA.ticksX;
     ticksY = DATA.ticksY;
     indicators = [];
+    margin = { left: 30, top: 10, right: 10, bottom: 30 };
 
-    types = ['curveMonotoneX', 'curveMonotoneY', 'curveLinear', 'curveBasis', 'curveBasisClosed', 'curveBundle(0)', 'curveBundle (ß=0.5)', 'curveBundle (ß=1)',
-        'curveCardinal (tension=0)', 'curveCardinal (tension=1)', 'curveCatmullRom (α=0)', 'curveCatmullRom (α=0.5)', 'curveCatmullRom (α=1)',
-        'curveNatural', 'curveStep', 'curveStepAfter', 'curveStepBefore'];
+    types = DATA_TYPES;
     curveType = this.types[0];
 
     colors = ['#3366cc', '#dc3912', '#ff9900', '#109618', '#990099', '#dd4477',

@@ -43,6 +43,8 @@ export class ChartAreaSeriesService implements OnDestroy {
             data: [10, 0],
         });
 
+        console.log(state);
+
         this.state = {
             ...this.state,
             ...state,

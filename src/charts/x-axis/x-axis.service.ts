@@ -50,7 +50,7 @@ export class ChartXAxisService implements OnDestroy {
         this.root
             .append('g')
             .classed('axis', true)
-            .attr('transform', `translate(${margin.left}, ${rect.height})`)
+            .attr('transform', `translate(${margin.left}, ${rect.height + margin.top})`)
             .call(x);
 
     }
