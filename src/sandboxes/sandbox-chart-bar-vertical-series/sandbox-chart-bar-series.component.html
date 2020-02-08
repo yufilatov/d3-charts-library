@@ -1,0 +1,65 @@
+<div class="dropdown">
+    <h5>SELECT CHART:</h5>
+    <div>
+        <select (change)="onChange($event)">
+            <option [value]="1">1</option>
+            <option [value]="2">2</option>
+            <option [value]="3">3</option>
+        </select>
+    </div>
+</div>
+
+<ng-container [ngSwitch]="chart">
+    <div *ngSwitchCase="1" class="container">
+        <div class="chart-column">
+            <div class="chart-title for">
+                <div (click)="tap()">ENGLISH PREMIER LEAGUE 2018/2019 GOALS FOR</div>
+                <div></div>HOME
+                <div></div>AWAY
+            </div>
+            <div class="chart-container" *ngFor="let club of dataFor">
+                <div class="title">{{club.club}}</div>
+                <div class="chart">
+                    <app-chart>
+                        <app-chart-series type="bar-simple"
+                            [data]="[club.for.home, club.for.away, 100-club.for.home-club.for.away]"
+                            [style]="styleFor">
+                            <!-- [animation]="true"> -->
+                        </app-chart-series>
+                    </app-chart>
+                </div>
+                <div class="total">{{club.for.home + club.for.away}}</div>
+            </div>
+        </div>
+
+        <div class="chart-column">
+            <div class="chart-title against">
+                <div>ENGLISH PREMIER LEAGUE 2018/2019 GOALS AGAINST</div>
+                <div></div>HOME
+                <div></div>AWAY
+            </div>
+            <div class="chart-container" *ngFor="let club of dataAgainst">
+                <div class="title">{{club.club}}</div>
+                <div class="chart">
+                    <app-chart>
+                        <app-chart-series type="bar-simple"
+                            [data]="[club.for.home, club.for.away, 100-club.for.home-club.for.away]"
+                            [style]="styleAgainst">
+                            <!-- [animation]="true"> -->
+                        </app-chart-series>
+                    </app-chart>
+                </div>
+                <div class="total">{{club.for.home + club.for.away}}</div>
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="2">
+        <div style="width: 500px; height: 500px;">
+            <app-chart>
+                <app-chart-series type="bar-horizontal" [data]="[10,20,30,40,50]" [style]="style">
+                    <!-- [animation]="true"> -->
+                </app-chart-series>
+            </app-chart>
+        </div>
+    </div>
+</ng-container>

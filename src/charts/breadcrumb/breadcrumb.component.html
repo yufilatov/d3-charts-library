@@ -1,0 +1,13 @@
+<ul>
+    <li (click)="selection = path[0]">
+        <div class="chart-breadcrumb-icon"></div>
+    </li>
+    <ng-container *ngFor="let part of path; let i = index">
+        <li *ngIf="format(part)">
+            <span>/</span>
+            <button (click)="selection = part">
+                {{ format(part) }}
+            </button>
+        </li>
+    </ng-container>
+</ul>

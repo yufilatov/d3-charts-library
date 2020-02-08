@@ -1,0 +1,19 @@
+<div class="chart-container">
+    <app-chart>
+        <app-chart-series type="area"
+            [data]="data"
+            [style]="style">
+        </app-chart-series>
+        <app-chart-x-axis
+            [range]="[1994, 2019]"
+            [ticks]="ticksX">
+        </app-chart-x-axis>
+        <app-chart-y-axis
+            [range]="[0,110]"
+            [ticks]="ticksY">
+        </app-chart-y-axis>
+        <app-chart-plot
+            [margin]="margin">
+        </app-chart-plot>
+    </app-chart>
+</div>
