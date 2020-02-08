@@ -1,20 +1,31 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 import { ChartStyle } from 'src/charts/chart-style/chart-style';
 import { DATA_FOR, DATA_AGAINST } from './data';
+import { Observable } from 'rxjs';
+import { SandboxDataService } from '../sandbox-dataservice';
 
 @Component({
-  selector: 'app-sandbox-chart-bar',
-  templateUrl: './sandbox-chart-bar-series.component.html',
-  styleUrls: ['./sandbox-chart-bar-series.component.scss']
+  selector: 'app-sandbox-chart-bar-horizontal',
+  templateUrl: './sandbox-chart-bar-horizontal-series.component.html',
+  styleUrls: ['./sandbox-chart-bar-horizontal-series.component.scss']
 })
+
 export class SandboxChartBarHorizontalSeriesComponent {
+  data$: Observable<any>;
+  data = [];
+  clubs = [];
+
+  constructor(dataService: SandboxDataService) {
+    dataService.getGoalsData().subscribe(x => {
+      this.data = [[]].concat(x.map(club => [club.for.home, club.for.away])),
+        this.clubs = x.map(club => club.club);
+    });
+  }
 
   dataFor = DATA_FOR;
   dataAgainst = DATA_AGAINST;
   prevDuration = 0;
-
-  data = [[], [14, 40, 5], [30, 50, 5], [20, 50, 6], [10, 20, 40], [30, 30, 30], [30, 30, 30], [30, 30, 30], [30, 30, 30], [30, 30, 30], [30, 30, 30]];
 
   styleFor =
     new ChartStyleBuilder()
@@ -64,4 +75,5 @@ export class SandboxChartBarHorizontalSeriesComponent {
         const text = `${d}%`;
         return { text, fontSize: 9, fontWeight: 600 };
       });
+
 }
