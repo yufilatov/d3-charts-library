@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SandboxChartBarVerticalSeriesComponent } from './sandbox-chart-bar-series.component';
+import { SandboxChartBarVerticalSeriesComponent } from './sandbox-chart-bar-vertical-series.component';
 
 describe('SandboxChartBarVerticalSeriesComponent', () => {
   let component: SandboxChartBarVerticalSeriesComponent;

@@ -1,19 +1,27 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 import { ChartStyle } from 'src/charts/chart-style/chart-style';
 import { DATA_FOR, DATA_AGAINST } from './data';
+import { Observable } from 'rxjs';
+import { SandboxDataService } from '../sandbox-dataservice';
+import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-sandbox-chart-bar',
-  templateUrl: './sandbox-chart-bar-series.component.html',
-  styleUrls: ['./sandbox-chart-bar-series.component.scss']
+  selector: 'app-sandbox-chart-bar-vertical',
+  templateUrl: './sandbox-chart-bar-vertical-series.component.html',
+  styleUrls: ['./sandbox-chart-bar-vertical-series.component.scss', './clubs.scss']
 })
-export class SandboxChartBarVerticalSeriesComponent {
+
+export class SandboxChartBarVerticalSeriesComponent implements OnInit {
+  data$: Observable<any>;
+  clubs$: Observable<any>;
+  data = [];
+
+  constructor(private dataService: SandboxDataService) { }
 
   dataFor = DATA_FOR;
   dataAgainst = DATA_AGAINST;
   prevDuration = 0;
-  chart = 1;
 
   styleFor =
     new ChartStyleBuilder()
@@ -55,16 +63,25 @@ export class SandboxChartBarVerticalSeriesComponent {
 
   style =
     new ChartStyleBuilder()
-      .for(ChartStyle.bar, (d) => {
-        return { fill: '#d0da5b', background: '#f1f3ca', size: 8 };
+      .for(ChartStyle.bar, (d, i) => {
+        const colors = ['#94c31a', '#bedb75', '#94c31a'];
+        return { fill: colors[i], background: '#f1f3ca', size: 25 };
       })
       .for(ChartStyle.label, (d) => {
         const text = `${d}%`;
         return { text, fontSize: 9, fontWeight: 600 };
       });
 
-  onChange(event) {
-    this.chart = event.target.value;
+  ngOnInit() {
+    this.data$ = this.dataService.getData().pipe(
+      map(x => x.map(club => [club.goals.for.home, club.goals.for.away])));
+
+    this.clubs$ = this.dataService.getData().pipe(
+      map(x => x.map(club => club.club)));
+  }
+
+  getLogo(club) {
+    return `logo logo-${club.replace(/\s+/g, '-').toLowerCase()}`;
   }
 
 }

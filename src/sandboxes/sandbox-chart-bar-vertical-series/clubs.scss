@@ -1,0 +1,87 @@
+@import '../../styles/mixins.scss';
+
+.logo {
+  &-chelsea {
+    @include club-logo('chelsea');
+  }
+
+  &-manchester-city {
+    @include club-logo('manchester-city');
+  }
+
+  &-liverpool {
+    @include club-logo('liverpool');
+  }
+
+  &-tottenham-hotspurs {
+    @include club-logo('tottenham-hotspurs');
+  }
+
+  &-watford {
+    @include club-logo('watford');
+  }
+
+  &-arsenal {
+    @include club-logo('arsenal');
+  }
+
+  &-manchester-united {
+    @include club-logo('manchester-united');
+  }
+
+  &-everton {
+    @include club-logo('everton');
+  }
+
+  &-leicester-city {
+    @include club-logo('leicester-city');
+  }
+
+  &-newcastle-united {
+    @include club-logo('newcastle-united');
+  }
+
+  &-west-ham-united {
+    @include club-logo('west-ham-united');
+  }
+
+  &-norwich-city {
+    @include club-logo('norwich-city');
+  }
+
+  &-crystal-palace {
+    @include club-logo('crystal-palace');
+  }
+
+  &-southampton {
+    @include club-logo('southampton');
+  }
+
+  &-bournemouth {
+    @include club-logo('bournemouth');
+  }
+
+  &-wolverhampton {
+    @include club-logo('wolverhampton');
+  }
+
+  &-fulham {
+    @include club-logo('fulham');
+  }
+
+  &-burnley {
+    @include club-logo('burnley');
+  }
+
+  &-brighton {
+    @include club-logo('brighton');
+  }
+
+  &-cardiff-city {
+    @include club-logo('cardiff-city');
+  }
+
+  &-huddersfield-town {
+    @include club-logo('huddersfield-town');
+  }
+}

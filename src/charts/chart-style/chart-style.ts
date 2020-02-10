@@ -47,7 +47,7 @@ export interface IChartArcStyle extends IChartStyle {
 export interface IChartBarStyle extends IChartStyle {
     fill?: string;
     background?: string;
-    height?: number;
+    size?: number;
     offsetLeft?: number;
     offsetRight?: number;
     paddingLeft?: number;
@@ -153,7 +153,7 @@ export abstract class ChartStyle {
             key: 'bar',
             background: 'transparent',
             fill: '#dfe1e6',
-            height: 15,
+            size: 15,
             offsetLeft: 0,
             offsetRight: 0,
             paddingLeft: 5,

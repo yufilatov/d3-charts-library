@@ -45,13 +45,15 @@ export class ChartBarVerticalSeriesService implements OnDestroy {
 
     const { data, style, animation, range, total } = this.state;
 
-    const scaleX = createScaleX('linear', {
+    const scaleX = createScaleX('band', {
       ...state as IChartSeriesState,
-      data: [0, total],
+      
+
     });
 
-    const scaleY = createScaleY('band', {
+    const scaleY = createScaleY('linear', {
       ...state as IChartSeriesState,
+      data: [0, total],
     });
 
     this.state = {
@@ -65,36 +67,34 @@ export class ChartBarVerticalSeriesService implements OnDestroy {
     const labelStyle = style.compile(ChartStyle.label);
     const animationStyle = style.compile(ChartStyle.animation);
 
-    const draw = ChartDrawFactory(this.root, data);
+    // const draw = ChartDrawFactory(this.root, data);
+    let draw;
     const format = d3.format(animationStyle(null, 0).format);
 
-    draw('.kf-chart-bar-vertical', {
-      create: selection =>
-        selection
-          .append('rect'),
-      update: selection =>
-        selection
-          .attr('width', scaleX(total) - scaleX(0))
-          .attr('height', (d, i) => barStyle(d, i).height)
-          .attr('vertical-align', 'middle')
-          .attr('x', scaleX(0))
-          .attr('y', (d, i) => scaleY(i))
-          .attr('fill', (d, i) => barStyle(d, i).background),
-    });
+    for (let i = 0; i < data.length; i++) {
+      draw = ChartDrawFactory(this.root, data[i]);
 
-    draw('.kf-chart-bar-value', {
-      create: selection =>
-        selection
-          .append('rect'),
-      update: selection =>
-        selection
-          .classed('animated-bar', true)
-          .attr('width', d => animation ? 0 : scaleX(d) - scaleX(0))
-          .attr('height', (d, i) => barStyle(d, i).height)
-          .attr('x', scaleX(0))
-          .attr('y', (d, i) => scaleY(i))
-          .attr('fill', (d, i) => barStyle(d, i).fill)
-    });
+      draw(`.kf-chart-bar-value-${nextId()}`, {
+        create: selection =>
+          selection
+            .append('rect'),
+        update: selection =>
+          selection
+            .classed('animated-bar', true)
+            .attr('width', (d, c) => barStyle(d, c).size)
+            .attr('height', d => animation ? 0 : scaleY(d))
+            .attr('transform', (d, c) => {
+              let previous = 0;
+              for (let j = 0; j < c; j++) {
+                previous = previous + data[i][j];
+              }
+              return `translate(0, ${c > 0 ? -scaleY(previous) : 0})`;
+            })
+            .attr('x', scaleX(i))
+            .attr('y', (d, c) => scaleY(total) - scaleY(d))
+            .attr('fill', (d, c) => barStyle(d, c).fill)
+      });
+    }
 
     // if (label !== 'none') {
     //   draw('.kf-chart-label', {

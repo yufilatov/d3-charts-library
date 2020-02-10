@@ -14,7 +14,7 @@ import { SandboxChartHalfDonutSeriesComponent } from 'src/sandboxes/sandbox-char
 import { SandboxChartBarProgressSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-progress-series/sandbox-chart-bar-progress-series.component';
 import { SandboxChartDoubleDonutSeriesComponent } from 'src/sandboxes/sandbox-chart-double-donut-series/sandbox-chart-double-donut-series.component';
 import { SandboxChartBarHorizontalSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-horizontal-series/sandbox-chart-bar-horizontal-series.component';
-import { SandboxChartBarVerticalSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-vertical-series/sandbox-chart-bar-series.component';
+import { SandboxChartBarVerticalSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-vertical-series/sandbox-chart-bar-vertical-series.component';
 import { SandboxChartBarSimpleSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-simple-series/sandbox-chart-bar-simple-series.component';
 
 

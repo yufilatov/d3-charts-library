@@ -91,13 +91,13 @@ export class ChartBarHorizontalSeriesService implements OnDestroy {
           selection
             .classed('animated-bar', true)
             .attr('width', d => animation ? 0 : scaleX(d) - scaleX(0))
-            .attr('height', (d, c) => barStyle(d, c).height)
+            .attr('height', (d, c) => barStyle(d, c).size)
             .attr('transform', (d, c) => {
               let previous = 0;
               for (let j = 0; j < c; j++) {
                 previous = previous + data[i][j];
               }
-              return `translate(${c > 0 ? scaleX(previous) - scaleX(0) : 0} ,${-barStyle(d, i).height / 2})`;
+              return `translate(${c > 0 ? scaleX(previous) - scaleX(0) : 0} ,${-barStyle(d, i).size / 2})`;
             })
             .attr('x', scaleX(0))
             .attr('y', (d, c) => scaleY(i))

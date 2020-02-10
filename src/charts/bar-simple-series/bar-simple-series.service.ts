@@ -77,7 +77,7 @@ export class ChartBarSimpleSeriesService implements OnDestroy {
         selection
           .classed('bar-animated', animation)
           .attr('width', d => animation ? 0 : scaleX(d))
-          .attr('height', (d, i) => barStyle(d, i).height)
+          .attr('height', (d, i) => barStyle(d, i).size)
           .attr('fill', (d, i) => barStyle(d, i).fill)
           .attr('x', (d, i) => {
             if (i === 0) {
@@ -97,7 +97,7 @@ export class ChartBarSimpleSeriesService implements OnDestroy {
       update: selection =>
         selection
           .attr('x', (d, i) => scaleX(0) - barStyle(d, i).paddingLeft)
-          .attr('y', (d, i) => barStyle(d, i).height)
+          .attr('y', (d, i) => barStyle(d, i).size)
           .attr('vertical-align', 'middle')
           .attr('text-anchor', 'end')
           .attr('font-size', (d, i) => labelStyle(d, i).fontSize)

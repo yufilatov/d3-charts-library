@@ -10,22 +10,23 @@
 </div> -->
 
 <!-- <ng-container [ngSwitch]="dropdown.value"> -->
-<app-chart>
-    <app-chart-series
-        type="bar-horizontal"
-        [data]="data"
-        [style]="style">
-    </app-chart-series>
-    <app-chart-x-axis
-        [range]="[0,100]"
-        [ticks]="[0,25,50,75,100]">
-    </app-chart-x-axis>
-    <app-chart-y-axis
-        [range]="[0,21]"
-        [ticks]=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]>
-    </app-chart-y-axis>
-    <app-chart-plot 
-        [margin]="{left:50,bottom: 50,right:20, top:10}">
-    </app-chart-plot>
-</app-chart>
+<div style="display: inline-flex;">
+    <!-- <div style="width: 20px;padding-top:30px">
+        <ng-container *ngFor="let club of (clubs$ | async)">
+            <div [ngClass]="getLogo(club)"></div>
+        </ng-container>
+    </div> -->
+
+    <app-chart>
+        <app-chart-series type="bar-horizontal" [data]="data$ | async" [style]="style">
+        </app-chart-series>
+        <app-chart-x-axis [range]="[0,20]" [ticks]="[]">
+        </app-chart-x-axis>
+        <app-chart-y-axis [range]="[0,100]" [ticks]=[]
+            [reverse]="true">
+        </app-chart-y-axis>
+        <app-chart-plot [margin]="{left:10,bottom: 50,right:20, top:10}">
+        </app-chart-plot>
+    </app-chart>
+</div>
 <!-- </ng-container> -->

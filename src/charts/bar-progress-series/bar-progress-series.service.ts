@@ -71,10 +71,10 @@ export class ChartBarProgressSeriesService implements OnDestroy {
       update: selection =>
         selection
           .attr('width', scaleX(total) - scaleX(0))
-          .attr('height', (d, i) => barStyle(d, i).height)
+          .attr('height', (d, i) => barStyle(d, i).size)
           .attr('vertical-align', 'middle')
           .attr('x', scaleX(0))
-          .attr('y', (d, i) => scaleY(i) - barStyle(d, i).height / 2)
+          .attr('y', (d, i) => scaleY(i) - barStyle(d, i).size / 2)
           .attr('fill', (d, i) => '#f8f8f8'),
     });
 
@@ -86,9 +86,9 @@ export class ChartBarProgressSeriesService implements OnDestroy {
         selection
           .classed('bar-animated', animation)
           .attr('width', (d, i) => animation ? 0 : scaleX(d) - scaleX(0))
-          .attr('height', (d, i) => barStyle(d, i).height)
+          .attr('height', (d, i) => barStyle(d, i).size)
           .attr('x', () => scaleX(0))
-          .attr('y', (d, i) => scaleY(i) - barStyle(d, i).height / 2)
+          .attr('y', (d, i) => scaleY(i) - barStyle(d, i).size / 2)
           .attr('fill', (d, i) => barStyle(d, i).fill),
     });
 

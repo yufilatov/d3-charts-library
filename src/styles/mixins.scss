@@ -1,0 +1,4 @@
+@mixin club-logo($name) {
+  background-image: url('../../assets/images/#{$name}-logo.png');
+}
+
