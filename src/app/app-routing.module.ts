@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { SandboxChartPieSeriesComponent } from 'src/sandboxes/sandbox-chart-pie-series/sandbox-chart-pie-series.component';
 import { SandboxChartLineSeriesComponent } from 'src/sandboxes/sandbox-chart-line-series/sandbox-chart-line-series.component';
 import { SandboxChartRadialTreeComponent } from 'src/sandboxes/sandbox-chart-radial-tree/sandbox-chart-radial-tree.component';
-import { SandboxChartAreaSeriesComponent } from 'src/sandboxes/sandbox-chart-area-series/sandbox-chart-area-series.component';
 import { SandboxChartChordSeriesComponent } from 'src/sandboxes/sandbox-chart-chord-series/sandbox-chart-chord-series.component';
 import { SandboxChartDonutSeriesComponent } from 'src/sandboxes/sandbox-chart-donut-series/sandbox-chart-donut-series.component';
 import { SandboxChartIcicleSeriesComponent } from 'src/sandboxes/sandbox-chart-icicle-series/sandbox-chart-icicle-series.component';
@@ -16,10 +15,11 @@ import { SandboxChartDoubleDonutSeriesComponent } from 'src/sandboxes/sandbox-ch
 import { SandboxChartBarHorizontalSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-horizontal-series/sandbox-chart-bar-horizontal-series.component';
 import { SandboxChartBarVerticalSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-vertical-series/sandbox-chart-bar-vertical-series.component';
 import { SandboxChartBarSimpleSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-simple-series/sandbox-chart-bar-simple-series.component';
+import { ExampleChartAreaSeriesComponent } from 'src/sandboxes/example-chart-area-series/example-chart-area-series.component';
 
 
 export const routes: Routes = [
-  { path: 'area', component: SandboxChartAreaSeriesComponent },
+  { path: 'area', component: ExampleChartAreaSeriesComponent },
   { path: 'bar-horizontal', component: SandboxChartBarHorizontalSeriesComponent },
   { path: 'bar-vertical', component: SandboxChartBarVerticalSeriesComponent },
   { path: 'bar-simple', component: SandboxChartBarSimpleSeriesComponent },

@@ -3,12 +3,12 @@ import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 import { ChartStyle } from 'src/charts/chart-style/chart-style';
 
 @Component({
-    selector: 'app-sandbox-chart-area',
-    templateUrl: './sandbox-chart-area-series.component.html',
-    styleUrls: ['./sandbox-chart-area-series.component.scss'],
+    selector: 'app-example-chart-area',
+    templateUrl: './example-chart-area-series.component.html',
+    styleUrls: ['./example-chart-area-series.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxChartAreaSeriesComponent implements OnInit {
+export class ExampleChartAreaSeriesComponent implements OnInit {
 
     data = [0, 2, 4, 5, 6, 1, 2, 3, 7, 5, 4, 3, 1, 6, 6, 5, 0];
 

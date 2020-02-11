@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SandboxChartAreaSeriesComponent } from './sandbox-chart-area-series.component';
+import { ExampleChartAreaSeriesComponent } from './example-chart-area-series.component';
 
 describe('SandboxChartAreaSeriesComponent', () => {
-  let component: SandboxChartAreaSeriesComponent;
-  let fixture: ComponentFixture<SandboxChartAreaSeriesComponent>;
+  let component: ExampleChartAreaSeriesComponent;
+  let fixture: ComponentFixture<ExampleChartAreaSeriesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SandboxChartAreaSeriesComponent]
+      declarations: [ExampleChartAreaSeriesComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SandboxChartAreaSeriesComponent);
+    fixture = TestBed.createComponent(ExampleChartAreaSeriesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
