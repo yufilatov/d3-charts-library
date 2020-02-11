@@ -24,6 +24,7 @@ const PERIMETER_LIMIT = 22;
 export class ChartSunburstSeriesService implements OnDestroy {
     private disposable = new ChartDisposable();
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
+    private selector = { id: `chart-series-sunburst-${nextId()}`, level: 0 };
 
     private id: string;
     state = DEFAULT_STATE;
@@ -49,13 +50,10 @@ export class ChartSunburstSeriesService implements OnDestroy {
     }
 
     constructor(private chartService: ChartService, renderer: Renderer2) {
-        this.id = `chart-series-sunburst-${nextId()}`;
-
-        const selector = { id: this.id, level: 0 };
-        this.root = chartService.select(selector);
+        this.root = chartService.select(this.selector);
         this.root.classed('chart-series-sunburst', true);
 
-        this.disposable.add(() => this.chartService.remove(selector));
+        this.disposable.add(() => this.chartService.remove(this.selector));
 
         const svg = chartService.selectRoot().node() as SVGElement;
         this.disposable.add(
@@ -104,6 +102,7 @@ export class ChartSunburstSeriesService implements OnDestroy {
                     .append('path'),
             update: selection =>
                 selection
+                    .attr('chart-sunburst-selector-hover', d => d.parent ? this.selector.id : null)
                     .attr('d', arc)
                     .attr('transform', `translate(${rect.width / 2}, ${rect.height / 2})`)
                     .attr('stroke', (d, i) => {

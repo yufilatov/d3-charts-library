@@ -7,6 +7,36 @@
             [selection]="selection"
             (selectionChange)="onSelectionChange($event.currentValue)">
         </app-chart-series>
+        <chart-popup for="sunburst">
+            <ng-template let-$context>
+                <div class="chart-popup-xl">
+                    <h3 class="chart-popup-xl-title">
+                        {{ $context.data.name }}
+                    </h3>
+                    <dl>
+                        <dt>Headcount</dt>
+                        <dd>
+                            {{ $context.data?.value }}
+                        </dd>
+                        <dt>Median Pay</dt>
+                        <dd>
+                            {{ $context.data?.medianPay | currency: 'EUR' }}
+                        </dd>
+                        <dt>
+                            <div [ngClass]="'chart-indicator-'+$context.data?.compRange"></div>
+                            Internal Equity
+                        </dt>
+                        <dd>
+                            {{ $context.data?.compRatioPercent }}%
+                        </dd>
+                        <dt>Total Payroll</dt>
+                        <dd>
+                            {{ $context.data?.payrollCost | currency: 'EUR' }}
+                        </dd>
+                    </dl>
+                </div>
+            </ng-template>
+        </chart-popup>
         <app-chart-breadcrumb appStopPropagation events="click"
             [path]="breadcrumb"
             [style]="breadcrumbStyle"

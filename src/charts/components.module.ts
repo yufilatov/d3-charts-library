@@ -23,6 +23,8 @@ import { RectSeriesChartComponent } from './rect-series/rect-series.component';
 import { ChartPlotComponent } from './chart-plot/chart-plot.component';
 import { BarVerticalSeriesChartComponent } from './bar-vertical-series/bar-vertical-series.component';
 import { BarSimpleSeriesChartComponent } from './bar-simple-series/bar-simple-series.component';
+import { ChartPopupComponent } from './chart-popup/chart-popup.component';
+import { ChartPortalModule } from './chart-portal/chart-portal.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { BarSimpleSeriesChartComponent } from './bar-simple-series/bar-simple-se
     LineSeriesChartComponent,
     MatrixSeriesChartComponent,
     PieSeriesChartComponent,
+    ChartPopupComponent,
     RadialTreeSeriesChartComponent,
     RectSeriesChartComponent,
     SunburstSeriesChartComponent,
@@ -53,7 +56,8 @@ import { BarSimpleSeriesChartComponent } from './bar-simple-series/bar-simple-se
     StopPropagationDirective
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ChartPortalModule
   ],
   exports: [
     ChartComponent,
@@ -66,6 +70,7 @@ import { BarSimpleSeriesChartComponent } from './bar-simple-series/bar-simple-se
     BreadcrumbChartComponent,
     ChartPlotComponent,
     ChartTicksComponent,
+    ChartPopupComponent,
     ChordSeriesChartComponent,
     DonutSeriesChartComponent,
     DoubleDonutSeriesChartComponent,
