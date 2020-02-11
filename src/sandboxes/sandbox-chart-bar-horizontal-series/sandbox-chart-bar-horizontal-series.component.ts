@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-sandbox-chart-bar-horizontal',
   templateUrl: './sandbox-chart-bar-horizontal-series.component.html',
-  styleUrls: ['./sandbox-chart-bar-horizontal-series.component.scss', './clubs.scss']
+  styleUrls: ['./sandbox-chart-bar-horizontal-series.component.scss', '../../styles/epl-emblems.scss']
 })
 
 export class SandboxChartBarHorizontalSeriesComponent implements OnInit {

@@ -11,11 +11,11 @@
 
 <!-- <ng-container [ngSwitch]="dropdown.value"> -->
 <div style="display: inline-flex;">
-    <!-- <div style="width: 20px;padding-top:30px">
+    <div style="width: 20px;padding-top:30px">
         <ng-container *ngFor="let club of (clubs$ | async)">
             <div [ngClass]="getLogo(club)"></div>
         </ng-container>
-    </div> -->
+    </div>
 
     <app-chart>
         <app-chart-series type="bar-horizontal" [data]="data$ | async" [style]="style">
