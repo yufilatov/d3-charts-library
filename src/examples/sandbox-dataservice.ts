@@ -7,9 +7,17 @@ import { map } from 'rxjs/operators';
 export class SandboxDataService {
     constructor(private http: HttpClient) { }
 
-    getData(): Observable<any> {
+    getData(season): Observable<any> {
         return this.http
-            .get<any>(`assets/epl1819.json`)
+            .get<any>(`assets/epl${season}.json`)
+            .pipe(
+                map(data => data.data)
+            );
+    }
+
+    getHistoryData(): Observable<any> {
+        return this.http
+            .get<any>(`assets/epl-clubs-position.json`)
             .pipe(
                 map(data => data.data)
             );

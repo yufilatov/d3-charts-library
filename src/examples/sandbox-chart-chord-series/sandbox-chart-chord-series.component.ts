@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 import { ChartStyle } from 'src/charts/chart-style/chart-style';
-import { DATA } from 'src/sandboxes/sandbox-chart-chord-series/data';
+import { DATA } from 'src/examples/sandbox-chart-chord-series/data';
 import * as d3 from 'd3';
 
 @Component({

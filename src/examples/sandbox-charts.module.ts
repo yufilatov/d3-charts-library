@@ -14,17 +14,17 @@ import { SandboxChartMatrixSeriesComponent } from './sandbox-chart-matrix-series
 import { SandboxChartPieSeriesComponent } from './sandbox-chart-pie-series/sandbox-chart-pie-series.component';
 import { SandboxChartRadialTreeComponent } from './sandbox-chart-radial-tree/sandbox-chart-radial-tree.component';
 import { SandboxChartSunburstSeriesComponent } from './sandbox-chart-sunburst-series/sandbox-chart-sunburst-series.component';
-import { SandboxChartBarVerticalSeriesComponent } from './sandbox-chart-bar-vertical-series/sandbox-chart-bar-vertical-series.component';
 import { SandboxChartBarSimpleSeriesComponent } from './sandbox-chart-bar-simple-series/sandbox-chart-bar-simple-series.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SandboxDataService } from './sandbox-dataservice';
 import { ExampleChartAreaSeriesComponent } from './example-chart-area-series/example-chart-area-series.component';
+import { ExampleChartBarVerticalSeriesComponent } from './example-chart-bar-vertical-series/example-chart-bar-vertical-series.component';
 
 @NgModule({
   declarations: [
     ExampleChartAreaSeriesComponent,
     SandboxChartBarHorizontalSeriesComponent,
-    SandboxChartBarVerticalSeriesComponent,
+    ExampleChartBarVerticalSeriesComponent,
     SandboxChartBarSimpleSeriesComponent,
     SandboxChartBarProgressSeriesComponent,
     SandboxChartChordSeriesComponent,
@@ -48,4 +48,4 @@ import { ExampleChartAreaSeriesComponent } from './example-chart-area-series/exa
     SandboxDataService,
   ]
 })
-export class SandboxChartsModule { }
+export class ExampleChartsModule { }

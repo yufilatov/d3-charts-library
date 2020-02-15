@@ -21,7 +21,8 @@ export class AreaSeriesChartComponent implements OnChanges {
 
     @Input() data: any[];
     @Input() style = new ChartStyleBuilder();
-    @Input() curveType = 'curveCardinal (tension=0)';
+    @Input() range: { x: number[], y: number[] } = { x: [], y: [] };
+    @Input() curveType = 'curveMonotoneX';
 
     constructor(private chart: ChartComponent, private seriesService: ChartAreaSeriesService) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
@@ -36,6 +37,7 @@ export class AreaSeriesChartComponent implements OnChanges {
         const state = this.seriesService.setState({
             data: this.data || [],
             style: this.style,
+            range: this.range,
             curveType: this.curveType,
             rect: this.chart.rect,
             margin: this.chart.margin,

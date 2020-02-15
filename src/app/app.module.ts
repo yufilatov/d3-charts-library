@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagesModule } from 'src/pages/pages.module';
-import { SandboxChartsModule } from 'src/sandboxes/sandbox-charts.module';
+import { ExampleChartsModule } from 'src/examples/sandbox-charts.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,7 @@ import { SandboxChartsModule } from 'src/sandboxes/sandbox-charts.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SandboxChartsModule,
+    ExampleChartsModule,
     PagesModule
   ],
   providers: [],

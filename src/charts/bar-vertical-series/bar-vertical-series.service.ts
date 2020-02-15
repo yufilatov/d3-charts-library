@@ -6,6 +6,8 @@ import { nextId } from '../kit';
 import { ChartDrawFactory } from '../common/chart-draw.factory';
 import { ChartStyle } from '../chart-style/chart-style';
 import * as d3 from 'd3';
+import { RectSeriesChartComponent } from '../rect-series/rect-series.component';
+import { CHART_MARGIN_EMPTY } from '../common/chart-margin';
 
 export interface IChartBarSeriesState extends IChartSeriesState {
   total?: number;
@@ -43,12 +45,20 @@ export class ChartBarVerticalSeriesService implements OnDestroy {
       ...state,
     };
 
-    const { data, style, animation, range, total } = this.state;
+    const { data, style, animation, range, total, rect, margin } = this.state;
+
+    // this.root.selectAll('rect').remove();
+
+    if (!rect.width || !rect.height) {
+      return this.state;
+    }
+
+    let datum = data.map((x, i) => i)
+    datum.push(data.length)
 
     const scaleX = createScaleX('band', {
       ...state as IChartSeriesState,
-      
-
+      data: datum
     });
 
     const scaleY = createScaleY('linear', {
@@ -59,8 +69,6 @@ export class ChartBarVerticalSeriesService implements OnDestroy {
     this.state = {
       ...this.state,
       ...state,
-      scaleX,
-      scaleY,
     };
 
     const barStyle = style.compile(ChartStyle.bar);
@@ -82,16 +90,18 @@ export class ChartBarVerticalSeriesService implements OnDestroy {
           selection
             .classed('animated-bar', true)
             .attr('width', (d, c) => barStyle(d, c).size)
-            .attr('height', d => animation ? 0 : scaleY(d))
+            .attr('height', d => {
+              return animation ? 0 : scaleY(d) - scaleY(0)
+            })
             .attr('transform', (d, c) => {
               let previous = 0;
               for (let j = 0; j < c; j++) {
                 previous = previous + data[i][j];
               }
-              return `translate(0, ${c > 0 ? -scaleY(previous) : 0})`;
+              return `translate(${scaleX(data.length) / data.length - barStyle(d, i).size / 2}, ${c > 0 ? -scaleY(previous) + scaleY(0) : 0})`;
             })
             .attr('x', scaleX(i))
-            .attr('y', (d, c) => scaleY(total) - scaleY(d))
+            .attr('y', (d, c) => scaleY(total) - scaleY(d) + scaleY(0))
             .attr('fill', (d, c) => barStyle(d, c).fill)
       });
     }

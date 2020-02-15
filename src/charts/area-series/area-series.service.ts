@@ -8,6 +8,7 @@ import { ChartStyle } from '../chart-style/chart-style';
 
 export interface IChartAreaSeriesState extends IChartSeriesState {
     curveType?: string;
+    range?: { x: number[], y: number[] }
 }
 
 const DEFAULT_STATE: IChartAreaSeriesState = {
@@ -32,18 +33,26 @@ export class ChartAreaSeriesService implements OnDestroy {
     }
 
     setState(state: IChartAreaSeriesState): IChartAreaSeriesState {
+        this.state = {
+            ...this.state,
+            ...state,
+        }
+
+        const { data, style, rect, curveType, range } = this.state;
+
+        if (!rect.height || !rect.width) {
+            return this.state;
+        }
 
         const scaleX = createScaleX('linear', {
             ...state as IChartSeriesState,
-            data: [0, state.data.length - 1],
+            data: [d3.min(range.x), d3.max(range.x)],
         });
 
         const scaleY = createScaleY('linear', {
             ...state as IChartSeriesState,
-            data: [10, 0],
+            data: [d3.max(range.y), d3.min(range.y)],
         });
-
-        console.log(state);
 
         this.state = {
             ...this.state,
@@ -52,15 +61,10 @@ export class ChartAreaSeriesService implements OnDestroy {
             scaleY,
         };
 
-        const { data, style, rect, curveType } = this.state;
-
-        if (!rect.height || !rect.width) {
-            return this.state;
-        }
-
-        const line = d3.line()
-            .x((d, i) => scaleX(i))
-            .y(d => scaleY(d))
+        const line = d3.area()
+            .x(d => scaleX(d[0]))
+            .y(d => scaleY(0))
+            .y1(d => scaleY(d[1]))
             .curve(getLineCurve(curveType));
 
         const lineStyle = style.compile(ChartStyle.line);

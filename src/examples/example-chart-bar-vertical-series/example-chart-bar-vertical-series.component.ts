@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 import { ChartStyle } from 'src/charts/chart-style/chart-style';
 import { DATA_FOR, DATA_AGAINST } from './data';
@@ -7,12 +7,12 @@ import { SandboxDataService } from '../sandbox-dataservice';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-sandbox-chart-bar-vertical',
-  templateUrl: './sandbox-chart-bar-vertical-series.component.html',
-  styleUrls: ['./sandbox-chart-bar-vertical-series.component.scss', './clubs.scss']
+  selector: 'app-example-chart-bar-vertical',
+  templateUrl: './example-chart-bar-vertical-series.component.html',
+  styleUrls: ['./example-chart-bar-vertical-series.component.scss', './clubs.scss']
 })
 
-export class SandboxChartBarVerticalSeriesComponent implements OnInit {
+export class ExampleChartBarVerticalSeriesComponent implements OnInit, OnChanges {
   data$: Observable<any>;
   clubs$: Observable<any>;
   data = [];
@@ -22,6 +22,8 @@ export class SandboxChartBarVerticalSeriesComponent implements OnInit {
   dataFor = DATA_FOR;
   dataAgainst = DATA_AGAINST;
   prevDuration = 0;
+  seasons = [20, 19, 18, 17, 16, 15]
+  options = ['Scored', 'Conceded', 'Both']
 
   styleFor =
     new ChartStyleBuilder()
@@ -73,15 +75,32 @@ export class SandboxChartBarVerticalSeriesComponent implements OnInit {
       });
 
   ngOnInit() {
-    this.data$ = this.dataService.getData().pipe(
+    this.data$ = this.dataService.getData('1819').pipe(
       map(x => x.map(club => [club.goals.for.home, club.goals.for.away])));
 
-    this.clubs$ = this.dataService.getData().pipe(
+    this.clubs$ = this.dataService.getData('1819').pipe(
       map(x => x.map(club => club.club)));
+  }
+
+  ngOnChanges() {
+    console.log('asdsdf')
   }
 
   getLogo(club) {
     return `logo logo-${club.replace(/\s+/g, '-').toLowerCase()}`;
+  }
+
+  onSeasonChange(season) {
+    this.data$ = this.dataService.getData(`${season - 1}${season}`).pipe(
+      map(x => x.map(club => [club.goals.for.home, club.goals.for.away])));
+  }
+
+  getSeason(season) {
+    return `20${season - 1}/20${season}`
+  }
+
+  getSelect(event) {
+    console.log(event);
   }
 
 }

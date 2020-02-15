@@ -1,0 +1,26 @@
+app-chart {
+  height: 700px;
+  width: 1200px;
+}
+
+select {
+  padding: 10px;
+  margin: 0px 15px 10px 0px;
+
+  option {
+    font-size: 14px;
+  }
+}
+
+.x-axis {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.y-axis {
+  // display: inline-block;
+  text-align: center;
+  width: 100%;
+  transform: rotate(-90deg) translateX(-50%);
+}

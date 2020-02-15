@@ -46,8 +46,7 @@ export function createScaleX(type: ChartScaleType, series: IChartSeriesState): I
                 .domain(data);
         }
         case 'linear-vertical': {
-            return d3
-                .scaleLinear()
+            return d3.scaleLinear()
                 .domain(data)
                 .range([margin.top, rect.height + margin.top]);
         }
@@ -75,10 +74,9 @@ export function createScaleY(type: ChartScaleType, series: IChartSeriesState): I
                 .range([margin.left, rect.width + margin.left]);
         }
         case 'linear': {
-            return d3
-                .scaleLinear()
+            return d3.scaleLinear()
+                .domain(data)
                 .range([margin.top, rect.height + margin.top])
-                .domain(data);
         }
         default:
             throw Error(`Invalid type ${type}`);

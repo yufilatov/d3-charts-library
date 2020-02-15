@@ -1,6 +1,9 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 import { ChartStyle } from 'src/charts/chart-style/chart-style';
+import { SandboxDataService } from '../sandbox-dataservice';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-example-chart-area',
@@ -9,18 +12,17 @@ import { ChartStyle } from 'src/charts/chart-style/chart-style';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExampleChartAreaSeriesComponent implements OnInit {
+    constructor(private dataService: SandboxDataService) { }
+    data$: Observable<any>
+    data = [[1996, 10], [2000, 29], [2019, 0]];
 
-    data = [0, 2, 4, 5, 6, 1, 2, 3, 7, 5, 4, 3, 1, 6, 6, 5, 0];
-
-    goals = [63, 62, 85, 59, 83];
-    points = [72, 70, 93, 50, 87];
     margin = { left: 30, top: 10, right: 10, bottom: 40 };
 
     ticksX = [];
     ticksY = [];
     range = {
-        x: [1992, 2019],
-        y: [105, 0],
+        x: [1995, 2020],
+        y: [100, 0],
     };
 
     style =
@@ -36,7 +38,12 @@ export class ExampleChartAreaSeriesComponent implements OnInit {
             });
 
     ngOnInit() {
-        for (let i = 1992; i < 2020; i++) {
+        this.data$ = this.dataService
+            .getHistoryData()
+            .pipe(
+                map(clubs => clubs[0].points.map((x, i) => [i + 1996, x])));
+
+        for (let i = 1995; i < 2021; i++) {
             this.ticksX.push(i);
         }
 
