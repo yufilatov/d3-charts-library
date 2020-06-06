@@ -9,22 +9,25 @@ import { ChartStyleBuilder } from '../chart-style/chart-style.builder';
     template: '',
     styleUrls: ['./donut-series.component.scss'],
     providers: [
-        ChartDonutSeriesService,
         ChartDisposable,
+        ChartDonutSeriesService,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     // tslint:disable-next-line:use-view-encapsulation
     encapsulation: ViewEncapsulation.None,
 })
 export class DonutSeriesChartComponent {
-    private disposable = new ChartDisposable();
-
     @Input() data: any[];
     @Input() style = new ChartStyleBuilder();
     @Input() total: number;
 
-    constructor(private chart: ChartComponent, private seriesService: ChartDonutSeriesService) {
+    constructor(
+        private chart: ChartComponent,
+        private seriesService: ChartDonutSeriesService,
+        private disposable: ChartDisposable,
+    ) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+
         this.disposable.add(() => rectChange.unsubscribe());
     }
 

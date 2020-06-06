@@ -11,7 +11,6 @@ import { COLORS_EPL } from 'src/styles/colors';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExampleChartLineSeriesComponent implements OnInit {
-
     COLORS = COLORS_EPL;
     DATA = DATA19;
 
@@ -27,12 +26,11 @@ export class ExampleChartLineSeriesComponent implements OnInit {
     zones;
     margin = { left: 30, bottom: 30 };
 
-    barStyle =
-        new ChartStyleBuilder()
-            .for(ChartStyle.bar, (d, i) => {
+    barStyle = new ChartStyleBuilder()
+        .for(ChartStyle.bar, (d, i) => {
 
-                return { height: 150, fill: this.colors[i + 9] };
-            });
+            return { height: 150, fill: this.colors[i + 9] };
+        });
 
     ngOnInit() {
         this.onSeasonChange('19');

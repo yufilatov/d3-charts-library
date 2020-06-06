@@ -1,7 +1,7 @@
 import { ChartStyleBuilder } from '../chart-style/chart-style.builder';
 import * as d3 from 'd3';
 import { IChartMargin } from './chart-margin';
-import { IChartScale } from './chart-scale';
+import { IChartScale, ChartScaleType } from './chart-scale';
 import { IChartRect } from './chart-rect';
 
 export interface IChartSeriesState {
@@ -16,8 +16,6 @@ export interface IChartSeriesState {
     selectX?: string;
     selectY?: string;
 }
-
-export type ChartScaleType = 'band' | 'ordinal' | 'linear' | 'linear-vertical' | 'band-vertical';
 
 export const CHART_DEFAULT_SERIES_STATE: IChartSeriesState = {
     data: [],

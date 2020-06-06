@@ -12,8 +12,8 @@ import { ChartPortalPositionStrategy } from '../chart-portal/chart-portal-positi
     templateUrl: './chart-popup.component.html',
     styleUrls: ['./chart-popup.component.scss'],
     providers: [
-        ChartPortalService,
         ChartDisposable,
+        ChartPortalService,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     // tslint:disable-next-line:use-view-encapsulation

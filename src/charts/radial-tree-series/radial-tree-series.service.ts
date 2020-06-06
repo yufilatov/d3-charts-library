@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE } from '../common/chart-series';
 import { ChartDisposable } from '../common/chart-disposable';
@@ -22,6 +22,10 @@ const DEFAULT_STATE: IKfChartRadialTreeSeriesState = {
 @Injectable()
 export class ChartRadialTreeSeriesService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
+    private state = {
+        ...DEFAULT_STATE,
+        id: `chart-series-radial-tree-${nextId()}`,
+    };
 
     private localSelection: any[] = [];
     selectionChange = new EventEmitter<{ oldValue: any[], currentValue: any[] }>();
@@ -43,11 +47,10 @@ export class ChartRadialTreeSeriesService {
         private chartService: ChartService,
         private disposable: ChartDisposable,
     ) {
-        const selector = { id: `chart-series-radial-tree-${nextId()}`, level: 0 };
+        const selector = { id: this.state.id, level: 0 };
         this.root = chartService.select(selector);
 
         this.disposable.add(() => this.chartService.remove(selector));
-
     }
 
     setState(state: IKfChartRadialTreeSeriesState) {

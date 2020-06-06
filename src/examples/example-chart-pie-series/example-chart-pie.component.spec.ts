@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {ExampleChartPieSeriesComponent } from './sandbox-chart-pie-series.component';
+import { ExampleChartPieSeriesComponent } from './example-chart-pie-series.component';
 
 describe('ExampleChartPieSeriesComponent', () => {
   let component: ExampleChartPieSeriesComponent;
@@ -7,9 +7,9 @@ describe('ExampleChartPieSeriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExampleChartPieSeriesComponent ],
+      declarations: [ExampleChartPieSeriesComponent],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

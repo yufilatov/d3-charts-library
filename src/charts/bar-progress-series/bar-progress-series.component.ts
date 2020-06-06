@@ -5,65 +5,65 @@ import { ChartBarProgressSeriesService } from './bar-progress-series.service';
 import { ChartDisposable } from '../common/chart-disposable';
 
 @Component({
-  selector: 'app-chart-series[type="bar-progress"]',
-  templateUrl: './bar-progress-series.component.html',
-  styleUrls: ['./bar-progress-series.component.scss'],
-  providers: [
-    ChartBarProgressSeriesService,
-    ChartDisposable,
-  ],
+    selector: 'app-chart-series[type="bar-progress"]',
+    templateUrl: './bar-progress-series.component.html',
+    styleUrls: ['./bar-progress-series.component.scss'],
+    providers: [
+        ChartBarProgressSeriesService,
+        ChartDisposable,
+    ],
 })
 export class BarProgressSeriesChartComponent implements OnChanges {
-  @Input() data: any[];
-  @Input() style = new ChartStyleBuilder();
-  @Input() label: 'start' | 'end' | 'none' = 'none';
-  @Input() labelEnd = false;
-  @Input() labelSpaceX = 30;
-  @Input() offsetLeft = 220;
-  @Input() total = 100;
-  @Input() animation = false;
+    @Input() data: any[];
+    @Input() style = new ChartStyleBuilder();
+    @Input() label: 'start' | 'end' | 'none' = 'none';
+    @Input() labelEnd = false;
+    @Input() labelSpaceX = 30;
+    @Input() offsetLeft = 220;
+    @Input() total = 100;
+    @Input() animation = false;
 
-  constructor(
-    private chart: ChartComponent,
-    private seriesService: ChartBarProgressSeriesService,
-    private disposable: ChartDisposable,
-  ) {
-    const rectChange = chart.rectChange.subscribe(() => this.invalidate());
-    this.disposable.add(() => rectChange.unsubscribe());
+    constructor(
+        private chart: ChartComponent,
+        private seriesService: ChartBarProgressSeriesService,
+        private disposable: ChartDisposable,
+    ) {
+        const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+        this.disposable.add(() => rectChange.unsubscribe());
 
-    this.recalculateMargins();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if ('offsetLeft' in changes || 'labelSpaceX' in changes || 'labelEnd' in changes) {
-      this.recalculateMargins();
+        this.recalculateMargins();
     }
-    this.invalidate();
-  }
 
-  private recalculateMargins() {
-    const left = this.offsetLeft + (this.label === 'end' ? 0 : this.labelSpaceX);
-    const right = this.label === 'end' ? this.labelSpaceX : 0;
-    this.chart.margin = {
-      left,
-      right,
-      top: 8,
-      bottom: 0,
-    };
-  }
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.offsetLeft || changes.labelSpaceX || changes.labelEnd) {
+            this.recalculateMargins();
+        }
+        this.invalidate();
+    }
 
-  private invalidate() {
-    const state = this.seriesService.setState({
-      data: this.data || [],
-      style: this.style,
-      rect: this.chart.rect,
-      margin: this.chart.margin,
-      label: this.label,
-      total: this.total,
-      animation: this.animation,
-    });
+    private recalculateMargins() {
+        const left = this.offsetLeft + (this.label === 'end' ? 0 : this.labelSpaceX);
+        const right = this.label === 'end' ? this.labelSpaceX : 0;
+        this.chart.margin = {
+            left,
+            right,
+            top: 8,
+            bottom: 0,
+        };
+    }
 
-    this.chart.addSeries(state);
-    this.disposable.add(() => this.chart.removeSeries(state));
-  }
+    private invalidate() {
+        const state = this.seriesService.setState({
+            data: this.data || [],
+            style: this.style,
+            rect: this.chart.rect,
+            margin: this.chart.margin,
+            label: this.label,
+            total: this.total,
+            animation: this.animation,
+        });
+
+        this.chart.addSeries(state);
+        this.disposable.add(() => this.chart.removeSeries(state));
+    }
 }

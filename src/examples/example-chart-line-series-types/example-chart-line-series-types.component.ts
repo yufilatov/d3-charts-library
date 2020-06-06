@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnChanges } from '@angular/core';
-import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
-import { ChartStyle } from 'src/charts/chart-style/chart-style';
 import { DATA, DATA_TYPES } from './data';
+import { ChartStyle } from 'src/charts/chart-style/chart-style';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 
 @Component({
     selector: 'app-example-chart-line-types',

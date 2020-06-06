@@ -1,12 +1,11 @@
-import { Injectable, OnDestroy, EventEmitter, Renderer2 } from '@angular/core';
-
 import * as d3 from 'd3';
-import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE } from '../common/chart-series';
-import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
 import { nextId, ChartMath, hasParent } from '../kit';
-import { IChartArcStyle, IChartLabelStyle, ChartStyle, IChartZoomStyle } from '../chart-style/chart-style';
+import { ChartDisposable } from '../common/chart-disposable';
 import { ChartDrawFactory } from '../common/chart-draw.factory';
+import { Injectable, EventEmitter, Renderer2 } from '@angular/core';
+import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE } from '../common/chart-series';
+import { IChartArcStyle, IChartLabelStyle, ChartStyle, IChartZoomStyle } from '../chart-style/chart-style';
 
 export interface IChartSunburstSeriesState extends IChartSeriesState {
     rings?: number;
@@ -21,13 +20,13 @@ const DEFAULT_STATE: IChartSunburstSeriesState = {
 const PERIMETER_LIMIT = 22;
 
 @Injectable()
-export class ChartSunburstSeriesService implements OnDestroy {
-    private disposable = new ChartDisposable();
+export class ChartSunburstSeriesService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
-    private selector = { id: `chart-series-sunburst-${nextId()}`, level: 0 };
-
-    private id: string;
-    state = DEFAULT_STATE;
+    private state = {
+        ...DEFAULT_STATE,
+        id: `chart-series-sunburst-${nextId()}`,
+    };
+    private selector = { id: this.state.id, level: 0 };
 
     private zoom: (node: any) => void;
     // tslint:disable-next-line:variable-name
@@ -49,7 +48,11 @@ export class ChartSunburstSeriesService implements OnDestroy {
         return this._selection;
     }
 
-    constructor(private chartService: ChartService, renderer: Renderer2) {
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+        renderer: Renderer2,
+    ) {
         this.root = chartService.select(this.selector);
         this.root.classed('chart-series-sunburst', true);
 
@@ -315,7 +318,7 @@ export class ChartSunburstSeriesService implements OnDestroy {
                         .attrTween('d', arcTween(target))
                         .on('end', (d, i) => {
                             if (d.x0 >= target.x0 && ChartMath.less(d.x0, target.x1)) {
-                                const labelId = `#${this.id}-label-${i}`;
+                                const labelId = `#${this.state.id}-label-${i}`;
 
                                 d3.selectAll('.chart-label')
                                     .filter(n => n === d)
@@ -396,10 +399,4 @@ export class ChartSunburstSeriesService implements OnDestroy {
     private zoomFactory(arc) {
         return this.drilldown(arc);
     }
-
-    ngOnDestroy() {
-        this.disposable.finalize();
-    }
-
-
 }

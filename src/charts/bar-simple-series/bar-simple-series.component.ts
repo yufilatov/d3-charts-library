@@ -9,8 +9,8 @@ import { ChartDisposable } from '../common/chart-disposable';
   templateUrl: './bar-simple-series.component.html',
   styleUrls: ['./bar-simple-series.component.scss'],
   providers: [
-    ChartBarSimpleSeriesService,
     ChartDisposable,
+    ChartBarSimpleSeriesService,
   ],
 })
 export class BarSimpleSeriesChartComponent implements OnChanges {

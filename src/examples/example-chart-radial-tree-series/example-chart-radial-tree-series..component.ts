@@ -1,13 +1,13 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DATA } from './chart-data';
-import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
-import { ChartStyle } from 'src/charts/chart-style/chart-style';
 import { findDescendants } from 'src/charts/kit';
+import { ChartStyle } from 'src/charts/chart-style/chart-style';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 
 @Component({
-    selector: 'app-example-chart-radial-tree',
-    templateUrl: './example-chart-radial-tree.component.html',
-    styleUrls: ['./example-chart-radial-tree.component.scss'],
+    selector: 'app-example-chart-radial-tree-series',
+    templateUrl: './example-chart-radial-tree-series.component.html',
+    styleUrls: ['./example-chart-radial-tree-series.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExampleChartRadialTreeComponent {
@@ -19,18 +19,17 @@ export class ExampleChartRadialTreeComponent {
     selection = this.data;
     breadcrumb: any[] = [this.data];
 
-    style =
-        new ChartStyleBuilder()
-            .for(ChartStyle.node, (d) => {
+    style = new ChartStyleBuilder()
+        .for(ChartStyle.node, (d) => {
 
-                const fill = d.children ? 'lightsteelblue' : '#ff7f0e';
+            const fill = d.children ? 'lightsteelblue' : '#ff7f0e';
 
-                return { fill, radius: 4, stroke: '#000' };
-            })
-            .for(ChartStyle.label, () => {
+            return { fill, radius: 4, stroke: '#000' };
+        })
+        .for(ChartStyle.label, () => {
 
-                return { fontSize: 12 };
-            });
+            return { fontSize: 12 };
+        });
 
     onSelectionChange(value: any[]) {
         switch (value.length) {

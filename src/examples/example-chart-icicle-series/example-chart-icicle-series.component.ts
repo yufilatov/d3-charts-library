@@ -26,7 +26,6 @@ export class ExampleChartIcicleSeriesComponent {
             return { fill };
         })
         .for(ChartStyle.label, d => {
-
             const text = `${d.data.name}: ${d.value}`;
 
             return { text };
