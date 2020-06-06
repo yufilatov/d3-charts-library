@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {ExampleChartLineSeriesComponent } from './sandbox-chart-line-series.component';
+import {ExampleChartLineSeriesComponent } from './example-chart-line-series.component';
 
 describe('ExampleChartPieSeriesComponent', () => {
   let component: ExampleChartLineSeriesComponent;

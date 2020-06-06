@@ -5,9 +5,9 @@ import { DATA19, DATA20 } from './data';
 import { COLORS_EPL } from 'src/styles/colors';
 
 @Component({
-    selector: 'app-sandbox-chart-line-types',
-    templateUrl: './sandbox-chart-line-series.component.html',
-    styleUrls: ['./sandbox-chart-line-series.component.scss'],
+    selector: 'app-example-chart-line-types',
+    templateUrl: './example-chart-line-series.component.html',
+    styleUrls: ['./example-chart-line-series.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExampleChartLineSeriesComponent implements OnInit {
@@ -15,7 +15,7 @@ export class ExampleChartLineSeriesComponent implements OnInit {
     DATA = DATA19;
 
     data = [];
-    range = {};
+    range = { x: [], y: {} };
     ticksX = [];
     ticksY = [];
     indicators = [];

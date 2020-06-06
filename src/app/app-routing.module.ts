@@ -10,13 +10,12 @@ import { ExampleChartDonutSeriesComponent } from 'src/examples/example-chart-don
 import { ExampleChartDoubleDonutSeriesComponent } from 'src/examples/example-chart-double-donut-series/example-chart-double-donut-series.component';
 import { ExampleChartHalfDonutSeriesComponent } from 'src/examples/example-chart-half-donut-series/example-chart-half-donut-series.component';
 import { ExampleChartIcicleSeriesComponent } from 'src/examples/example-chart-icicle-series/example-chart-icicle-series.component';
-import { ExampleChartLineSeriesComponent } from 'src/examples/example-chart-line-series/sandbox-chart-line-series.component';
 import { ExampleChartLineSeriesTypesComponent } from 'src/examples/example-chart-line-series-types/example-chart-line-series-types.component';
 import { ExampleChartMatrixSeriesComponent } from 'src/examples/example-chart-matrix-series/example-chart-matrix-series.component';
 import { ExampleChartPieSeriesComponent } from 'src/examples/example-chart-pie-series/example-chart-pie-series.component';
 import { ExampleChartRadialTreeComponent } from 'src/examples/example-chart-radial-tree-series/example-chart-radial-tree-series..component';
 import { ExampleChartSunburstSeriesComponent } from 'src/examples/example-chart-sunburst-series/example-chart-sunburst-series.component';
-
+import { ExampleChartLineSeriesComponent } from 'src/examples/example-chart-line-series/example-chart-line-series.component';
 
 export const routes: Routes = [
   { path: 'area', component: ExampleChartAreaSeriesComponent },
