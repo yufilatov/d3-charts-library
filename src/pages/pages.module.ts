@@ -11,11 +11,11 @@ import { AboutComponent } from './about/about.component';
   declarations: [
     HomeComponent,
     ContactsComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     CommonModule,
-    PagesRoutingModule
-  ]
+    PagesRoutingModule,
+  ],
 })
 export class PagesModule { }

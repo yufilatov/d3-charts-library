@@ -8,7 +8,7 @@ import { ChartComponent } from './chart.component';
         CommonModule,
     ],
     exports: [
-        ChartComponent
-    ]
+        ChartComponent,
+    ],
 })
 export class ChartModule { }

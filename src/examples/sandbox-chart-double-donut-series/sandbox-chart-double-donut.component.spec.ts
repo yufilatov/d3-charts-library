@@ -7,7 +7,7 @@ describe('SandboxChartDoubleDonutSeriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SandboxChartDoubleDonutSeriesComponent]
+      declarations: [SandboxChartDoubleDonutSeriesComponent],
     })
       .compileComponents();
   }));

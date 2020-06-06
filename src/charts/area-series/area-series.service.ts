@@ -1,14 +1,15 @@
-import { Injectable, OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
+import { Injectable } from '@angular/core';
 import { nextId, getLineCurve } from '../kit';
-import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE, createScaleX, createScaleY } from '../common/chart-series';
-import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
 import { ChartStyle } from '../chart-style/chart-style';
+import { ChartDisposable } from '../common/chart-disposable';
+import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE, createScaleX, createScaleY } from '../common/chart-series';
+import { ChartDrawFactory } from '../common/chart-draw.factory';
 
 export interface IChartAreaSeriesState extends IChartSeriesState {
     curveType?: string;
-    range?: { x: number[], y: number[] }
+    range?: { x: number[], y: number[] };
 }
 
 const DEFAULT_STATE: IChartAreaSeriesState = {
@@ -16,19 +17,20 @@ const DEFAULT_STATE: IChartAreaSeriesState = {
 };
 
 @Injectable()
-export class ChartAreaSeriesService implements OnDestroy {
-
-    private disposable = new ChartDisposable();
+export class ChartAreaSeriesService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
     private state = {
         ...DEFAULT_STATE,
         id: `chart-series-area-${nextId()}`,
     };
 
-    constructor(private chartService: ChartService) {
-        const selector = { id: 'chart-series-area', level: 0 };
-        this.root = chartService.select(selector);
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+    ) {
+        const selector = { id: this.state.id, level: 0 };
 
+        this.root = chartService.select(selector);
         this.disposable.add(() => this.chartService.remove(selector));
     }
 
@@ -36,7 +38,7 @@ export class ChartAreaSeriesService implements OnDestroy {
         this.state = {
             ...this.state,
             ...state,
-        }
+        };
 
         const { data, style, rect, curveType, range } = this.state;
 
@@ -82,10 +84,25 @@ export class ChartAreaSeriesService implements OnDestroy {
             .attr('stroke', (d, i) => lineStyle(d, i).stroke)
             .attr('stroke-width', (d, i) => lineStyle(d, i).strokeWidth);
 
-        return this.state;
-    }
+        const draw = ChartDrawFactory(this.root, data);
 
-    ngOnDestroy() {
-        this.disposable.finalize();
+        draw('.chart-line-point', {
+            create: selection =>
+                selection
+                    .append('circle'),
+            update: selection =>
+                selection
+                    .attr('cx', (d, i) => scaleX(d[0]))
+                    .attr('cy', d => scaleY(d[1]))
+                    .attr('r', (d, i) => circleStyle(d, i).radius)
+                    .attr('fill', (d, i) => circleStyle(d, i).fill)
+                    .attr('stroke', (d, i) => circleStyle(d, i).stroke)
+                    .attr('stroke-width', (d, i) => circleStyle(d, i).strokeWidth)
+                    .on('mouseover', (d, i) => {
+                        this.root.selectAll('.circle').filter(n => n === d);
+                    }),
+        });
+
+        return this.state;
     }
 }

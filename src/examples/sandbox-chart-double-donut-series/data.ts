@@ -8,7 +8,7 @@ export const DATA = [
         against: {
             home: 12,
             away: 11,
-        }
+        },
     },
     {
         club: 'Liverpool',
@@ -19,7 +19,7 @@ export const DATA = [
         against: {
             home: 10,
             away: 12,
-        }
+        },
     },
     {
         club: 'Chelsea',
@@ -30,7 +30,7 @@ export const DATA = [
         against: {
             home: 12,
             away: 27,
-        }
+        },
     },
     {
         club: 'Tottenham Hotspurs',
@@ -41,7 +41,7 @@ export const DATA = [
         against: {
             home: 16,
             away: 23,
-        }
+        },
     },
     {
         club: 'Arsenal',
@@ -52,7 +52,7 @@ export const DATA = [
         against: {
             home: 16,
             away: 35,
-        }
+        },
     },
     {
         club: 'Manchester United',
@@ -63,7 +63,7 @@ export const DATA = [
         against: {
             home: 25,
             away: 29,
-        }
+        },
     },
     {
         club: 'Wolverhampton',
@@ -74,7 +74,7 @@ export const DATA = [
         against: {
             home: 21,
             away: 25,
-        }
+        },
     },
     {
         club: 'Everton',
@@ -85,7 +85,7 @@ export const DATA = [
         against: {
             home: 21,
             away: 25,
-        }
+        },
     },
     {
         club: 'Leicester City',
@@ -96,7 +96,7 @@ export const DATA = [
         against: {
             home: 20,
             away: 28,
-        }
+        },
     },
     {
         club: 'West Ham United',
@@ -107,7 +107,7 @@ export const DATA = [
         against: {
             home: 27,
             away: 28,
-        }
+        },
     },
     {
         club: 'Watford',
@@ -118,7 +118,7 @@ export const DATA = [
         against: {
             home: 28,
             away: 31,
-        }
+        },
     },
     {
         club: 'Crystal Palace',
@@ -129,7 +129,7 @@ export const DATA = [
         against: {
             home: 23,
             away: 30,
-        }
+        },
     },
     {
         club: 'Newcastle United',
@@ -140,7 +140,7 @@ export const DATA = [
         against: {
             home: 25,
             away: 23,
-        }
+        },
     },
     {
         club: 'Bournemouth',
@@ -151,7 +151,7 @@ export const DATA = [
         against: {
             home: 25,
             away: 45,
-        }
+        },
     },
     {
         club: 'Burnley',
@@ -162,7 +162,7 @@ export const DATA = [
         against: {
             home: 32,
             away: 36,
-        }
+        },
     },
     {
         club: 'Southampton',
@@ -173,7 +173,7 @@ export const DATA = [
         against: {
             home: 30,
             away: 35,
-        }
+        },
     },
     {
         club: 'Brighton',
@@ -184,7 +184,7 @@ export const DATA = [
         against: {
             home: 28,
             away: 32,
-        }
+        },
     },
     {
         club: 'Cardiff City',
@@ -195,7 +195,7 @@ export const DATA = [
         against: {
             home: 38,
             away: 31,
-        }
+        },
     },
     {
         club: 'Fulham',
@@ -206,7 +206,7 @@ export const DATA = [
         against: {
             home: 36,
             away: 45,
-        }
+        },
     },
     {
         club: 'Huddersfield Town',
@@ -217,7 +217,7 @@ export const DATA = [
         against: {
             home: 31,
             away: 45,
-        }
+        },
     },
 ];
 

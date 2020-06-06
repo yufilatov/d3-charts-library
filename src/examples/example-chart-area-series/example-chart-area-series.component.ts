@@ -1,40 +1,40 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
-import { ChartStyle } from 'src/charts/chart-style/chart-style';
-import { SandboxDataService } from '../sandbox-dataservice';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ChartStyle } from 'src/charts/chart-style/chart-style';
+import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
+import { ExampleDataService } from '../example-data-service';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-example-chart-area',
     templateUrl: './example-chart-area-series.component.html',
-    styleUrls: ['./example-chart-area-series.component.scss'],
+    styleUrls: [
+        './example-chart-area-series.component.scss',
+        '../../styles/epl-emblems.scss',
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExampleChartAreaSeriesComponent implements OnInit {
-    constructor(private dataService: SandboxDataService) { }
-    data$: Observable<any>
-    data = [[1996, 10], [2000, 29], [2019, 0]];
+    constructor(private dataService: ExampleDataService) { }
 
-    margin = { left: 30, top: 10, right: 10, bottom: 40 };
+    data$: Observable<any>;
+
+    margin = { left: 30, top: 10, right: 15, bottom: 40 };
 
     ticksX = [];
     ticksY = [];
     range = {
-        x: [1995, 2020],
-        y: [100, 0],
+        x: [1996, 2019],
+        y: [0, 100],
     };
 
     style =
         new ChartStyleBuilder()
-            .for(ChartStyle.circle, (d, i) => {
-                const fill = d > 5 ? '#709a28' : d > 2 ? '#f7a704' : '#c23612';
-
-                return { fill };
+            .for(ChartStyle.circle, () => {
+                return { fill: '#ffdd00', radius: 5, stroke: '#000000' };
             })
-            .for(ChartStyle.line, (d, i) => {
-
-                return { stroke: 'steelblue', strokeWidth: 2 };
+            .for(ChartStyle.line, () => {
+                return { fill: '#034694', strokeWidth: 0 };
             });
 
     ngOnInit() {
@@ -43,7 +43,7 @@ export class ExampleChartAreaSeriesComponent implements OnInit {
             .pipe(
                 map(clubs => clubs[0].points.map((x, i) => [i + 1996, x])));
 
-        for (let i = 1995; i < 2021; i++) {
+        for (let i = 1995; i < 2020; i++) {
             this.ticksX.push(i);
         }
 
@@ -51,5 +51,4 @@ export class ExampleChartAreaSeriesComponent implements OnInit {
             this.ticksY.push(i);
         }
     }
-
 }

@@ -8,9 +8,9 @@ describe('SunburstSeriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SunburstSeriesChartComponent ]
+      declarations: [SunburstSeriesChartComponent],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

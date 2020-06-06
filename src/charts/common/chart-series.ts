@@ -76,7 +76,7 @@ export function createScaleY(type: ChartScaleType, series: IChartSeriesState): I
         case 'linear': {
             return d3.scaleLinear()
                 .domain(data)
-                .range([margin.top, rect.height + margin.top])
+                .range([margin.top, rect.height + margin.top]);
         }
         default:
             throw Error(`Invalid type ${type}`);

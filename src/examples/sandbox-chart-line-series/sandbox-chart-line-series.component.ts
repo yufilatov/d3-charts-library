@@ -146,7 +146,7 @@ export class SandboxChartLineSeriesComponent implements OnInit {
                 this.data = newData;
                 this.range = {
                     x: [0, 39],
-                    y: [0, 21]
+                    y: [0, 21],
                 };
                 for (let i = 0; i <= 38; i++) {
                     this.ticksX.push(i);
@@ -171,7 +171,7 @@ export class SandboxChartLineSeriesComponent implements OnInit {
                 this.data = newData;
                 this.range = {
                     x: [0, 39],
-                    y: [0, 100]
+                    y: [0, 100],
                 };
 
                 for (let i = 0; i <= 38; i++) {

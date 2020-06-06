@@ -11,34 +11,33 @@ import { ChartChordSeriesService } from './chord-series.service';
   providers: [
     ChartChordSeriesService,
     ChartDisposable,
-  ]
+  ],
 })
 export class ChordSeriesChartComponent implements OnChanges {
 
   private disposable = new ChartDisposable();
 
-    @Input() data: any[];
-    @Input() style = new ChartStyleBuilder();
+  @Input() data: any[];
+  @Input() style = new ChartStyleBuilder();
 
-    constructor(private chart: ChartComponent, private seriesService: ChartChordSeriesService) {
-        const rectChange = chart.rectChange.subscribe(() => this.invalidate());
-        this.disposable.add(() => rectChange.unsubscribe());
-    }
+  constructor(private chart: ChartComponent, private seriesService: ChartChordSeriesService) {
+    const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+    this.disposable.add(() => rectChange.unsubscribe());
+  }
 
-    ngOnChanges(changes: SimpleChanges) {
-        const dataChange = changes['data'];
-        if (dataChange) {
-            this.invalidate();
-        }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.data) {
+      this.invalidate();
     }
+  }
 
-    private invalidate() {
-        this.seriesService.setState({
-            data: this.data,
-            style: this.style,
-            rect: this.chart.rect,
-            margin: this.chart.margin,
-        });
-    }
+  private invalidate() {
+    this.seriesService.setState({
+      data: this.data,
+      style: this.style,
+      rect: this.chart.rect,
+      margin: this.chart.margin,
+    });
+  }
 
 }

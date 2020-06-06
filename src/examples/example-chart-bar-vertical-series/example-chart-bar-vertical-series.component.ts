@@ -1,106 +1,96 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartStyleBuilder } from 'src/charts/chart-style/chart-style.builder';
 import { ChartStyle } from 'src/charts/chart-style/chart-style';
-import { DATA_FOR, DATA_AGAINST } from './data';
-import { Observable } from 'rxjs';
-import { SandboxDataService } from '../sandbox-dataservice';
+import { Observable, empty } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ExampleDataService } from '../example-data-service';
 
 @Component({
   selector: 'app-example-chart-bar-vertical',
   templateUrl: './example-chart-bar-vertical-series.component.html',
-  styleUrls: ['./example-chart-bar-vertical-series.component.scss', './clubs.scss']
+  styleUrls: ['./example-chart-bar-vertical-series.component.scss', '../../styles/epl-emblems.scss'],
 })
 
-export class ExampleChartBarVerticalSeriesComponent implements OnInit, OnChanges {
+export class ExampleChartBarVerticalSeriesComponent implements OnInit {
+  constructor(private dataService: ExampleDataService) { }
+
   data$: Observable<any>;
   clubs$: Observable<any>;
-  data = [];
 
-  constructor(private dataService: SandboxDataService) { }
+  margin = { left: 30, bottom: 25, right: 20, top: 20 };
+  range = { x: [0, 21], y: [0, 130] };
 
-  dataFor = DATA_FOR;
-  dataAgainst = DATA_AGAINST;
-  prevDuration = 0;
-  seasons = [20, 19, 18, 17, 16, 15]
-  options = ['Scored', 'Conceded', 'Both']
+  ticksX = [];
+  ticksY = [];
 
-  styleFor =
-    new ChartStyleBuilder()
-      .for(ChartStyle.bar, (d, i) => {
-        const fill = i === 0 ? '#94c31a' : i === 1 ? '#bedb75' : '#f8f8f8';
+  seasons = [20, 19, 18, 17, 16, 15];
 
-        return { fill, height: 20, offsetLeft: 25 };
-      })
-      .for(ChartStyle.label, (d) => {
-        const text = 'Club Name';
-        return { text, fontSize: 10 };
-      })
-      .for(ChartStyle.animation, (d, i) => {
-        const duration = d * 10 + (100 - d) * 10;
-        const delay = this.prevDuration;
-        this.prevDuration = (i + 1) % 3 > 0 ? this.prevDuration + duration - 210 : 0;
+  colors = ['#709a28', '#87ba30', '#c23612', '#e0471f'];
 
-        return { duration, delay, format: '.0' };
-      });
-
-  styleAgainst =
-    new ChartStyleBuilder()
-      .for(ChartStyle.bar, (d, i) => {
-        const fill = i === 0 ? '#f7a704' : i === 1 ? '#faca68' : '#f8f8f8';
-
-        return { fill, height: 20, offsetLeft: 25 };
-      })
-      .for(ChartStyle.label, (d) => {
-        const text = 'Club Name';
-        return { text, fontSize: 10 };
-      })
-      .for(ChartStyle.animation, (d, i) => {
-        const duration = d * 10 + (100 - d) * 10;
-        const delay = this.prevDuration;
-        this.prevDuration = (i + 1) % 3 > 0 ? this.prevDuration + duration - 210 : 0;
-
-        return { duration, delay };
-      });
+  selectedSeason = 19;
 
   style =
     new ChartStyleBuilder()
       .for(ChartStyle.bar, (d, i) => {
-        const colors = ['#94c31a', '#bedb75', '#94c31a'];
-        return { fill: colors[i], background: '#f1f3ca', size: 25 };
+
+        return { fill: this.colors[i], background: '#f1f3ca', size: 25 };
       })
       .for(ChartStyle.label, (d) => {
         const text = `${d}%`;
+
         return { text, fontSize: 9, fontWeight: 600 };
       });
 
   ngOnInit() {
-    this.data$ = this.dataService.getData('1819').pipe(
+    for (let i = 1; i < Math.max(...this.range.x); i++) {
+      this.ticksX.push(i);
+    }
+
+    for (let i = 5; i < Math.max(...this.range.y); i += 5) {
+      this.ticksY.push(i);
+    }
+
+    this.data$ = this.dataService.getData(`${this.selectedSeason - 1}${this.selectedSeason}`).pipe(
       map(x => x.map(club => [club.goals.for.home, club.goals.for.away])));
 
-    this.clubs$ = this.dataService.getData('1819').pipe(
-      map(x => x.map(club => club.club)));
-  }
-
-  ngOnChanges() {
-    console.log('asdsdf')
+    this.clubs$ = this.dataService.getData(`${this.selectedSeason - 1}${this.selectedSeason}`).pipe(
+      map(x => x.map(club => club)));
   }
 
   getLogo(club) {
     return `logo logo-${club.replace(/\s+/g, '-').toLowerCase()}`;
   }
 
-  onSeasonChange(season) {
-    this.data$ = this.dataService.getData(`${season - 1}${season}`).pipe(
-      map(x => x.map(club => [club.goals.for.home, club.goals.for.away])));
+  updateData(scored = true, conceded = false) {
+    if (scored && conceded) {
+      this.colors = ['#709a28', '#87ba30', '#c23612', '#e0471f'];
+
+      this.data$ = this.dataService.getData(`${this.selectedSeason - 1}${this.selectedSeason}`).pipe(
+        map(x => x.map(club => [club.goals.for.home, club.goals.for.away, club.goals.against.home, club.goals.against.away])));
+    } else {
+      if (scored) {
+        this.colors = ['#709a28', '#87ba30'];
+
+        this.data$ = this.dataService.getData(`${this.selectedSeason - 1}${this.selectedSeason}`).pipe(
+          map(x => x.map(club => [club.goals.for.home, club.goals.for.away])));
+      } else {
+        if (conceded) {
+          this.colors = ['#c23612', '#e0471f'];
+
+          this.data$ = this.dataService.getData(`${this.selectedSeason - 1}${this.selectedSeason}`).pipe(
+            map(x => x.map(club => [club.goals.against.home, club.goals.against.away])));
+        } else {
+          this.data$ = empty();
+        }
+      }
+    }
+
+    this.clubs$ = this.dataService.getData(`${this.selectedSeason - 1}${this.selectedSeason}`).pipe(
+      map(x => x.map(club => club)));
   }
 
   getSeason(season) {
-    return `20${season - 1}/20${season}`
-  }
-
-  getSelect(event) {
-    console.log(event);
+    return `20${season - 1}/20${season}`;
   }
 
 }

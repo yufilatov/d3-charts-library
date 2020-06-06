@@ -5,25 +5,26 @@ import { CHART_MARGIN_EMPTY, IChartMargin } from '../common/chart-margin';
 
 @Component({
     selector: 'app-chart-plot',
-    template: '',
+    templateUrl: './chart-plot.component.html',
     styleUrls: ['./chart-plot.component.scss'],
-    providers: [
-        ChartDisposable,
-    ],
+    providers: [ChartDisposable],
     changeDetection: ChangeDetectionStrategy.OnPush,
     // tslint:disable-next-line:use-view-encapsulation
     encapsulation: ViewEncapsulation.None,
 })
 export class ChartPlotComponent implements OnChanges {
     @Input() margin: IChartMargin = CHART_MARGIN_EMPTY;
-    private disposable = new ChartDisposable();
 
-    constructor(private chart: ChartComponent) {
+    constructor(
+        private chart: ChartComponent,
+        private disposable: ChartDisposable,
+    ) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+
         this.disposable.add(() => rectChange.unsubscribe());
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.invalidate();
     }
 

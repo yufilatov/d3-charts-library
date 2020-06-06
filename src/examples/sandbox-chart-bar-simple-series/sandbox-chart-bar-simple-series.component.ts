@@ -6,7 +6,7 @@ import { DATA_FOR, DATA_AGAINST } from './data';
 @Component({
   selector: 'app-sandbox-chart-bar',
   templateUrl: './sandbox-chart-bar-simple-series.component.html',
-  styleUrls: ['./sandbox-chart-bar-simple-series.component.scss']
+  styleUrls: ['./sandbox-chart-bar-simple-series.component.scss'],
 })
 export class SandboxChartBarSimpleSeriesComponent {
 

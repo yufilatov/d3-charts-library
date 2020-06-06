@@ -86,7 +86,7 @@ export class ChartBarSimpleSeriesService implements OnDestroy {
             positionX = positionX + scaleX(data[i - 1]);
             return positionX;
           })
-          .attr('y', (d, i) => 0)
+          .attr('y', (d, i) => 0),
 
     });
 

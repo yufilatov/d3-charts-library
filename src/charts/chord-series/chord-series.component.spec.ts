@@ -7,7 +7,7 @@ describe('BarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ChordSeriesChartComponent]
+      declarations: [ChordSeriesChartComponent],
     })
       .compileComponents();
   }));

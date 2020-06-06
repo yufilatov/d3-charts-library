@@ -43,7 +43,7 @@ export class YAxisChartComponent implements OnChanges {
             rect: this.chart.rect,
             margin: this.chart.margin,
             ticks: this.ticks,
-            reverse: this.reverse
+            reverse: this.reverse,
         });
 
         this.chart.addSeries(state);

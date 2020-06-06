@@ -8,7 +8,7 @@ describe('SandboxChartChordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SandboxChartChordSeriesComponent ]
+      declarations: [ SandboxChartChordSeriesComponent ],
     })
     .compileComponents();
   }));

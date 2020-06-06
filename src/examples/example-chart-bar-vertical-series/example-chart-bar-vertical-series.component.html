@@ -1,52 +1,63 @@
-<div style="display: flex;">
+<div class="dropdowns">
   <div>
-    <select (change)="onSeasonChange($event.target.value)">
+    <select
+      [(ngModel)]="selectedSeason"
+      (change)="updateData(inputScored.checked, inputConceded.checked)">
       <option
-        *ngFor="let season of seasons;let i = index"
+        *ngFor="let season of seasons;"
         [value]="season"
         [selected]="season === 19">
         {{ getSeason(season) }}
       </option>
     </select>
   </div>
-  <div style="display: flex;align-items: center;">
-    <div
-      *ngFor="let item of options;let i = index"
-      style="margin-right: 10px;">
+  <div class="radio-buttons">
+    <div>
       <input
+        #inputScored
         type="checkbox"
-        [checked]="i === 0">
-      {{item}}
+        checked="true"
+        (change)="updateData($event.target.checked, inputConceded.checked)">
+      Scored
+    </div>
+    <div>
+      <input
+        #inputConceded
+        type="checkbox"
+        (change)="updateData(inputScored.checked, $event.target.checked)">
+      Conceded
     </div>
   </div>
 </div>
 
-<!-- <ng-container [ngSwitch]="dropdown.value"> -->
-<div style="width: 1200px; height: 800px;">
-  <!-- <div style="width: 20px;padding-top:30px">
-            <ng-container *ngFor="let club of (clubs$ | async)">
-                <div [ngClass]="getLogo(club)"></div>
-            </ng-container>
-        </div> -->
-
+<div>
   <app-chart>
     <app-chart-series
-      type="bar-vertical"
+      type="bar"
+      orientation="vertical"
       [data]="data$ | async"
-      [style]="style">
-    </app-chart-series>
+      [range]="range"
+      [style]="style"
+    ></app-chart-series>
     <app-chart-x-axis
-      [range]="[0,21]"
-      [ticks]="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
-    </app-chart-x-axis>
+      [range]="range.x"
+      [ticks]="ticksX"
+    ></app-chart-x-axis>
     <app-chart-y-axis
-      [range]="[0,100]"
-      [ticks]="[5,10,15,20,25,30,35,40,45,50,55,60,65,60,75,70,75,80,85,90,95,100]"
-      [reverse]="true">
-    </app-chart-y-axis>
-    <app-chart-plot [margin]="{left:30,bottom:50,right:20,top:20}"></app-chart-plot>
+      [range]="range.y"
+      [ticks]="ticksY"
+    ></app-chart-y-axis>
+    <app-chart-plot
+      [margin]="margin"
+    ></app-chart-plot>
   </app-chart>
-  <!-- <span class="x-axis">TEAM</span>
-  <span class="y-axis">TEAM</span> -->
+
+    <div style="padding-left: 58.5px;width: 1200px;display: inline-flex;">
+      <ng-container *ngFor="let club of (clubs$ | async)" >
+          <div style="display:flex; flex-direction: column;font-size: 9px;text-align: center;">
+            <div [ngClass]="getLogo(club.club)"></div>
+              <div style="width: 53.8px">{{club.twoLinesName}}</div>
+            </div>
+      </ng-container>
+    </div>
 </div>
-<!-- </ng-container> -->

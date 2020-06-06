@@ -10,8 +10,8 @@ export const DATA = [{
                         { name: 'AgglomerativeCluster', value: 3938 },
                         { name: 'CommunityStructure', value: 3812 },
                         { name: 'HierarchicalCluster', value: 6714 },
-                        { name: 'MergeEdge', value: 743 }
-                    ]
+                        { name: 'MergeEdge', value: 743 },
+                    ],
                 },
                 {
                     name: 'graph',
@@ -20,16 +20,16 @@ export const DATA = [{
                         { name: 'LinkDistance', value: 5731 },
                         { name: 'MaxFlowMinCut', value: 7840 },
                         { name: 'ShortestPaths', value: 5914 },
-                        { name: 'SpanningTree', value: 3416 }
-                    ]
+                        { name: 'SpanningTree', value: 3416 },
+                    ],
                 },
                 {
                     name: 'optimization',
                     children: [
-                        { name: 'AspectRatioBanker', value: 7074 }
-                    ]
-                }
-            ]
+                        { name: 'AspectRatioBanker', value: 7074 },
+                    ],
+                },
+            ],
         },
         {
             name: 'animate',
@@ -47,8 +47,8 @@ export const DATA = [{
                         { name: 'NumberInterpolator', value: 1382 },
                         { name: 'ObjectInterpolator', value: 1629 },
                         { name: 'PointInterpolator', value: 1675 },
-                        { name: 'RectangleInterpolator', value: 2042 }
-                    ]
+                        { name: 'RectangleInterpolator', value: 2042 },
+                    ],
                 },
                 { name: 'ISchedulable', value: 1041 },
                 { name: 'Parallel', value: 5176 },
@@ -58,8 +58,8 @@ export const DATA = [{
                 { name: 'Transition', value: 9201 },
                 { name: 'Transitioner', value: 19975 },
                 { name: 'TransitionEvent', value: 1116 },
-                { name: 'Tween', value: 6006 }
-            ]
+                { name: 'Tween', value: 6006 },
+            ],
         },
         {
             name: 'data',
@@ -71,16 +71,16 @@ export const DATA = [{
                         { name: 'DelimitedTextConverter', value: 4294 },
                         { name: 'GraphMLConverter', value: 9800 },
                         { name: 'IDataConverter', value: 1314 },
-                        { name: 'JSONConverter', value: 2220 }
-                    ]
+                        { name: 'JSONConverter', value: 2220 },
+                    ],
                 },
                 { name: 'DataField', value: 1759 },
                 { name: 'DataSchema', value: 2165 },
                 { name: 'DataSet', value: 586 },
                 { name: 'DataSource', value: 3331 },
                 { name: 'DataTable', value: 772 },
-                { name: 'DataUtil', value: 3322 }
-            ]
+                { name: 'DataUtil', value: 3322 },
+            ],
         },
         {
             name: 'display',
@@ -88,14 +88,14 @@ export const DATA = [{
                 { name: 'DirtySprite', value: 8833 },
                 { name: 'LineSprite', value: 1732 },
                 { name: 'RectSprite', value: 3623 },
-                { name: 'TextSprite', value: 10066 }
-            ]
+                { name: 'TextSprite', value: 10066 },
+            ],
         },
         {
             name: 'flex',
             children: [
-                { name: 'FlareVis', value: 4116 }
-            ]
+                { name: 'FlareVis', value: 4116 },
+            ],
         },
         {
             name: 'physics',
@@ -107,8 +107,8 @@ export const DATA = [{
                 { name: 'Particle', value: 2822 },
                 { name: 'Simulation', value: 9983 },
                 { name: 'Spring', value: 2213 },
-                { name: 'SpringForce', value: 1681 }
-            ]
+                { name: 'SpringForce', value: 1681 },
+            ],
         },
         {
             name: 'query',
@@ -165,8 +165,8 @@ export const DATA = [{
                         { name: 'variance', value: 335 },
                         { name: 'where', value: 299 },
                         { name: 'xor', value: 354 },
-                        { name: '_', value: 264 }
-                    ]
+                        { name: '_', value: 264 },
+                    ],
                 },
                 { name: 'Minimum', value: 843 },
                 { name: 'Not', value: 1554 },
@@ -177,8 +177,8 @@ export const DATA = [{
                 { name: 'Sum', value: 791 },
                 { name: 'Variable', value: 1124 },
                 { name: 'Variance', value: 1876 },
-                { name: 'Xor', value: 1101 }
-            ]
+                { name: 'Xor', value: 1101 },
+            ],
         },
         {
             name: 'scale',
@@ -192,8 +192,8 @@ export const DATA = [{
                 { name: 'RootScale', value: 1756 },
                 { name: 'Scale', value: 4268 },
                 { name: 'ScaleType', value: 1821 },
-                { name: 'TimeScale', value: 5833 }
-            ]
+                { name: 'TimeScale', value: 5833 },
+            ],
         },
         {
             name: 'util',
@@ -208,8 +208,8 @@ export const DATA = [{
                     name: 'heap',
                     children: [
                         { name: 'FibonacciHeap', value: 9354 },
-                        { name: 'HeapNode', value: 1233 }
-                    ]
+                        { name: 'HeapNode', value: 1233 },
+                    ],
                 },
                 { name: 'IEvaluable', value: 335 },
                 { name: 'IPredicate', value: 383 },
@@ -219,8 +219,8 @@ export const DATA = [{
                     children: [
                         { name: 'DenseMatrix', value: 3165 },
                         { name: 'IMatrix', value: 2815 },
-                        { name: 'SparseMatrix', value: 3366 }
-                    ]
+                        { name: 'SparseMatrix', value: 3366 },
+                    ],
                 },
                 { name: 'Maths', value: 17705 },
                 { name: 'Orientation', value: 1486 },
@@ -230,15 +230,15 @@ export const DATA = [{
                         { name: 'ColorPalette', value: 6367 },
                         { name: 'Palette', value: 1229 },
                         { name: 'ShapePalette', value: 2059 },
-                        { name: 'SizePalette', value: 2291 }
-                    ]
+                        { name: 'SizePalette', value: 2291 },
+                    ],
                 },
                 { name: 'Property', value: 5559 },
                 { name: 'Shapes', value: 19118 },
                 { name: 'Sort', value: 6887 },
                 { name: 'Stats', value: 6557 },
-                { name: 'Strings', value: 22026 }
-            ]
+                { name: 'Strings', value: 22026 },
+            ],
         },
         {
             name: 'vis',
@@ -250,8 +250,8 @@ export const DATA = [{
                         { name: 'Axis', value: 24593 },
                         { name: 'AxisGridLine', value: 652 },
                         { name: 'AxisLabel', value: 636 },
-                        { name: 'CartesianAxes', value: 6703 }
-                    ]
+                        { name: 'CartesianAxes', value: 6703 },
+                    ],
                 },
                 {
                     name: 'controls',
@@ -266,8 +266,8 @@ export const DATA = [{
                         { name: 'IControl', value: 763 },
                         { name: 'PanZoomControl', value: 5222 },
                         { name: 'SelectionControl', value: 7862 },
-                        { name: 'TooltipControl', value: 8435 }
-                    ]
+                        { name: 'TooltipControl', value: 8435 },
+                    ],
                 },
                 {
                     name: 'data',
@@ -283,13 +283,13 @@ export const DATA = [{
                                 { name: 'ArrowType', value: 698 },
                                 { name: 'EdgeRenderer', value: 5569 },
                                 { name: 'IRenderer', value: 353 },
-                                { name: 'ShapeRenderer', value: 2247 }
-                            ]
+                                { name: 'ShapeRenderer', value: 2247 },
+                            ],
                         },
                         { name: 'ScaleBinding', value: 11275 },
                         { name: 'Tree', value: 7147 },
-                        { name: 'TreeBuilder', value: 9930 }
-                    ]
+                        { name: 'TreeBuilder', value: 9930 },
+                    ],
                 },
                 {
                     name: 'events',
@@ -297,16 +297,16 @@ export const DATA = [{
                         { name: 'DataEvent', value: 2313 },
                         { name: 'SelectionEvent', value: 1880 },
                         { name: 'TooltipEvent', value: 1701 },
-                        { name: 'VisualizationEvent', value: 1117 }
-                    ]
+                        { name: 'VisualizationEvent', value: 1117 },
+                    ],
                 },
                 {
                     name: 'legend',
                     children: [
                         { name: 'Legend', value: 20859 },
                         { name: 'LegendItem', value: 4614 },
-                        { name: 'LegendRange', value: 10530 }
-                    ]
+                        { name: 'LegendRange', value: 10530 },
+                    ],
                 },
                 {
                     name: 'operator',
@@ -316,8 +316,8 @@ export const DATA = [{
                             children: [
                                 { name: 'BifocalDistortion', value: 4461 },
                                 { name: 'Distortion', value: 6314 },
-                                { name: 'FisheyeDistortion', value: 3444 }
-                            ]
+                                { name: 'FisheyeDistortion', value: 3444 },
+                            ],
                         },
                         {
                             name: 'encoder',
@@ -326,16 +326,16 @@ export const DATA = [{
                                 { name: 'Encoder', value: 4060 },
                                 { name: 'PropertyEncoder', value: 4138 },
                                 { name: 'ShapeEncoder', value: 1690 },
-                                { name: 'SizeEncoder', value: 1830 }
-                            ]
+                                { name: 'SizeEncoder', value: 1830 },
+                            ],
                         },
                         {
                             name: 'filter',
                             children: [
                                 { name: 'FisheyeTreeFilter', value: 5219 },
                                 { name: 'GraphDistanceFilter', value: 3165 },
-                                { name: 'VisibilityFilter', value: 3509 }
-                            ]
+                                { name: 'VisibilityFilter', value: 3509 },
+                            ],
                         },
                         { name: 'IOperator', value: 1286 },
                         {
@@ -343,8 +343,8 @@ export const DATA = [{
                             children: [
                                 { name: 'Labeler', value: 9956 },
                                 { name: 'RadialLabeler', value: 3899 },
-                                { name: 'StackedAreaLabeler', value: 3202 }
-                            ]
+                                { name: 'StackedAreaLabeler', value: 3202 },
+                            ],
                         },
                         {
                             name: 'layout',
@@ -363,18 +363,18 @@ export const DATA = [{
                                 { name: 'RadialTreeLayout', value: 12348 },
                                 { name: 'RandomLayout', value: 870 },
                                 { name: 'StackedAreaLayout', value: 9121 },
-                                { name: 'TreeMapLayout', value: 9191 }
-                            ]
+                                { name: 'TreeMapLayout', value: 9191 },
+                            ],
                         },
                         { name: 'Operator', value: 2490 },
                         { name: 'OperatorList', value: 5248 },
                         { name: 'OperatorSequence', value: 4190 },
                         { name: 'OperatorSwitch', value: 2581 },
-                        { name: 'SortOperator', value: 2023 }
-                    ]
+                        { name: 'SortOperator', value: 2023 },
+                    ],
                 },
-                { name: 'Visualization', value: 16540 }
-            ]
-        }
-    ]
+                { name: 'Visualization', value: 16540 },
+            ],
+        },
+    ],
 }];

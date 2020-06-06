@@ -10,11 +10,11 @@ import { AboutComponent } from './about/about.component';
 const routes: Routes = [
   { path: 'Home', component: HomeComponent },
   { path: 'Contacts', component: ContactsComponent },
-  { path: 'About', component: AboutComponent }
+  { path: 'About', component: AboutComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class PagesRoutingModule { }

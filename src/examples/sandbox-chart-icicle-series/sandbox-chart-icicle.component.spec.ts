@@ -7,7 +7,7 @@ describe('SandboxChartIcicleSeriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SandboxChartIcicleSeriesComponent ]
+      declarations: [ SandboxChartIcicleSeriesComponent ],
     })
     .compileComponents();
   }));

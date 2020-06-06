@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SandboxChartBarVerticalSeriesComponent } from './example-chart-bar-vertical-series.component';
+import { ExampleChartBarVerticalSeriesComponent } from './example-chart-bar-vertical-series.component';
 
 describe('SandboxChartBarVerticalSeriesComponent', () => {
-  let component: SandboxChartBarVerticalSeriesComponent;
-  let fixture: ComponentFixture<SandboxChartBarVerticalSeriesComponent>;
+  let component: ExampleChartBarVerticalSeriesComponent;
+  let fixture: ComponentFixture<ExampleChartBarVerticalSeriesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SandboxChartBarVerticalSeriesComponent ]
+      declarations: [ ExampleChartBarVerticalSeriesComponent ],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SandboxChartBarVerticalSeriesComponent);
+    fixture = TestBed.createComponent(ExampleChartBarVerticalSeriesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

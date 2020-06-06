@@ -8,7 +8,7 @@ import { findDescendants } from 'src/charts/kit';
 @Component({
   selector: 'app-sandbox-chart-sunburst',
   templateUrl: './sandbox-chart-sunburst-series.component.html',
-  styleUrls: ['./sandbox-chart-sunburst-series.component.scss']
+  styleUrls: ['./sandbox-chart-sunburst-series.component.scss'],
 })
 export class SandboxChartSunburstSeriesComponent {
   constructor(ref: ChangeDetectorRef) {

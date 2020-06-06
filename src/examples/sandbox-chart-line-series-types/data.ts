@@ -5,8 +5,8 @@ export const DATA = {
     ticksY: [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
     range: {
         x: [-5, 20],
-        y: [20, 0]
-    }
+        y: [20, 0],
+    },
 };
 
 export const DATA_TYPES = ['curveMonotoneX', 'curveMonotoneY', 'curveLinear', 'curveBasis', 'curveBasisClosed', 'curveBundle(0)', 'curveBundle (ß=0.5)', 'curveBundle (ß=1)',

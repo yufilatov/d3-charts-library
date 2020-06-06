@@ -9,7 +9,6 @@ export const DATA = [
             'flare.analytics.cluster.MergeEdge',
             'flare.analytics.cluster.HierarchicalCluster',
             'flare.vis.data.Data',
-
         ],
 
     },
@@ -22,7 +21,6 @@ export const DATA = [
             'flare.vis.data.DataList',
             'flare.analytics.cluster.MergeEdge',
             'flare.util.math.IMatrix',
-
         ],
 
     },
@@ -40,7 +38,6 @@ export const DATA = [
             'flare.vis.operator.Operator',
             'flare.util.Property',
             'flare.vis.data.Data',
-
         ],
 
     },
@@ -63,7 +60,6 @@ export const DATA = [
             'flare.vis.data.Data',
             'flare.util.Property',
             'flare.vis.operator.Operator',
-
         ],
 
     },
@@ -78,7 +74,6 @@ export const DATA = [
             'flare.vis.data.Data',
             'flare.util.Property',
             'flare.vis.operator.Operator',
-
         ],
 
     },
@@ -92,7 +87,6 @@ export const DATA = [
             'flare.vis.data.Data',
             'flare.util.Property',
             'flare.vis.operator.Operator',
-
         ],
 
     },
@@ -108,7 +102,6 @@ export const DATA = [
             'flare.util.heap.FibonacciHeap',
             'flare.util.Property',
             'flare.vis.data.Data',
-
         ],
 
     },

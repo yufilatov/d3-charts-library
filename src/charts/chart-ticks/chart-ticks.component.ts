@@ -18,7 +18,11 @@ export class ChartTicksComponent {
 
     scale: (d: number) => number = () => 0;
 
-    constructor(private chart: ChartComponent, private cd: ChangeDetectorRef, private disposable: ChartDisposable) {
+    constructor(
+        private chart: ChartComponent,
+        private cd: ChangeDetectorRef,
+        private disposable: ChartDisposable,
+    ) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
         const seriesListChange = chart.seriesListChange.subscribe(() => this.invalidate());
 

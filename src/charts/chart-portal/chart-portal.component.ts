@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef, ChangeDetectionStrategy, ElementRef, Rend
 import { ChartPortalPositionStrategy } from './chart-portal-position.strategy';
 
 @Component({
-    selector: 'chart-portal',
+    selector: 'app-chart-portal',
     templateUrl: './chart-portal.component.html',
     styleUrls: ['./chart-portal.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

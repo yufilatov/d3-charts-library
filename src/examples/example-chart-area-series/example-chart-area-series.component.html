@@ -1,10 +1,8 @@
+<div style="display: flex;align-items:center">
+    <div class="logo logo-chelsea"></div> Total points each season from 1996 to 2019
+</div>
 <div class="chart-container">
     <app-chart>
-        <app-chart-series type="area"
-            [data]="data$ | async"
-            [style]="style"
-            [range]="range">
-        </app-chart-series>
         <app-chart-x-axis
             [range]="range.x"
             [ticks]="ticksX">
@@ -13,10 +11,14 @@
             [range]="range.y"
             [ticks]="ticksY">
         </app-chart-y-axis>
+        <app-chart-series
+            type="area"
+            [data]="data$ | async"
+            [style]="style"
+            [range]="range">
+        </app-chart-series>
         <app-chart-plot
             [margin]="margin">
         </app-chart-plot>
     </app-chart>
 </div>
-
-{{data$ | async}}

@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { nextId, getLineCurve } from '../kit';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE, createScaleX, createScaleY } from '../common/chart-series';
 import { ChartDisposable } from '../common/chart-disposable';
@@ -17,15 +17,20 @@ const DEFAULT_STATE: IChartPieSeriesState = {
 };
 
 @Injectable()
-export class ChartLineSeriesService implements OnDestroy {
-
-    private disposable = new ChartDisposable();
+export class ChartLineSeriesService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
+    private state = {
+        ...DEFAULT_STATE,
+        id: `chart-series-line-${nextId()}`,
+    };
 
-    constructor(private chartService: ChartService) {
-        const selector = { id: `chart-series-line-${nextId()}`, level: 0 };
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+    ) {
+        const selector = { id: this.state.id, level: 0 };
+
         this.root = chartService.select(selector);
-
         this.disposable.add(() => this.chartService.remove(selector));
     }
 
@@ -81,12 +86,8 @@ export class ChartLineSeriesService implements OnDestroy {
                     .attr('stroke', (d, i) => circleStyle(d, i).stroke)
                     .on('mouseover', (d, i) => {
                         this.root.selectAll('.circle').filter(n => n === d);
-                    })
+                    }),
         });
 
-    }
-
-    ngOnDestroy() {
-        this.disposable.finalize();
     }
 }

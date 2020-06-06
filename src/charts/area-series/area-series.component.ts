@@ -17,19 +17,22 @@ import { ChartStyleBuilder } from '../chart-style/chart-style.builder';
     encapsulation: ViewEncapsulation.None,
 })
 export class AreaSeriesChartComponent implements OnChanges {
-    private disposable = new ChartDisposable();
-
-    @Input() data: any[];
-    @Input() style = new ChartStyleBuilder();
-    @Input() range: { x: number[], y: number[] } = { x: [], y: [] };
     @Input() curveType = 'curveMonotoneX';
+    @Input() data: any[];
+    @Input() range: { x: number[], y: number[] } = { x: [], y: [] };
+    @Input() style = new ChartStyleBuilder();
 
-    constructor(private chart: ChartComponent, private seriesService: ChartAreaSeriesService) {
+    constructor(
+        private chart: ChartComponent,
+        private disposable: ChartDisposable,
+        private seriesService: ChartAreaSeriesService,
+    ) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+
         this.disposable.add(() => rectChange.unsubscribe());
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.invalidate();
     }
 

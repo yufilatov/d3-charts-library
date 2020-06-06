@@ -11,7 +11,7 @@ import { ChartDisposable } from '../common/chart-disposable';
   providers: [
     ChartBarSimpleSeriesService,
     ChartDisposable,
-]
+  ],
 })
 export class BarSimpleSeriesChartComponent implements OnChanges {
   @Input() data: any[];
@@ -44,7 +44,7 @@ export class BarSimpleSeriesChartComponent implements OnChanges {
       rect: this.chart.rect,
       margin: this.chart.margin,
       total: this.total,
-      animation: this.animation
+      animation: this.animation,
     });
 
     this.chart.addSeries(state);

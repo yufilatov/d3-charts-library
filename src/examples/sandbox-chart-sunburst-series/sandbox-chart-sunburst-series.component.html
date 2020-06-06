@@ -7,7 +7,7 @@
             [selection]="selection"
             (selectionChange)="onSelectionChange($event.currentValue)">
         </app-chart-series>
-        <chart-popup for="sunburst">
+        <app-chart-popup for="sunburst">
             <ng-template let-$context>
                 <div class="chart-popup-xl">
                     <h3 class="chart-popup-xl-title">
@@ -36,7 +36,7 @@
                     </dl>
                 </div>
             </ng-template>
-        </chart-popup>
+        </app-chart-popup>
         <app-chart-breadcrumb appStopPropagation events="click"
             [path]="breadcrumb"
             [style]="breadcrumbStyle"

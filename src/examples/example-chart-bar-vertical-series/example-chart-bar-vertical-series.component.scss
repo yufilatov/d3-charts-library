@@ -4,12 +4,25 @@ app-chart {
 }
 
 select {
-  padding: 10px;
-  margin: 0px 15px 10px 0px;
+  padding: 5px;
 
   option {
     font-size: 14px;
   }
+}
+
+.radio-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  > div {
+    margin-right: 10px;
+  }
+}
+
+.dropdowns {
+  display: flex;
 }
 
 .x-axis {
@@ -19,8 +32,18 @@ select {
 }
 
 .y-axis {
-  // display: inline-block;
   text-align: center;
   width: 100%;
   transform: rotate(-90deg) translateX(-50%);
+}
+
+.logo {
+  width: 25px;
+  height: 25px;
+  display: inline-flex;
+  padding-left: 14.9px;
+  padding-right: 14.9px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }

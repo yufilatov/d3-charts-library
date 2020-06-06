@@ -1,13 +1,11 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
 import { nextId } from '../kit';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE, createScaleY } from '../common/chart-series';
 import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
-
 export interface IChartYAxisState extends IChartSeriesState {
-    range?: any[];
+    range?: number[];
     ticks?: number[];
     reverse?: boolean;
 }
@@ -17,18 +15,20 @@ const DEFAULT_STATE: IChartYAxisState = {
 };
 
 @Injectable()
-export class ChartYAxisService implements OnDestroy {
-
-    private disposable = new ChartDisposable();
+export class ChartYAxisService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
     private state = {
-        ...DEFAULT_STATE
-    }
+        ...DEFAULT_STATE,
+        id: `chart-y-axis-${nextId()}`,
+    };
 
-    constructor(private chartService: ChartService) {
-        const selector = { id: `chart-y-axis-${nextId()}`, level: 0 };
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+    ) {
+        const selector = { id: this.state.id, level: 0 };
+
         this.root = chartService.select(selector);
-
         this.disposable.add(() => this.chartService.remove(selector));
     }
 
@@ -36,7 +36,7 @@ export class ChartYAxisService implements OnDestroy {
         this.state = {
             ...this.state,
             ...state,
-        }
+        };
         const { rect, range, margin, ticks, reverse } = this.state;
 
         if (!rect.height || !rect.width) {
@@ -47,7 +47,7 @@ export class ChartYAxisService implements OnDestroy {
 
         const scaleY = createScaleY('linear', {
             ...state,
-            data: [100, 0],
+            data: reverse ? [d3.min(range), d3.max(range)] : [d3.max(range), d3.min(range)],
         });
 
         const y = d3.axisLeft()
@@ -62,13 +62,5 @@ export class ChartYAxisService implements OnDestroy {
             .call(y);
 
         return this.state;
-    }
-
-    ngOnDestroy() {
-        this.disposable.finalize();
-    }
-
-    getRange(reverse, rect) {
-        return reverse ? [rect.height, 0] : [0, rect.height];
     }
 }

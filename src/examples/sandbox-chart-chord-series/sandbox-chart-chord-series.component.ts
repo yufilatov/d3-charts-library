@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-sandbox-chart-chord',
   templateUrl: './sandbox-chart-chord-series.component.html',
-  styleUrls: ['./sandbox-chart-chord-series.component.scss']
+  styleUrls: ['./sandbox-chart-chord-series.component.scss'],
 })
 export class SandboxChartChordSeriesComponent {
 

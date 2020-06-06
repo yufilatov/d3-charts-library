@@ -8,7 +8,7 @@ import { ChartComponent } from '../chart/chart.component';
 import { ChartPortalPositionStrategy } from '../chart-portal/chart-portal-position.strategy';
 
 @Component({
-    selector: 'chart-popup',
+    selector: 'app-chart-popup',
     templateUrl: './chart-popup.component.html',
     styleUrls: ['./chart-popup.component.scss'],
     providers: [

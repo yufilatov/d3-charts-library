@@ -78,7 +78,7 @@ export class ChartRectSeriesService implements OnDestroy {
                     .attr('height', scaleY(minY) - scaleY(maxY))
                     .attr('x', 1 + scaleX(minX))
                     .attr('y', scaleY(d3.max(range.y) - minY))
-                    .attr('fill', (d, i) => rectStyle(d, i).fill)
+                    .attr('fill', (d, i) => rectStyle(d, i).fill),
         });
 
     }

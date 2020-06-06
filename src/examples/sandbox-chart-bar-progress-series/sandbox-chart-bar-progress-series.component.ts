@@ -6,7 +6,7 @@ import { DATA } from './data';
 @Component({
   selector: 'app-sandbox-chart-progress-bar',
   templateUrl: './sandbox-chart-bar-progress-series.component.html',
-  styleUrls: ['./sandbox-chart-bar-progress-series.component.scss']
+  styleUrls: ['./sandbox-chart-bar-progress-series.component.scss'],
 })
 export class SandboxChartBarProgressSeriesComponent implements OnInit {
   clubs = this.getClubs(DATA);

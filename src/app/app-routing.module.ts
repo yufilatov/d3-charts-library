@@ -12,7 +12,7 @@ import { SandboxChartLineSeriesTypesComponent } from 'src/examples/sandbox-chart
 import { SandboxChartHalfDonutSeriesComponent } from 'src/examples/sandbox-chart-half-donut-series/sandbox-chart-half-donut-series.component';
 import { SandboxChartBarProgressSeriesComponent } from 'src/examples/sandbox-chart-bar-progress-series/sandbox-chart-bar-progress-series.component';
 import { SandboxChartDoubleDonutSeriesComponent } from 'src/examples/sandbox-chart-double-donut-series/sandbox-chart-double-donut-series.component';
-import { SandboxChartBarHorizontalSeriesComponent } from 'src/examples/sandbox-chart-bar-horizontal-series/sandbox-chart-bar-horizontal-series.component';
+import { SandboxChartBarHorizontalSeriesComponent } from 'src/examples/example-chart-bar-horizontal-series/example-chart-bar-horizontal-series.component';
 import { ExampleChartBarVerticalSeriesComponent } from 'src/examples/example-chart-bar-vertical-series/example-chart-bar-vertical-series.component';
 import { SandboxChartBarSimpleSeriesComponent } from 'src/examples/sandbox-chart-bar-simple-series/sandbox-chart-bar-simple-series.component';
 import { ExampleChartAreaSeriesComponent } from 'src/examples/example-chart-area-series/example-chart-area-series.component';
@@ -34,11 +34,11 @@ export const routes: Routes = [
   { path: 'matrix', component: SandboxChartMatrixSeriesComponent },
   { path: 'pie', component: SandboxChartPieSeriesComponent },
   { path: 'radial-tree', component: SandboxChartRadialTreeComponent },
-  { path: 'sunburst', component: SandboxChartSunburstSeriesComponent }
+  { path: 'sunburst', component: SandboxChartSunburstSeriesComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

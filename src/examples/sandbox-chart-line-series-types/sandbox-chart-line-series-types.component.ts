@@ -40,12 +40,12 @@ export class SandboxChartLineSeriesTypesComponent implements OnInit {
     }
 
     ngOnInit() {
-        let point = [];
+        const point = [];
         for (let i = 0; i < this.types.length; i++) {
             point.push([this.xs[i], this.ys[i]]);
         }
 
-        for (let i = 0; i < this.types.length; i++) {
+        for (const i of this.types) {
             this.datum.push(point);
         }
         this.data = [this.datum[0]];
@@ -64,7 +64,7 @@ export class SandboxChartLineSeriesTypesComponent implements OnInit {
                 return { fill: '#fff' };
             })
             .for(ChartStyle.line, () => {
-                return { stroke: this.colors[ind], strokeWidth: 2 }
+                return { stroke: this.colors[ind], strokeWidth: 2 };
             });
     }
 

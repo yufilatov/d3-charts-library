@@ -11,7 +11,7 @@ import { ChartDisposable } from '../common/chart-disposable';
   providers: [
     ChartBarProgressSeriesService,
     ChartDisposable,
-]
+  ],
 })
 export class BarProgressSeriesChartComponent implements OnChanges {
   @Input() data: any[];

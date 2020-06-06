@@ -302,8 +302,6 @@ export class ChartSunburstSeriesService implements OnDestroy {
                         .style('opacity', (d, i) => {
                             transitionCount = transitionCount + 1;
 
-                            (shouldHide(d)) && console.log('Iopta');
-
                             if (this.selection.length === 0) {
                                 return d.depth === 1 ? 1 : 0.7;
                             }
