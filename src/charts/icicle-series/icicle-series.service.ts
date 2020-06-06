@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
 import { nextId } from '../kit';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE } from '../common/chart-series';
@@ -16,11 +16,13 @@ const DEFAULT_STATE: IChartIcicleSeriesState = {
 };
 
 @Injectable()
-export class ChartIcicleSeriesService implements OnDestroy {
-    private disposable = new ChartDisposable();
+export class ChartIcicleSeriesService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
 
-    constructor(private chartService: ChartService) {
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+    ) {
         const selector = { id: `chart-series-pie-${nextId()}`, level: 0 };
         this.root = chartService.select(selector);
 
@@ -61,7 +63,7 @@ export class ChartIcicleSeriesService implements OnDestroy {
                     .on('click', (d) => {
                         datum = datum === d ? d.parent ? d = d.parent : d : d;
                         this.animation(d, state);
-                    })
+                    }),
         });
 
         draw('.chart-icicle-cell-text', {
@@ -78,7 +80,7 @@ export class ChartIcicleSeriesService implements OnDestroy {
                     .attr('font-weight', 600)
                     .attr('opacity', d => +this.labelVisible(d, state))
                     .style('text-transform', 'capitalize')
-                    .text((d, i) => labelStyle(d, i).text)
+                    .text((d, i) => labelStyle(d, i).text),
         });
 
 
@@ -97,7 +99,7 @@ export class ChartIcicleSeriesService implements OnDestroy {
                 x0: (a.x0 - d.x0) / (d.x1 - d.x0) * rect.height,
                 x1: (a.x1 - d.x0) / (d.x1 - d.x0) * rect.height,
                 y0: a.y0 - d.y0,
-                y1: a.y1 - d.y0
+                y1: a.y1 - d.y0,
             });
 
         this.root
@@ -119,9 +121,5 @@ export class ChartIcicleSeriesService implements OnDestroy {
     private labelVisible(d, state) {
         const { rect } = state;
         return d.y1 <= rect.width + 0.001 && d.y0 >= 0 && d.x1 - d.x0 > 16;
-    }
-
-    ngOnDestroy() {
-        this.disposable.finalize();
     }
 }

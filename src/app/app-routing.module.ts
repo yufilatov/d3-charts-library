@@ -1,44 +1,44 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SandboxChartPieSeriesComponent } from 'src/sandboxes/sandbox-chart-pie-series/sandbox-chart-pie-series.component';
-import { SandboxChartLineSeriesComponent } from 'src/sandboxes/sandbox-chart-line-series/sandbox-chart-line-series.component';
-import { SandboxChartRadialTreeComponent } from 'src/sandboxes/sandbox-chart-radial-tree/sandbox-chart-radial-tree.component';
-import { SandboxChartAreaSeriesComponent } from 'src/sandboxes/sandbox-chart-area-series/sandbox-chart-area-series.component';
-import { SandboxChartChordSeriesComponent } from 'src/sandboxes/sandbox-chart-chord-series/sandbox-chart-chord-series.component';
-import { SandboxChartDonutSeriesComponent } from 'src/sandboxes/sandbox-chart-donut-series/sandbox-chart-donut-series.component';
-import { SandboxChartIcicleSeriesComponent } from 'src/sandboxes/sandbox-chart-icicle-series/sandbox-chart-icicle-series.component';
-import { SandboxChartMatrixSeriesComponent } from 'src/sandboxes/sandbox-chart-matrix-series/sandbox-chart-matrix-series.component';
-import { SandboxChartSunburstSeriesComponent } from 'src/sandboxes/sandbox-chart-sunburst-series/sandbox-chart-sunburst-series.component';
-import { SandboxChartLineSeriesTypesComponent } from 'src/sandboxes/sandbox-chart-line-series-types/sandbox-chart-line-series-types.component';
-import { SandboxChartHalfDonutSeriesComponent } from 'src/sandboxes/sandbox-chart-half-donut-series/sandbox-chart-half-donut-series.component';
-import { SandboxChartBarProgressSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-progress-series/sandbox-chart-bar-progress-series.component';
-import { SandboxChartDoubleDonutSeriesComponent } from 'src/sandboxes/sandbox-chart-double-donut-series/sandbox-chart-double-donut-series.component';
-import { SandboxChartBarHorizontalSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-horizontal-series/sandbox-chart-bar-series.component';
-import { SandboxChartBarVerticalSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-vertical-series/sandbox-chart-bar-series.component';
-import { SandboxChartBarSimpleSeriesComponent } from 'src/sandboxes/sandbox-chart-bar-simple-series/sandbox-chart-bar-simple-series.component';
+import { ExampleChartAreaSeriesComponent } from 'src/examples/example-chart-area-series/example-chart-area-series.component';
+import { ExampleChartBarHorizontalSeriesComponent } from 'src/examples/example-chart-bar-horizontal-series/example-chart-bar-horizontal-series.component';
+import { ExampleChartBarVerticalSeriesComponent } from 'src/examples/example-chart-bar-vertical-series/example-chart-bar-vertical-series.component';
+import { ExampleChartBarSimpleSeriesComponent } from 'src/examples/example-chart-bar-simple-series/examples-chart-bar-simple-series.component';
+import { ExampleChartBarProgressSeriesComponent } from 'src/examples/example-chart-bar-progress-series/examples-chart-bar-progress-series.component';
+import { ExampleChartChordSeriesComponent } from 'src/examples/example-chart-chord-series/examples-chart-chord-series.component';
+import { ExampleChartDonutSeriesComponent } from 'src/examples/example-chart-donut-series/example-chart-donut-series.component';
+import { ExampleChartDoubleDonutSeriesComponent } from 'src/examples/example-chart-double-donut-series/example-chart-double-donut-series.component';
+import { ExampleChartHalfDonutSeriesComponent } from 'src/examples/example-chart-half-donut-series/example-chart-half-donut-series.component';
+import { ExampleChartIcicleSeriesComponent } from 'src/examples/example-chart-icicle-series/example-chart-icicle-series.component';
+import { ExampleChartLineSeriesComponent } from 'src/examples/example-chart-line-series/sandbox-chart-line-series.component';
+import { ExampleChartLineSeriesTypesComponent } from 'src/examples/example-chart-line-series-types/example-chart-line-series-types.component';
+import { ExampleChartMatrixSeriesComponent } from 'src/examples/example-chart-matrix-series/example-chart-matrix-series.component';
+import { ExampleChartPieSeriesComponent } from 'src/examples/example-chart-pie-series/example-chart-pie-series.component';
+import { ExampleChartRadialTreeComponent } from 'src/examples/example-chart-radial-tree-series/example-chart-radial-tree-series..component';
+import { ExampleChartSunburstSeriesComponent } from 'src/examples/example-chart-sunburst-series/example-chart-sunburst-series.component';
 
 
 export const routes: Routes = [
-  { path: 'area', component: SandboxChartAreaSeriesComponent },
-  { path: 'bar-horizontal', component: SandboxChartBarHorizontalSeriesComponent },
-  { path: 'bar-vertical', component: SandboxChartBarVerticalSeriesComponent },
-  { path: 'bar-simple', component: SandboxChartBarSimpleSeriesComponent },
-  { path: 'bar-progress', component: SandboxChartBarProgressSeriesComponent },
-  { path: 'chord', component: SandboxChartChordSeriesComponent },
-  { path: 'donut', component: SandboxChartDonutSeriesComponent },
-  { path: 'double-donut', component: SandboxChartDoubleDonutSeriesComponent },
-  { path: 'half-donut', component: SandboxChartHalfDonutSeriesComponent },
-  { path: 'icicle', component: SandboxChartIcicleSeriesComponent },
-  { path: 'line', component: SandboxChartLineSeriesComponent },
-  { path: 'line-types', component: SandboxChartLineSeriesTypesComponent },
-  { path: 'matrix', component: SandboxChartMatrixSeriesComponent },
-  { path: 'pie', component: SandboxChartPieSeriesComponent },
-  { path: 'radial-tree', component: SandboxChartRadialTreeComponent },
-  { path: 'sunburst', component: SandboxChartSunburstSeriesComponent }
+  { path: 'area', component: ExampleChartAreaSeriesComponent },
+  { path: 'bar-horizontal', component: ExampleChartBarHorizontalSeriesComponent },
+  { path: 'bar-vertical', component: ExampleChartBarVerticalSeriesComponent },
+  { path: 'bar-simple', component: ExampleChartBarSimpleSeriesComponent },
+  { path: 'bar-progress', component: ExampleChartBarProgressSeriesComponent },
+  { path: 'chord', component: ExampleChartChordSeriesComponent },
+  { path: 'donut', component: ExampleChartDonutSeriesComponent },
+  { path: 'double-donut', component: ExampleChartDoubleDonutSeriesComponent },
+  { path: 'half-donut', component: ExampleChartHalfDonutSeriesComponent },
+  { path: 'icicle', component: ExampleChartIcicleSeriesComponent },
+  { path: 'line', component: ExampleChartLineSeriesComponent },
+  { path: 'line-types', component: ExampleChartLineSeriesTypesComponent },
+  { path: 'matrix', component: ExampleChartMatrixSeriesComponent },
+  { path: 'pie', component: ExampleChartPieSeriesComponent },
+  { path: 'radial-tree', component: ExampleChartRadialTreeComponent },
+  { path: 'sunburst', component: ExampleChartSunburstSeriesComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

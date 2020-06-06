@@ -1,0 +1,28 @@
+app-chart {
+  height: 700px;
+  width: 1000px;
+}
+
+.logo {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 5.25px;
+  display: inline-flex;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.dropdown {
+  display: flex;
+
+  select {
+    width: 100px;
+    text-align-last: center;
+    padding: 5px;
+
+    option {
+      font-size: 14px;
+    }
+  }
+}

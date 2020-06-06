@@ -3,8 +3,6 @@ import { ChartLineSeriesService } from './line-series.service';
 import { ChartDisposable } from '../common/chart-disposable';
 import { ChartComponent } from '../chart/chart.component';
 import { ChartStyleBuilder } from '../chart-style/chart-style.builder';
-import { ChartXAxisService } from '../x-axis/x-axis.service';
-import { ChartYAxisService } from '../y-axis/y-axis.service';
 
 @Component({
     selector: 'app-chart-series[type="line"]',
@@ -13,8 +11,6 @@ import { ChartYAxisService } from '../y-axis/y-axis.service';
     providers: [
         ChartLineSeriesService,
         ChartDisposable,
-        ChartXAxisService,
-        ChartYAxisService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     // tslint:disable-next-line:use-view-encapsulation

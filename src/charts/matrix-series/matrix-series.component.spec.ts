@@ -7,7 +7,7 @@ describe('MatrixComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MatrixSeriesChartComponent]
+      declarations: [MatrixSeriesChartComponent],
     })
       .compileComponents();
   }));

@@ -7,7 +7,7 @@ describe('BarHorizontalSeriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BarSimpleSeriesChartComponent ]
+      declarations: [ BarSimpleSeriesChartComponent ],
     })
     .compileComponents();
   }));

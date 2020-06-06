@@ -1,33 +1,34 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartDisposable } from '../common/chart-disposable';
 import { ChartStyleBuilder } from '../chart-style/chart-style.builder';
 import { ChartComponent } from '../chart/chart.component';
 import { ChartChordSeriesService } from './chord-series.service';
 
 @Component({
-  selector: 'app-chart-series[type="chord"]',
-  templateUrl: './chord-series.component.html',
-  styleUrls: ['./chord-series.component.scss'],
-  providers: [
-    ChartChordSeriesService,
-    ChartDisposable,
-  ]
+    selector: 'app-chart-series[type="chord"]',
+    templateUrl: './chord-series.component.html',
+    styleUrls: ['./chord-series.component.scss'],
+    providers: [
+        ChartDisposable,
+        ChartChordSeriesService,
+    ],
 })
 export class ChordSeriesChartComponent implements OnChanges {
-
-  private disposable = new ChartDisposable();
-
     @Input() data: any[];
     @Input() style = new ChartStyleBuilder();
 
-    constructor(private chart: ChartComponent, private seriesService: ChartChordSeriesService) {
+    constructor(
+        private chart: ChartComponent,
+        private seriesService: ChartChordSeriesService,
+        private disposable: ChartDisposable,
+    ) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+
         this.disposable.add(() => rectChange.unsubscribe());
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const dataChange = changes['data'];
-        if (dataChange) {
+        if (changes.data) {
             this.invalidate();
         }
     }
@@ -40,5 +41,4 @@ export class ChordSeriesChartComponent implements OnChanges {
             margin: this.chart.margin,
         });
     }
-
 }

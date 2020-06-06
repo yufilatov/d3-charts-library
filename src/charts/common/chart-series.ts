@@ -1,7 +1,7 @@
 import { ChartStyleBuilder } from '../chart-style/chart-style.builder';
 import * as d3 from 'd3';
 import { IChartMargin } from './chart-margin';
-import { IChartScale } from './chart-scale';
+import { IChartScale, ChartScaleType } from './chart-scale';
 import { IChartRect } from './chart-rect';
 
 export interface IChartSeriesState {
@@ -16,8 +16,6 @@ export interface IChartSeriesState {
     selectX?: string;
     selectY?: string;
 }
-
-export type ChartScaleType = 'band' | 'ordinal' | 'linear' | 'linear-vertical' | 'band-vertical';
 
 export const CHART_DEFAULT_SERIES_STATE: IChartSeriesState = {
     data: [],
@@ -46,8 +44,7 @@ export function createScaleX(type: ChartScaleType, series: IChartSeriesState): I
                 .domain(data);
         }
         case 'linear-vertical': {
-            return d3
-                .scaleLinear()
+            return d3.scaleLinear()
                 .domain(data)
                 .range([margin.top, rect.height + margin.top]);
         }
@@ -75,10 +72,9 @@ export function createScaleY(type: ChartScaleType, series: IChartSeriesState): I
                 .range([margin.left, rect.width + margin.left]);
         }
         case 'linear': {
-            return d3
-                .scaleLinear()
-                .range([margin.top, rect.height + margin.top])
-                .domain(data);
+            return d3.scaleLinear()
+                .domain(data)
+                .range([margin.top, rect.height + margin.top]);
         }
         default:
             throw Error(`Invalid type ${type}`);

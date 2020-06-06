@@ -1,0 +1,41 @@
+<div class="dropdown">
+  <!-- <h5>SELECT CHART:</h5> -->
+  <div style="display: flex;align-content: center;">
+    <select (change)="onSeasonChange($event.target.value)">
+      <option
+        *ngFor="let season of seasons;let i = index"
+        [value]="season"
+        [selected]="season === 19">
+        {{ getSeason(season) }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<ng-container>
+  <div style="display: inline-flex;">
+    <div style="width: 20px;padding-top:30px;">
+      <ng-container *ngFor="let club of (clubs$ | async)">
+        <div [ngClass]="getLogo(club)"></div>
+      </ng-container>
+    </div>
+
+    <app-chart>
+      <app-chart-series
+        type="bar"
+        orientation="horizontal"
+        [data]="dataLocal"
+        [style]="style">
+      </app-chart-series>
+      <app-chart-x-axis
+        [range]="[0,100]"
+        [ticks]="[10,20,30,40,50,60,70,80,90,100]">
+      </app-chart-x-axis>
+      <app-chart-y-axis
+        [range]="[0,20]"
+        [ticks]="[]">
+      </app-chart-y-axis>
+      <app-chart-plot [margin]="{left:10,bottom: 50,right:20, top:10}"></app-chart-plot>
+    </app-chart>
+  </div>
+</ng-container>

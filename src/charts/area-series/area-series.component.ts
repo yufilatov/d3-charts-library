@@ -17,18 +17,22 @@ import { ChartStyleBuilder } from '../chart-style/chart-style.builder';
     encapsulation: ViewEncapsulation.None,
 })
 export class AreaSeriesChartComponent implements OnChanges {
-    private disposable = new ChartDisposable();
-
+    @Input() curveType = 'curveMonotoneX';
     @Input() data: any[];
+    @Input() range: { x: number[], y: number[] } = { x: [], y: [] };
     @Input() style = new ChartStyleBuilder();
-    @Input() curveType = 'curveCardinal (tension=0)';
 
-    constructor(private chart: ChartComponent, private seriesService: ChartAreaSeriesService) {
+    constructor(
+        private chart: ChartComponent,
+        private disposable: ChartDisposable,
+        private seriesService: ChartAreaSeriesService,
+    ) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+
         this.disposable.add(() => rectChange.unsubscribe());
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         this.invalidate();
     }
 
@@ -36,6 +40,7 @@ export class AreaSeriesChartComponent implements OnChanges {
         const state = this.seriesService.setState({
             data: this.data || [],
             style: this.style,
+            range: this.range,
             curveType: this.curveType,
             rect: this.chart.rect,
             margin: this.chart.margin,

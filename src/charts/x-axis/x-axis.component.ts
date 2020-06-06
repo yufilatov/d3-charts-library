@@ -40,7 +40,7 @@ export class XAxisChartComponent implements OnChanges {
             style: this.style,
             rect: this.chart.rect,
             margin: this.chart.margin,
-            ticks: this.ticks
+            ticks: this.ticks,
         });
     }
 }

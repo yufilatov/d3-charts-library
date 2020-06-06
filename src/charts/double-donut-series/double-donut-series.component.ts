@@ -17,14 +17,17 @@ import { ChartDoubleDonutSeriesService } from './double-donut-series.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class DoubleDonutSeriesChartComponent {
-    private disposable = new ChartDisposable();
-
     @Input() data: any[];
     @Input() style = new ChartStyleBuilder();
     @Input() total: number;
 
-    constructor(private chart: ChartComponent, private seriesService: ChartDoubleDonutSeriesService) {
+    constructor(
+        private chart: ChartComponent,
+        private seriesService: ChartDoubleDonutSeriesService,
+        private disposable: ChartDisposable,
+    ) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+
         this.disposable.add(() => rectChange.unsubscribe());
     }
 

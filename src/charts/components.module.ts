@@ -5,7 +5,6 @@ import { ChordSeriesChartComponent } from './chord-series/chord-series.component
 import { SunburstSeriesChartComponent } from './sunburst-series/sunburst-series.component';
 import { MatrixSeriesChartComponent } from './matrix-series/matrix-series.component';
 import { BarProgressSeriesChartComponent } from './bar-progress-series/bar-progress-series.component';
-import { BarHorizontalSeriesChartComponent } from './bar-horizontal-series/bar-horizontal-series.component';
 import { PieSeriesChartComponent } from './pie-series/pie-series.component';
 import { DonutSeriesChartComponent } from './donut-series/donut-series.component';
 import { HalfDonutSeriesChartComponent } from './half-donut-series/half-donut-series.component';
@@ -21,16 +20,17 @@ import { AreaSeriesChartComponent } from './area-series/area-series.component';
 import { YAxisChartComponent } from './y-axis/y-axis.component';
 import { RectSeriesChartComponent } from './rect-series/rect-series.component';
 import { ChartPlotComponent } from './chart-plot/chart-plot.component';
-import { BarVerticalSeriesChartComponent } from './bar-vertical-series/bar-vertical-series.component';
+import { BarSeriesChartComponent } from './bar-series/bar-series.component';
 import { BarSimpleSeriesChartComponent } from './bar-simple-series/bar-simple-series.component';
+import { ChartPopupComponent } from './chart-popup/chart-popup.component';
+import { ChartPortalModule } from './chart-portal/chart-portal.module';
 
 @NgModule({
   declarations: [
     ChartComponent,
 
     AreaSeriesChartComponent,
-    BarHorizontalSeriesChartComponent,
-    BarVerticalSeriesChartComponent,
+    BarSeriesChartComponent,
     BarSimpleSeriesChartComponent,
     BarProgressSeriesChartComponent,
     BreadcrumbChartComponent,
@@ -44,28 +44,30 @@ import { BarSimpleSeriesChartComponent } from './bar-simple-series/bar-simple-se
     LineSeriesChartComponent,
     MatrixSeriesChartComponent,
     PieSeriesChartComponent,
+    ChartPopupComponent,
     RadialTreeSeriesChartComponent,
     RectSeriesChartComponent,
     SunburstSeriesChartComponent,
     XAxisChartComponent,
     YAxisChartComponent,
 
-    StopPropagationDirective
+    StopPropagationDirective,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ChartPortalModule,
   ],
   exports: [
     ChartComponent,
 
     AreaSeriesChartComponent,
-    BarHorizontalSeriesChartComponent,
-    BarVerticalSeriesChartComponent,
+    BarSeriesChartComponent,
     BarSimpleSeriesChartComponent,
     BarProgressSeriesChartComponent,
     BreadcrumbChartComponent,
     ChartPlotComponent,
     ChartTicksComponent,
+    ChartPopupComponent,
     ChordSeriesChartComponent,
     DonutSeriesChartComponent,
     DoubleDonutSeriesChartComponent,
@@ -80,7 +82,7 @@ import { BarSimpleSeriesChartComponent } from './bar-simple-series/bar-simple-se
     XAxisChartComponent,
     YAxisChartComponent,
 
-    StopPropagationDirective
-  ]
+    StopPropagationDirective,
+  ],
 })
 export class ComponentsModule { }

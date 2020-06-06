@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE } from '../common/chart-series';
 import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
@@ -16,13 +16,18 @@ const DEFAULT_STATE: IChartChordSeriesState = {
 };
 
 @Injectable()
-export class ChartChordSeriesService implements OnDestroy {
-
-    private disposable = new ChartDisposable();
+export class ChartChordSeriesService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
+    private state = {
+        ...DEFAULT_STATE,
+        id: `chart-series-chord-${nextId()}`,
+    };
 
-    constructor(private chartService: ChartService) {
-        const selector = { id: `chart-series-chord-${nextId()}`, level: 0 };
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+    ) {
+        const selector = { id: this.state.id, level: 0 };
         this.root = chartService.select(selector);
 
         this.disposable.add(() => this.chartService.remove(selector));
@@ -142,9 +147,5 @@ export class ChartChordSeriesService implements OnDestroy {
 
     getName(name) {
         return name.substring(0, name.lastIndexOf('.')).substring(6);
-    }
-
-    ngOnDestroy() {
-        this.disposable.finalize();
     }
 }

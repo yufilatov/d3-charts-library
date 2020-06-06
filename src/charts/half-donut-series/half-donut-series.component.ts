@@ -17,14 +17,17 @@ import { ChartStyleBuilder } from '../chart-style/chart-style.builder';
     encapsulation: ViewEncapsulation.None,
 })
 export class HalfDonutSeriesChartComponent {
-    private disposable = new ChartDisposable();
-
     @Input() data: any[];
     @Input() style = new ChartStyleBuilder();
     @Input() total: number;
 
-    constructor(private chart: ChartComponent, private seriesService: ChartHalfDonutSeriesService) {
+    constructor(
+        private chart: ChartComponent,
+        private seriesService: ChartHalfDonutSeriesService,
+        private disposable: ChartDisposable,
+    ) {
         const rectChange = chart.rectChange.subscribe(() => this.invalidate());
+
         this.disposable.add(() => rectChange.unsubscribe());
     }
 

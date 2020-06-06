@@ -1,0 +1,12 @@
+.chart-container {
+  width: 800px;
+  height: 800px;
+}
+
+app-chart-breadcrumb {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  pointer-events: all;
+  margin-left: 10px;
+}

@@ -1,11 +1,9 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
 import { nextId } from '../kit';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE } from '../common/chart-series';
 import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
-import { ChartStyle } from '../chart-style/chart-style';
-import { ChartDrawFactory } from '../common/chart-draw.factory';
 
 export interface IChartXAxisState extends IChartSeriesState {
     range?: any[];
@@ -17,13 +15,18 @@ const DEFAULT_STATE: IChartXAxisState = {
 };
 
 @Injectable()
-export class ChartXAxisService implements OnDestroy {
-
-    private disposable = new ChartDisposable();
+export class ChartXAxisService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
+    private state = {
+        ...DEFAULT_STATE,
+        id: `chart-x-axis-${nextId()}`,
+    };
 
-    constructor(private chartService: ChartService) {
-        const selector = { id: `chart-x-axis-${nextId()}`, level: 0 };
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+    ) {
+        const selector = { id: this.state.id, level: 0 };
         this.root = chartService.select(selector);
 
         this.disposable.add(() => this.chartService.remove(selector));
@@ -53,9 +56,5 @@ export class ChartXAxisService implements OnDestroy {
             .attr('transform', `translate(${margin.left}, ${rect.height + margin.top})`)
             .call(x);
 
-    }
-
-    ngOnDestroy() {
-        this.disposable.finalize();
     }
 }

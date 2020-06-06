@@ -30,19 +30,23 @@ export class YAxisChartComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if ('range' || 'reverse' in changes) {
+        if (changes.margin) {
             this.invalidate();
         }
     }
 
     private invalidate() {
-        this.seriesService.setState({
+
+        const state = this.seriesService.setState({
             range: this.range,
             style: this.style,
             rect: this.chart.rect,
             margin: this.chart.margin,
             ticks: this.ticks,
-            reverse: this.reverse
+            reverse: this.reverse,
         });
+
+        this.chart.addSeries(state);
+        this.disposable.add(() => this.chart.removeSeries(state));
     }
 }

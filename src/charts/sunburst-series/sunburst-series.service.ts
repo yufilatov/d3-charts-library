@@ -1,12 +1,11 @@
-import { Injectable, OnDestroy, EventEmitter, Renderer2 } from '@angular/core';
-
 import * as d3 from 'd3';
-import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE } from '../common/chart-series';
-import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
 import { nextId, ChartMath, hasParent } from '../kit';
-import { IChartArcStyle, IChartLabelStyle, ChartStyle, IChartZoomStyle } from '../chart-style/chart-style';
+import { ChartDisposable } from '../common/chart-disposable';
 import { ChartDrawFactory } from '../common/chart-draw.factory';
+import { Injectable, EventEmitter, Renderer2 } from '@angular/core';
+import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE } from '../common/chart-series';
+import { IChartArcStyle, IChartLabelStyle, ChartStyle, IChartZoomStyle } from '../chart-style/chart-style';
 
 export interface IChartSunburstSeriesState extends IChartSeriesState {
     rings?: number;
@@ -21,12 +20,13 @@ const DEFAULT_STATE: IChartSunburstSeriesState = {
 const PERIMETER_LIMIT = 22;
 
 @Injectable()
-export class ChartSunburstSeriesService implements OnDestroy {
-    private disposable = new ChartDisposable();
+export class ChartSunburstSeriesService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
-
-    private id: string;
-    state = DEFAULT_STATE;
+    private state = {
+        ...DEFAULT_STATE,
+        id: `chart-series-sunburst-${nextId()}`,
+    };
+    private selector = { id: this.state.id, level: 0 };
 
     private zoom: (node: any) => void;
     // tslint:disable-next-line:variable-name
@@ -48,14 +48,15 @@ export class ChartSunburstSeriesService implements OnDestroy {
         return this._selection;
     }
 
-    constructor(private chartService: ChartService, renderer: Renderer2) {
-        this.id = `chart-series-sunburst-${nextId()}`;
-
-        const selector = { id: this.id, level: 0 };
-        this.root = chartService.select(selector);
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+        renderer: Renderer2,
+    ) {
+        this.root = chartService.select(this.selector);
         this.root.classed('chart-series-sunburst', true);
 
-        this.disposable.add(() => this.chartService.remove(selector));
+        this.disposable.add(() => this.chartService.remove(this.selector));
 
         const svg = chartService.selectRoot().node() as SVGElement;
         this.disposable.add(
@@ -104,6 +105,7 @@ export class ChartSunburstSeriesService implements OnDestroy {
                     .append('path'),
             update: selection =>
                 selection
+                    .attr('chart-sunburst-selector-hover', d => d.parent ? this.selector.id : null)
                     .attr('d', arc)
                     .attr('transform', `translate(${rect.width / 2}, ${rect.height / 2})`)
                     .attr('stroke', (d, i) => {
@@ -303,8 +305,6 @@ export class ChartSunburstSeriesService implements OnDestroy {
                         .style('opacity', (d, i) => {
                             transitionCount = transitionCount + 1;
 
-                            (shouldHide(d)) && console.log('Iopta');
-
                             if (this.selection.length === 0) {
                                 return d.depth === 1 ? 1 : 0.7;
                             }
@@ -318,7 +318,7 @@ export class ChartSunburstSeriesService implements OnDestroy {
                         .attrTween('d', arcTween(target))
                         .on('end', (d, i) => {
                             if (d.x0 >= target.x0 && ChartMath.less(d.x0, target.x1)) {
-                                const labelId = `#${this.id}-label-${i}`;
+                                const labelId = `#${this.state.id}-label-${i}`;
 
                                 d3.selectAll('.chart-label')
                                     .filter(n => n === d)
@@ -399,10 +399,4 @@ export class ChartSunburstSeriesService implements OnDestroy {
     private zoomFactory(arc) {
         return this.drilldown(arc);
     }
-
-    ngOnDestroy() {
-        this.disposable.finalize();
-    }
-
-
 }

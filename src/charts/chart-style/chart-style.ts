@@ -32,6 +32,7 @@ export interface IChartCircleStyle extends IChartStyle {
     fill?: string;
     radius?: number;
     stroke?: string;
+    strokeWidth?: number;
 }
 
 export interface IChartArcStyle extends IChartStyle {
@@ -47,7 +48,7 @@ export interface IChartArcStyle extends IChartStyle {
 export interface IChartBarStyle extends IChartStyle {
     fill?: string;
     background?: string;
-    height?: number;
+    size?: number;
     offsetLeft?: number;
     offsetRight?: number;
     paddingLeft?: number;
@@ -132,7 +133,8 @@ export abstract class ChartStyle {
             key: 'circle',
             fill: '#000',
             radius: 5,
-            stroke: '#000'
+            stroke: '#000',
+            strokeWidth: 1,
         };
     }
 
@@ -153,11 +155,11 @@ export abstract class ChartStyle {
             key: 'bar',
             background: 'transparent',
             fill: '#dfe1e6',
-            height: 15,
+            size: 15,
             offsetLeft: 0,
             offsetRight: 0,
             paddingLeft: 5,
-            paddgingRight: 5
+            paddgingRight: 5,
         };
     }
 

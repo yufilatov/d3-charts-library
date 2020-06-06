@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
 import { nextId } from '../kit';
 import { IChartSeriesState, CHART_DEFAULT_SERIES_STATE, createScaleX, createScaleY } from '../common/chart-series';
@@ -17,13 +17,18 @@ const DEFAULT_STATE: IChartRectSeriesState = {
 };
 
 @Injectable()
-export class ChartRectSeriesService implements OnDestroy {
-
-    private disposable = new ChartDisposable();
+export class ChartRectSeriesService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
+    private state = {
+        ...DEFAULT_STATE,
+        id: `chart-series-pie-${nextId()}`,
+    };
 
-    constructor(private chartService: ChartService) {
-        const selector = { id: `chart-series-pie-${nextId()}`, level: 0 };
+    constructor(
+        private chartService: ChartService,
+        private disposable: ChartDisposable,
+    ) {
+        const selector = { id: this.state.id, level: 0 };
         this.root = chartService.select(selector);
 
         this.disposable.add(() => this.chartService.remove(selector));
@@ -78,12 +83,8 @@ export class ChartRectSeriesService implements OnDestroy {
                     .attr('height', scaleY(minY) - scaleY(maxY))
                     .attr('x', 1 + scaleX(minX))
                     .attr('y', scaleY(d3.max(range.y) - minY))
-                    .attr('fill', (d, i) => rectStyle(d, i).fill)
+                    .attr('fill', (d, i) => rectStyle(d, i).fill),
         });
 
-    }
-
-    ngOnDestroy() {
-        this.disposable.finalize();
     }
 }
