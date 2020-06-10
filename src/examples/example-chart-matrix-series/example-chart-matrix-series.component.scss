@@ -1,0 +1,19 @@
+.chart-container {
+    width: 780px;
+    height: 780px;
+
+    >div {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+}
+
+select {
+    height: 30px;
+    width: 120px;
+    text-align-last: center;
+    font-size: 18px;
+    font-family: 'Proxima Nova Regular';
+}

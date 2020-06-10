@@ -1,0 +1,7 @@
+@mixin club-logo($name) {
+  background-image: url("src/assets/images/epl-logos/#{$name}-logo.png");
+}
+
+@mixin land-logo($name) {
+  background-image: url("src/assets/images/german-lands-logos/#{$name}-logo.png");
+}

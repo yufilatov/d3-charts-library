@@ -1,0 +1,17 @@
+<ul>
+  <li (click)="selection = path[0]">
+      <div [ngClass]="'chart-breadcrumb-icon ' + icon"></div>
+  </li>
+  <ng-container *ngFor="let part of path; let i = index">
+      <li *ngIf="format(part)"
+          kf-text
+          size="sm"
+          weight="strong"
+          [style.color]="getColor(i)">
+          <span kf-text size="xs" weight="strong">/</span>
+          <button (click)="selection = part">
+              {{ format(part) }}
+          </button>
+      </li>
+  </ng-container>
+</ul>

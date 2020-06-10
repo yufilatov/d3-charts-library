@@ -1,0 +1,55 @@
+app-chart {
+  height: 700px;
+  width: 1200px;
+}
+
+select {
+  padding: 5px;
+  margin: 0 10px;
+
+  option {
+    font-size: 14px;
+  }
+}
+
+.radio-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  > div {
+    margin-right: 10px;
+  }
+}
+
+.dropdowns {
+  display: flex;
+  margin-bottom: 7.5px;
+}
+
+.x-axis {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.y-axis {
+  text-align: center;
+  width: 100%;
+  transform: rotate(-90deg) translateX(-50%);
+}
+
+.logo {
+  width: 25px;
+  height: 25px;
+  display: inline-flex;
+  padding-left: 14.9px;
+  padding-right: 14.9px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+h5 {
+  margin: 0;
+}

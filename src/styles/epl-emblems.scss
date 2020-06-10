@@ -1,0 +1,119 @@
+@import "../styles/mixins.scss";
+
+.logo {
+  &-arsenal {
+    @include club-logo("arsenal");
+  }
+
+  &-aston-villa {
+    @include club-logo("aston-villa");
+  }
+
+  &-bournemouth {
+    @include club-logo("bournemouth");
+  }
+
+  &-brighton {
+    @include club-logo("brighton");
+  }
+
+  &-burnley {
+    @include club-logo("burnley");
+  }
+
+  &-cardiff-city {
+    @include club-logo("cardiff-city");
+  }
+
+  &-chelsea {
+    @include club-logo("chelsea");
+  }
+
+  &-crystal-palace {
+    @include club-logo("crystal-palace");
+  }
+
+  &-everton {
+    @include club-logo("everton");
+  }
+
+  &-fulham {
+    @include club-logo("fulham");
+  }
+
+  &-huddersfield-town {
+    @include club-logo("huddersfield-town");
+  }
+
+  &-hull-city {
+    @include club-logo("hull-city");
+  }
+
+  &-leicester-city {
+    @include club-logo("leicester-city");
+  }
+
+  &-liverpool {
+    @include club-logo("liverpool");
+  }
+
+  &-newcastle-united {
+    @include club-logo("newcastle-united");
+  }
+
+  &-norwich-city {
+    @include club-logo("norwich-city");
+  }
+
+  &-manchester-city {
+    @include club-logo("manchester-city");
+  }
+
+  &-manchester-united {
+    @include club-logo("manchester-united");
+  }
+
+  &-middlesbrough {
+    @include club-logo("middlesbrough");
+  }
+
+  &-tottenham-hotspurs {
+    @include club-logo("tottenham-hotspurs");
+  }
+
+  &-sheffield-united {
+    @include club-logo("sheffield-united");
+  }
+
+  &-southampton {
+    @include club-logo("southampton");
+  }
+
+  &-stoke-city {
+    @include club-logo("stoke-city");
+  }
+
+  &-sunderland {
+    @include club-logo("sunderland");
+  }
+
+  &-swansea-city {
+    @include club-logo("swansea-city");
+  }
+
+  &-watford {
+    @include club-logo("watford");
+  }
+
+  &-west-bromwich-albion {
+    @include club-logo("west-bromwich-albion");
+  }
+
+  &-west-ham-united {
+    @include club-logo("west-ham-united");
+  }
+
+  &-wolverhampton {
+    @include club-logo("wolverhampton");
+  }
+}

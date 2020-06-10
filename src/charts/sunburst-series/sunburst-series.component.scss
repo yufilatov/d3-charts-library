@@ -1,0 +1,16 @@
+.should-hide {
+  opacity: 0;
+}
+
+.chart-sunburst {
+  &-label {
+    pointer-events: none;
+  }
+
+  &-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+  }
+}
