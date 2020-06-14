@@ -27,6 +27,7 @@ import { CommonModule } from '@angular/common';
 import { ChartPortalModule } from './chart-portal/chart-portal.module';
 import { CircularPackageSeriesChartComponent } from './circular-package-series/circular-package-series.component';
 import { WordCloudSeriesChartComponent } from './word-cloud-series/word-cloud-series.component';
+import { MapSeriesChartComponent } from './map-series/map-series.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { WordCloudSeriesChartComponent } from './word-cloud-series/word-cloud-se
     HalfDonutSeriesChartComponent,
     IcicleSeriesChartComponent,
     LineSeriesChartComponent,
+    MapSeriesChartComponent,
     MatrixSeriesChartComponent,
     PieSeriesChartComponent,
     ChartPopupComponent,
@@ -82,6 +84,7 @@ import { WordCloudSeriesChartComponent } from './word-cloud-series/word-cloud-se
     HalfDonutSeriesChartComponent,
     IcicleSeriesChartComponent,
     LineSeriesChartComponent,
+    MapSeriesChartComponent,
     MatrixSeriesChartComponent,
     PieSeriesChartComponent,
     ChartPopupComponent,
