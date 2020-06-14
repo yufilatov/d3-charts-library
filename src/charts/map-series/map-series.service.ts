@@ -17,7 +17,7 @@ export class MapSeriesChartService {
     private root: d3.Selection<SVGElement, string, SVGElement, number>;
     private state = {
         ...DEFAULT_STATE,
-        id: `chart-series-radial-tree-${nextId()}`,
+        id: `chart-series-map-germany-${nextId()}`,
     };
 
     mouseover = new EventEmitter<any>();

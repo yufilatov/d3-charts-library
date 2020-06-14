@@ -50,6 +50,10 @@ export class CircularPackageSeriesService {
             .domain(['Asia', 'Europe', 'Africa', 'Oceania', 'Americas'])
             .range(d3.schemeSet1);
 
+        const size = d3.scaleLinear()
+            .domain([0, 1400000000])
+            .range([10, 50]);
+
         const simulation = d3.forceSimulation()
             .force('center', d3
                 .forceCenter()
@@ -63,10 +67,6 @@ export class CircularPackageSeriesService {
                 .strength(.2)
                 .radius(d => (size(d.value) + 2.5))
                 .iterations(2));
-
-        const size = d3.scaleLinear()
-            .domain([0, 1400000000])
-            .range([10, 50]);
 
         const dragStarted = (d) => {
             if (!d3.event.active) {
