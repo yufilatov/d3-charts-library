@@ -40,6 +40,15 @@
     <h5 *ngIf="i===48">Day 4</h5>
     <h5 *ngIf="i===64">Day 5</h5>
     <h5 *ngIf="i===80">Day 6</h5>
+    
+    <h6 *ngIf="i%16===0">Group A</h6>
+    <h6 *ngIf="i%16===2">Group B</h6>
+    <h6 *ngIf="i%16===4">Group C</h6>
+    <h6 *ngIf="i%16===6">Group D</h6>
+    <h6 *ngIf="i%16===8">Group E</h6>
+    <h6 *ngIf="i%16===10">Group F</h6>
+    <h6 *ngIf="i%16===12">Group G</h6>
+    <h6 *ngIf="i%16===14">Group H</h6>
     {{match.match}} {{match.score[0]}} : {{match.score[1]}} {{match?.turbo}}
   </div>
 </div>
@@ -64,8 +73,20 @@
   </div>
 </div>
 
-<div *ngIf="day > 7">
-  <h4>1/8</h4>
+<h4 *ngIf="day > 6">1/8 Draw</h4>
+<div class="pots">
+  <div *ngFor="let pot of potsOneEights; let i=index;">
+    Pot {{i+1}}
+    <ul>
+      <li *ngFor="let team of sortDataPlayoff(i);">
+		{{team.name}} ({{team.shortCountryName}})
+	</li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="day > 7" class="playoff">
+  <h4>1/8 Matches</h4>
   <ul>
     <li *ngFor="let match of oneEightsResults">
 		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
@@ -73,8 +94,17 @@
   </ul>
 </div>
 
-<div *ngIf="day > 8">
-  <h4>1/4</h4>
+<h4 *ngIf="day > 7">1/4 Draw</h4>
+<div *ngIf="day > 7" class="pots">
+  	<ul>
+	  	<li *ngFor="let team of quarterfinalTeams;">
+		  {{team.name}} ({{team.shortCountryName}})
+	  	</li>
+  	</ul>
+</div>
+
+<div *ngIf="day > 8" class="playoff">
+  <h4>1/4 Matches</h4>
   <ul>
     <li *ngFor="let match of quarterfinalsResults">
 		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
@@ -82,8 +112,17 @@
   </ul>
 </div>
 
-<div *ngIf="day > 9">
-  <h4>1/2</h4>
+<h4 *ngIf="day > 8">1/2 Draw</h4>
+<div *ngIf="day > 8" class="pots">
+  	<ul>
+	  	<li *ngFor="let team of semifinalTeams;">
+		  {{team.name}} ({{team.shortCountryName}})
+	  	</li>
+  	</ul>
+</div>
+
+<div *ngIf="day > 9" class="playoff">
+  <h4>1/2 Matches</h4>
   <ul>
     <li *ngFor="let match of semifinalsResults">
 		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
@@ -91,7 +130,7 @@
   </ul>
 </div>
 
-<div *ngIf="day > 10">
+<div *ngIf="day > 10" class="playoff">
   <h4>FINAL</h4>
   {{finalResults[0].match}} {{finalResults[0].score[0]}} : {{finalResults[0].score[1]}}
   <span class="comment">{{finalResults[0]?.comment}}</span>

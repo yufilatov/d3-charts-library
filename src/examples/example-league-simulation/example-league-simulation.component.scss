@@ -80,3 +80,24 @@ button {
   font-style: italic;
   color: green;
 }
+
+.playoff {
+  ul {
+    width: 1000px;
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 2.5px 0;
+    }
+
+    li:nth-child(even) {
+      border-bottom: 1px solid rgb(85, 73, 73);
+    }
+  }
+}
+
+h6 {
+  font-style: italic;
+  margin: 5px 0;
+}

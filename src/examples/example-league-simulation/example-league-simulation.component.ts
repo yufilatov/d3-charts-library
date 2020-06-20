@@ -10,6 +10,7 @@ import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 export class ExampleLeagueSimulationComponent implements OnInit {
     data = DATA;
     pots = [1, 2, 3, 4];
+    potsOneEights = [1, 2];
 
     groups = [];
     sortedGroups;
@@ -21,7 +22,9 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
     oneEighths = [];
     quarterfinals = [];
+    quarterfinalTeams = [];
     semifinals = [];
+    semifinalTeams = [];
     final = [];
 
     results = [];
@@ -73,6 +76,10 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
     sortData(index: number) {
         return this.data.filter(a => a.pot === index);
+    }
+
+    sortDataPlayoff(index: number) {
+        return [...this.sortedGroups].map(g => g[index]);
     }
 
     simulate(day) {
@@ -532,7 +539,7 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                                                 this.quarterfinals.push(team1);
                                                 this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
                                                     {
-                                                        comment: `${team1.name} wonon away goals in extra time
+                                                        comment: `${team1.name} won on away goals in extra time
                                                         ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
                                                         (${extraGoals1}:${extraGoals2})`,
                                                     });
@@ -603,6 +610,7 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         }
                     }
                 }
+                this.quarterfinalTeams = [...this.quarterfinals];
                 break;
             }
             case 8: {
@@ -755,6 +763,7 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         }
                     }
                 }
+                this.semifinalTeams = [...this.semifinals];
                 break;
             }
             case 9: {
