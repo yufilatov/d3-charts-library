@@ -787,16 +787,16 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         this.final.push(team1);
                         this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
                             {
-                                comment: `${team1.name} won ${matchResult2HomeTeam + matchResult1AwayTeam}:
-                                ${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate `,
+                                comment: `${team1.name} won
+                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate `,
                             });
                     } else {
                         if (matchResult2HomeTeam + matchResult1AwayTeam < matchResult1HomeTeam + matchResult2AwayTeam) {
                             this.final.push(team2);
                             this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
                                 {
-                                    comment: `${team2.name} won ${matchResult2HomeTeam + matchResult1AwayTeam}:
-                                    ${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate `,
+                                    comment: `${team2.name} won
+                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate `,
                                 });
                         } else {
                             if (matchResult1AwayTeam > matchResult2AwayTeam) {
