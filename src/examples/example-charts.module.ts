@@ -23,6 +23,8 @@ import { ExampleChartRadialTreeComponent } from './example-chart-radial-tree-ser
 import { ExampleChartSunburstSeriesComponent } from './example-chart-sunburst-series/example-chart-sunburst-series.component';
 import { ExampleChartWordCloudSeriesComponent } from './example-chart-word-cloud-series/examples-chart-word-cloud-series.component';
 import { ExampleChartMapSeriesComponent } from './example-chart-map-series/example-chart-map-series.component';
+import { ExampleLeagueSimulationComponent } from './example-league-simulation/example-league-simulation.component';
+
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { ExampleChartMapSeriesComponent } from './example-chart-map-series/examp
     ExampleChartRadialTreeComponent,
     ExampleChartSunburstSeriesComponent,
     ExampleChartWordCloudSeriesComponent,
+    ExampleLeagueSimulationComponent,
   ],
   imports: [
     ComponentsModule,

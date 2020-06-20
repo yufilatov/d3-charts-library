@@ -19,6 +19,7 @@ import { ExampleChartRadialTreeComponent } from 'src/examples/example-chart-radi
 import { ExampleChartSunburstSeriesComponent } from 'src/examples/example-chart-sunburst-series/example-chart-sunburst-series.component';
 import { ExampleChartWordCloudSeriesComponent } from 'src/examples/example-chart-word-cloud-series/examples-chart-word-cloud-series.component';
 import { ExampleChartMapSeriesComponent } from 'src/examples/example-chart-map-series/example-chart-map-series.component';
+import { ExampleLeagueSimulationComponent } from 'src/examples/example-league-simulation/example-league-simulation.component';
 
 export const routes: Routes = [
   { path: 'area', component: ExampleChartAreaSeriesComponent },
@@ -40,6 +41,7 @@ export const routes: Routes = [
   { path: 'radial-tree', component: ExampleChartRadialTreeComponent },
   { path: 'sunburst', component: ExampleChartSunburstSeriesComponent },
   { path: 'word-cloud', component: ExampleChartWordCloudSeriesComponent },
+  { path: 'league', component: ExampleLeagueSimulationComponent },
 ];
 
 @NgModule({
