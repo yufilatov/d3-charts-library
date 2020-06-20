@@ -1,0 +1,98 @@
+<h4>Champions League 2019/2020 Simulation</h4>
+
+<div class="pots">
+  <div *ngFor="let pot of pots; let i=index;">
+    Pot {{i+1}}
+    <ul>
+      <li *ngFor="let team of sortData(i+1);">
+		{{team.name}} ({{team.shortCountryName}})
+	</li>
+    </ul>
+  </div>
+</div>
+
+<div class="groups">
+  <div *ngFor="let group of groups;let i=index">
+    <h5>Group {{letters[i]}}</h5>
+    <ul>
+      <li *ngFor="let team of group">
+			{{team.name}}
+		</li>
+    </ul>
+  </div>
+</div>
+
+<button
+  (click)="simulate(day)"
+  *ngIf="day<11">
+  <ng-container *ngIf="day<7">Simulate Day {{day}}</ng-container>
+  <ng-container *ngIf="day===7">Simulate 1/8</ng-container>
+  <ng-container *ngIf="day===8">Simulate Quarterfinals</ng-container>
+  <ng-container *ngIf="day===9">Simulate Semifinals</ng-container>
+  <ng-container *ngIf="day===10">Simulate Final</ng-container>
+</button>
+
+<div *ngIf="day>1">
+  <div *ngFor="let match of results; let i=index;">
+    <h5 *ngIf="i===0">Day 1</h5>
+    <h5 *ngIf="i===16">Day 2</h5>
+    <h5 *ngIf="i===32">Day 3</h5>
+    <h5 *ngIf="i===48">Day 4</h5>
+    <h5 *ngIf="i===64">Day 5</h5>
+    <h5 *ngIf="i===80">Day 6</h5>
+    {{match.match}} {{match.score[0]}} : {{match.score[1]}} {{match?.turbo}}
+  </div>
+</div>
+
+<div class="groups">
+  <div *ngFor="let group of sortedGroups;let i=index">
+    <h5>Group {{letters[i]}}</h5>
+    <table>
+      <tbody>
+        <tr>
+          <td>Team</td>
+          <td>Points</td>
+          <td>Goals</td>
+        </tr>
+        <tr *ngFor="let team of group">
+          <td>{{team.name}}</td>
+          <td>{{team?.points}}</td>
+          <td>{{team?.goals[0]}}:{{team?.goals[1]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="day > 7">
+  <h4>1/8</h4>
+  <ul>
+    <li *ngFor="let match of oneEightsResults">
+		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
+	</li>
+  </ul>
+</div>
+
+<div *ngIf="day > 8">
+  <h4>1/4</h4>
+  <ul>
+    <li *ngFor="let match of quarterfinalsResults">
+		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
+	</li>
+  </ul>
+</div>
+
+<div *ngIf="day > 9">
+  <h4>1/2</h4>
+  <ul>
+    <li *ngFor="let match of semifinalsResults">
+		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
+	</li>
+  </ul>
+</div>
+
+<div *ngIf="day > 10">
+  <h4>FINAL</h4>
+  {{finalResults[0].match}} {{finalResults[0].score[0]}} : {{finalResults[0].score[1]}}
+  <span class="comment">{{finalResults[0]?.comment}}</span>
+</div>
