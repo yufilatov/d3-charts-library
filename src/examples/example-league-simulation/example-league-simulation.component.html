@@ -24,7 +24,7 @@
 </div>
 
 <button (click)="startDraw()" [disabled]="groups[7].length === 4">DRAW</button>
-<button (click)="drawFast()">DRAW FAST</button>
+<!-- <button (click)="drawFast()">DRAW FAST</button> -->
 <button *ngIf="day < 11" (click)="simulate(day)" [disabled]="groups[7].length !== 4">
   <ng-container *ngIf="day < 7">Simulate Day {{ day }}</ng-container>
   <ng-container *ngIf="day === 7">Simulate 1/8</ng-container>
@@ -33,7 +33,7 @@
   <ng-container *ngIf="day === 10">Simulate Final</ng-container>
 </button>
 
-<button (click)="changeTimeoutLength()">SKIP</button>
+<!-- <button (click)="changeTimeoutLength()">SKIP</button> -->
 
 <div *ngIf="day > 1">
     <div *ngFor="let match of results; let i = index">
