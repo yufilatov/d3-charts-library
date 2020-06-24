@@ -53,13 +53,11 @@
         <h6 *ngIf="i % 16 === 12">Group G</h6>
         <h6 *ngIf="i % 16 === 14">Group H</h6>
         <div style="display: flex; justify-items: center; padding-bottom: 5px;">
-            <div [ngClass]="getLogo(match.team1 ? match.team1 : '')"></div>
+            <div [ngClass]="getLogo(match.team1)"></div>
             {{ match.team1 }}
-            <span class="score" [ngStyle]="match.score[0] > match.score[1] && { 'font-weight': '600' }">{{ match.score[0] }}
-      </span> :
-            <span class="score" [ngStyle]="match.score[0] < match.score[1] && { 'font-weight': '600' }">{{ match.score[1] }}
-      </span> {{ match.team2 }}
-            <div [ngClass]="getLogo(match.team2 ? match.team2 : '')" style="margin-left: 5px;"></div>
+            <span class="score" [ngStyle]="match.score[0] > match.score[1] && { 'font-weight': '600' }">{{ match.score[0] }}</span> :
+            <span class="score" [ngStyle]="match.score[0] < match.score[1] && { 'font-weight': '600' }">{{ match.score[1] }}</span> {{ match.team2 }}
+            <div [ngClass]="getLogo(match.team2)" style="margin-left: 5px;"></div>
         </div>
     </div>
 </div>

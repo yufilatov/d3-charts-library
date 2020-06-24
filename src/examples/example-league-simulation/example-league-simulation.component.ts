@@ -26,6 +26,8 @@ export class ExampleLeagueSimulationComponent implements OnInit {
     roundOf2Teams = [];
     winner = {};
 
+    results = [];
+
     teamsLeft = [];
 
     startDraw;
@@ -255,6 +257,11 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][1].awayGoalsPerTeam[0] = this.groups[i][1].awayGoalsPerTeam[0] + matchResult1AwayTeam;
                     this.groups[i][3].awayGoalsPerTeam[2] = this.groups[i][3].awayGoalsPerTeam[2] + matchResult2AwayTeam;
+
+                    this.results.push(
+                        { team1: `${this.groups[i][0].name}`, team2: `${this.groups[i][1].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
+                        { team1: `${this.groups[i][2].name}`, team2: `${this.groups[i][3].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
+                    );
                 }
                 break;
             }
@@ -295,7 +302,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         }
                     }
 
-                    // save extra data in case of equity
                     this.groups[i][1].goals[0] = this.groups[i][1].goals[0] + matchResult1HomeTeam;
                     this.groups[i][2].goals[0] = this.groups[i][2].goals[0] + matchResult1AwayTeam;
                     this.groups[i][3].goals[0] = this.groups[i][3].goals[0] + matchResult2HomeTeam;
@@ -313,6 +319,11 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][2].awayGoalsPerTeam[1] = this.groups[i][2].awayGoalsPerTeam[1] + matchResult1AwayTeam;
                     this.groups[i][0].awayGoalsPerTeam[3] = this.groups[i][0].awayGoalsPerTeam[3] + matchResult2AwayTeam;
+
+                    this.results.push(
+                        { team1: `${this.groups[i][1].name}`, team2: `${this.groups[i][2].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
+                        { team1: `${this.groups[i][3].name}`, team2: `${this.groups[i][0].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
+                    );
                 }
                 break;
             }
@@ -370,6 +381,11 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][3].awayGoalsPerTeam[1] = this.groups[i][3].awayGoalsPerTeam[1] + matchResult1AwayTeam;
                     this.groups[i][2].awayGoalsPerTeam[0] = this.groups[i][2].awayGoalsPerTeam[0] + matchResult2AwayTeam;
+
+                    this.results.push(
+                        { team1: `${this.groups[i][3].name}`, team2: `${this.groups[i][1].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
+                        { team1: `${this.groups[i][2].name}`, team2: `${this.groups[i][0].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
+                    );
                 }
                 break;
             }
@@ -426,6 +442,11 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][1].awayGoalsPerTeam[3] = this.groups[i][1].awayGoalsPerTeam[3] + matchResult1AwayTeam;
                     this.groups[i][2].awayGoalsPerTeam[0] = this.groups[i][2].awayGoalsPerTeam[0] + matchResult2AwayTeam;
+
+                    this.results.push(
+                        { team1: `${this.groups[i][1].name}`, team2: `${this.groups[i][3].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
+                        { team1: `${this.groups[i][0].name}`, team2: `${this.groups[i][2].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
+                    );
                 }
                 break;
             }
@@ -479,6 +500,11 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][3].awayGoalsPerTeam[2] = this.groups[i][3].awayGoalsPerTeam[2] + matchResult1AwayTeam;
                     this.groups[i][0].awayGoalsPerTeam[1] = this.groups[i][0].awayGoalsPerTeam[1] + matchResult2AwayTeam;
+
+                    this.results.push(
+                        { team1: `${this.groups[i][3].name}`, team2: `${this.groups[i][2].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
+                        { team1: `${this.groups[i][1].name}`, team2: `${this.groups[i][0].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
+                    );
                 }
                 break;
             }
@@ -532,6 +558,11 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][1].awayGoalsPerTeam[2] = this.groups[i][1].awayGoalsPerTeam[2] + matchResult1AwayTeam;
                     this.groups[i][3].awayGoalsPerTeam[0] = this.groups[i][3].awayGoalsPerTeam[0] + matchResult2AwayTeam;
+
+                    this.results.push(
+                        { team1: `${this.groups[i][2].name}`, team2: `${this.groups[i][0].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
+                        { team1: `${this.groups[i][1].name}`, team2: `${this.groups[i][3].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
+                    );
                 }
                 this.sortDataPlayoff = [this.groups.map(g => this.sort(g)[0]), this.groups.map(g => this.sort(g)[1])];
                 let pot1 = this.groups.map(g => this.sort(g)[0]);
