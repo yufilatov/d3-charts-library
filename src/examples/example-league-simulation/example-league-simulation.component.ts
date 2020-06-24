@@ -782,7 +782,7 @@ export class ExampleLeagueSimulationComponent implements OnInit {
         if (matchResult1HomeTeam > matchResult1AwayTeam) {
             this.winner = team1;
         } else {
-            this.winner = this.next;
+            this.winner = team2;
         }
 
         if (matchResult1HomeTeam === matchResult1AwayTeam) {
