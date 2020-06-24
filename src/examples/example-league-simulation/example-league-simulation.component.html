@@ -1,137 +1,187 @@
 <h4>Champions League 2019/2020 Simulation</h4>
 
 <div class="pots">
-  <div *ngFor="let pot of pots; let i=index;">
-    Pot {{i+1}}
-    <ul>
-      <li *ngFor="let team of sortData(i+1);">
-		{{team.name}} ({{team.shortCountryName}})
-	</li>
-    </ul>
-  </div>
+    <div *ngFor="let pot of [1, 2, 3, 4]">
+        Pot {{ pot }}
+        <ul>
+            <li *ngFor="let team of sortData(pot)">
+                {{ team.name }} ({{ team.shortCountryName }})
+            </li>
+        </ul>
+    </div>
 </div>
 
 <div class="groups">
-  <div *ngFor="let group of groups;let i=index">
-    <h5>Group {{letters[i]}}</h5>
-    <ul>
-      <li *ngFor="let team of group">
-			{{team.name}}
-		</li>
-    </ul>
-  </div>
+    <div *ngFor="let group of groups; let i = index">
+        <h5>Group {{ letters[i] }}</h5>
+        <ul>
+            <li *ngFor="let team of group">
+                <div [ngClass]="getLogo(team.name)"></div>
+                {{ team.name }}
+            </li>
+        </ul>
+    </div>
 </div>
 
-<button
-  (click)="simulate(day)"
-  *ngIf="day<11">
-  <ng-container *ngIf="day<7">Simulate Day {{day}}</ng-container>
-  <ng-container *ngIf="day===7">Simulate 1/8</ng-container>
-  <ng-container *ngIf="day===8">Simulate Quarterfinals</ng-container>
-  <ng-container *ngIf="day===9">Simulate Semifinals</ng-container>
-  <ng-container *ngIf="day===10">Simulate Final</ng-container>
+<button (click)="startDraw()" [disabled]="groups[7].length === 4">DRAW</button>
+<button (click)="drawFast()">DRAW FAST</button>
+<button *ngIf="day < 11" (click)="simulate(day)" [disabled]="groups[7].length !== 4">
+  <ng-container *ngIf="day < 7">Simulate Day {{ day }}</ng-container>
+  <ng-container *ngIf="day === 7">Simulate 1/8</ng-container>
+  <ng-container *ngIf="day === 8">Simulate Quarterfinals</ng-container>
+  <ng-container *ngIf="day === 9">Simulate Semifinals</ng-container>
+  <ng-container *ngIf="day === 10">Simulate Final</ng-container>
 </button>
 
-<div *ngIf="day>1">
-  <div *ngFor="let match of results; let i=index;">
-    <h5 *ngIf="i===0">Day 1</h5>
-    <h5 *ngIf="i===16">Day 2</h5>
-    <h5 *ngIf="i===32">Day 3</h5>
-    <h5 *ngIf="i===48">Day 4</h5>
-    <h5 *ngIf="i===64">Day 5</h5>
-    <h5 *ngIf="i===80">Day 6</h5>
-    
-    <h6 *ngIf="i%16===0">Group A</h6>
-    <h6 *ngIf="i%16===2">Group B</h6>
-    <h6 *ngIf="i%16===4">Group C</h6>
-    <h6 *ngIf="i%16===6">Group D</h6>
-    <h6 *ngIf="i%16===8">Group E</h6>
-    <h6 *ngIf="i%16===10">Group F</h6>
-    <h6 *ngIf="i%16===12">Group G</h6>
-    <h6 *ngIf="i%16===14">Group H</h6>
-    {{match.match}} {{match.score[0]}} : {{match.score[1]}} {{match?.turbo}}
-  </div>
+<button (click)="changeTimeoutLength()">SKIP</button>
+
+<div *ngIf="day > 1">
+    <div *ngFor="let match of results; let i = index">
+        <h5 *ngIf="i === 0">Day 1</h5>
+        <h5 *ngIf="i === 16">Day 2</h5>
+        <h5 *ngIf="i === 32">Day 3</h5>
+        <h5 *ngIf="i === 48">Day 4</h5>
+        <h5 *ngIf="i === 64">Day 5</h5>
+        <h5 *ngIf="i === 80">Day 6</h5>
+
+        <h6 *ngIf="i % 16 === 0">Group A</h6>
+        <h6 *ngIf="i % 16 === 2">Group B</h6>
+        <h6 *ngIf="i % 16 === 4">Group C</h6>
+        <h6 *ngIf="i % 16 === 6">Group D</h6>
+        <h6 *ngIf="i % 16 === 8">Group E</h6>
+        <h6 *ngIf="i % 16 === 10">Group F</h6>
+        <h6 *ngIf="i % 16 === 12">Group G</h6>
+        <h6 *ngIf="i % 16 === 14">Group H</h6>
+        <div style="display: flex; justify-items: center; padding-bottom: 5px;">
+            <div [ngClass]="getLogo(match.team1 ? match.team1 : '')"></div>
+            {{ match.team1 }}
+            <span class="score" [ngStyle]="match.score[0] > match.score[1] && { 'font-weight': '600' }">{{ match.score[0] }}
+      </span> :
+            <span class="score" [ngStyle]="match.score[0] < match.score[1] && { 'font-weight': '600' }">{{ match.score[1] }}
+      </span> {{ match.team2 }}
+            <div [ngClass]="getLogo(match.team2 ? match.team2 : '')" style="margin-left: 5px;"></div>
+        </div>
+    </div>
 </div>
 
 <div class="groups">
-  <div *ngFor="let group of sortedGroups;let i=index">
-    <h5>Group {{letters[i]}}</h5>
-    <table>
-      <tbody>
-        <tr>
-          <td>Team</td>
-          <td>Points</td>
-          <td>Goals</td>
-        </tr>
-        <tr *ngFor="let team of group">
-          <td>{{team.name}}</td>
-          <td>{{team?.points}}</td>
-          <td>{{team?.goals[0]}}:{{team?.goals[1]}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div *ngFor="let group of groups; let i = index">
+        <h5>Group {{ letters[i] }}</h5>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Team</td>
+                    <td>Points</td>
+                    <td>Goals</td>
+                </tr>
+                <tr *ngFor="let team of sort(group)">
+                    <td>{{ team.name }}</td>
+                    <td>{{ team?.points }}</td>
+                    <td>{{ (team?.goals)[0] }}:{{ (team?.goals)[1] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <h4 *ngIf="day > 6">1/8 Draw</h4>
-<div class="pots">
-  <div *ngFor="let pot of potsOneEights; let i=index;">
-    Pot {{i+1}}
-    <ul>
-      <li *ngFor="let team of sortDataPlayoff(i);">
-		{{team.name}} ({{team.shortCountryName}})
-	</li>
-    </ul>
-  </div>
+<div *ngIf="day > 6" style="display: flex;">
+    <div class="pots">
+        <div *ngFor="let pot of [1, 2]" class="column">
+            Pot {{ pot }}
+            <ul>
+                <li *ngFor="let team of sortDataPlayoff[pot - 1]">
+                    {{ team.name }} ({{ team.shortCountryName }})
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pots">
+        <div class="fixtures">
+            Fixtures
+            <ul>
+                <li *ngFor="let team of roundOf16Teams[0]; let i = index">
+                    {{ roundOf16Teams[1][i].name }} - {{ team.name }}
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
-
 <div *ngIf="day > 7" class="playoff">
-  <h4>1/8 Matches</h4>
-  <ul>
-    <li *ngFor="let match of oneEightsResults">
-		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
-	</li>
-  </ul>
+    <h4>1/8 Matches</h4>
+    <ng-container *ngTemplateOutlet="playoff; context: { results: roundOf16, winners: roundOf8Teams }"></ng-container>
 </div>
 
 <h4 *ngIf="day > 7">1/4 Draw</h4>
-<div *ngIf="day > 7" class="pots">
-  	<ul>
-	  	<li *ngFor="let team of quarterfinalTeams;">
-		  {{team.name}} ({{team.shortCountryName}})
-	  	</li>
-  	</ul>
+<div *ngIf="day > 7" style="display: flex;">
+    <div class="pots">
+        <div class="column">
+            Pot 1
+            <ul>
+                <li *ngFor="let team of roundOf8Teams">
+                    {{ team.name }} ({{ team.shortCountryName }})
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pots">
+        <div class="fixtures">
+            Fixtures
+            <ul>
+                <li *ngFor="let match of [0, 2, 4, 6]; let i = index">
+                    {{ roundOf8Teams[match].name }} - {{ roundOf8Teams[match + 1].name }}
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
-
 <div *ngIf="day > 8" class="playoff">
-  <h4>1/4 Matches</h4>
-  <ul>
-    <li *ngFor="let match of quarterfinalsResults">
-		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
-	</li>
-  </ul>
+    <h4>1/4 Matches</h4>
+    <ng-container *ngTemplateOutlet="playoff; context: { results: roundOf8, winners: roundOf4Teams }"></ng-container>
 </div>
 
 <h4 *ngIf="day > 8">1/2 Draw</h4>
-<div *ngIf="day > 8" class="pots">
-  	<ul>
-	  	<li *ngFor="let team of semifinalTeams;">
-		  {{team.name}} ({{team.shortCountryName}})
-	  	</li>
-  	</ul>
+<div *ngIf="day > 8" style="display: flex;">
+    <div class="pots">
+        <div class="column">
+            Pot 1
+            <ul>
+                <li *ngFor="let team of roundOf4Teams">
+                    {{ team.name }} ({{ team.shortCountryName }})
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pots">
+        <div class="fixtures">
+            Fixtures
+            <ul>
+                <li *ngFor="let match of [0, 2]; let i = index">
+                    {{ roundOf4Teams[match].name }} - {{ roundOf4Teams[match + 1].name }}
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
-
 <div *ngIf="day > 9" class="playoff">
-  <h4>1/2 Matches</h4>
-  <ul>
-    <li *ngFor="let match of semifinalsResults">
-		{{match.match}} {{match.score[0]}} : {{match.score[1]}} <span class="comment">{{match?.comment}}</span>
-	</li>
-  </ul>
+    <h4>1/2 Matches</h4>
+    <ng-container *ngTemplateOutlet="playoff; context: { results: roundOf4, winners: roundOf2Teams }"></ng-container>
 </div>
 
 <div *ngIf="day > 10" class="playoff">
-  <h4>FINAL</h4>
-  {{finalResults[0].match}} {{finalResults[0].score[0]}} : {{finalResults[0].score[1]}}
-  <span class="comment">{{finalResults[0]?.comment}}</span>
+    <h4>FINAL</h4>
+    <ng-container *ngTemplateOutlet="playoff; context: { results: [roundOf2], winners: [winner] }"></ng-container>
 </div>
+
+<ng-template #playoff let-results="results" let-winners="winners">
+    <ul>
+        <li *ngFor="let match of results; let i = index" style="display: flex; align-items: center;">
+            <div [ngClass]="getLogo(match.team1.name)"></div>
+            <span [ngStyle]="(i%2===1 || day > 10) && winners.includes(match.team1) && { 'font-weight': '600' }">{{ match.team1.name }}</span>
+            <span class="score">{{ match.score[0] }}</span> : <span class="score">{{ match.score[1] }}</span>
+            <span [ngStyle]="(i%2===1 || day > 10) && winners.includes(match.team2) && { 'font-weight': '600' }">{{ match.team2.name }}</span>
+            <div [ngClass]="getLogo(match.team2.name)" style="margin-left: 5px;"></div>
+            <span class="comment">{{ match?.comment }}</span>
+        </li>
+    </ul>
+</ng-template>

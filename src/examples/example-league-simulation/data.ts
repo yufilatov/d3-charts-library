@@ -91,7 +91,7 @@ export const DATA = [
         pot: 2,
     },
     {
-        name: 'Tottenham Hotspur',
+        name: 'Tottenham Hotspurs',
         shortName: 'TOT',
         country: 'England',
         shortCountryName: 'ENG',

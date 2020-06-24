@@ -1,46 +1,52 @@
 import { DATA } from './data';
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnChanges } from '@angular/core';
 
 @Component({
     selector: 'app-example-league-simulation',
     templateUrl: './example-league-simulation.component.html',
-    styleUrls: ['./example-league-simulation.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./example-league-simulation.component.scss', '../../styles/epl-emblems.scss', '../../styles/champions-league-logos.scss'],
+    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExampleLeagueSimulationComponent implements OnInit {
     data = DATA;
-    pots = [1, 2, 3, 4];
-    potsOneEights = [1, 2];
+    day = 1;
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
     groups = [];
-    sortedGroups;
+    next = [];
 
-    oneEightsResults = [];
-    quarterfinalsResults = [];
-    semifinalsResults = [];
-    finalResults = [];
+    roundOf16 = [];
+    roundOf8 = [];
+    roundOf4 = [];
+    roundOf2 = {};
 
-    oneEighths = [];
-    quarterfinals = [];
-    quarterfinalTeams = [];
-    semifinals = [];
-    semifinalTeams = [];
-    final = [];
+    roundOf16Teams = [[], []];
+    roundOf8Teams = [];
+    roundOf4Teams = [];
+    roundOf2Teams = [];
+    winner = {};
 
-    results = [];
-    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    day = 1;
+    teamsLeft = [];
 
-    constructor() { }
+    startDraw;
+    drawFast;
+    sortDataPlayoff;
 
     ngOnInit() {
-        // define 4 teams from 4 different pots
         let pot1 = this.data.filter(a => a.pot === 1);
-        let pot2 = this.data.filter(a => a.pot === 2);
-        let pot3 = this.data.filter(a => a.pot === 3);
-        let pot4 = this.data.filter(a => a.pot === 4);
+        const pot2 = this.data.filter(a => a.pot === 2);
+        const pot3 = this.data.filter(a => a.pot === 3);
+        const pot4 = this.data.filter(a => a.pot === 4);
 
-        // add points to each team
+        const group1 = [];
+        let group2 = [];
+        let group3 = [];
+        let group4 = [];
+
+        for (let i = 0; i < 8; i++) {
+            this.groups.push([]);
+        }
+
         this.data.forEach(team => team = Object.assign(
             team,
             {
@@ -51,35 +57,147 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                 awayGoalsPerTeam: [0, 0, 0, 0],
             }));
 
-        // create an array of groups
-        for (let i = 0; i < 8; i++) {
-            this.groups.push([]);
-        }
-
-        // push teams to groups and pots
         for (const [i, group] of this.groups.entries()) {
             const team1 = pot1[Math.floor(Math.random() * pot1.length)];
-            const team2 = pot2[Math.floor(Math.random() * pot2.length)];
-            const team3 = pot3[Math.floor(Math.random() * pot3.length)];
-            const team4 = pot4[Math.floor(Math.random() * pot4.length)];
-
-            this.groups[i].push(team1, team2, team3, team4);
-            this.sortedGroups = [...this.groups.map(a => ([...a]))];
-
-            // remove selected teams from pots
+            group1.push(team1);
             pot1 = pot1.filter(a => a.name !== team1.name);
-            pot2 = pot2.filter(a => a.name !== team2.name);
-            pot3 = pot3.filter(a => a.name !== team3.name);
-            pot4 = pot4.filter(a => a.name !== team4.name);
         }
+
+        const full = (pot, index) => {
+            let potCopy = [...pot];
+            for (let i = 0; i < 8; i++) {
+                const countriesLeftForPot = index === 1 ?
+                    [...potCopy].filter(a =>
+                        a.shortCountryName !== group1[i].shortCountryName) : index === 2 ?
+                        [...potCopy].filter(a =>
+                            a.shortCountryName !== group1[i].shortCountryName &&
+                            a.shortCountryName !== group2[i].shortCountryName) :
+                        [...potCopy].filter(a =>
+                            a.shortCountryName !== group1[i].shortCountryName &&
+                            a.shortCountryName !== group2[i].shortCountryName &&
+                            a.shortCountryName !== group3[i].shortCountryName);
+
+                if (countriesLeftForPot.length === 0) {
+                    for (let j = 0; j < 8; j++) {
+                        if (index === 1) {
+                            group2 = [];
+                        } else {
+                            if (index === 2) {
+                                group3 = [];
+                            } else {
+                                group4 = [];
+                            }
+                        }
+                    }
+                    full(pot, index);
+                    break;
+                }
+
+                const team = countriesLeftForPot[Math.floor(Math.random() * countriesLeftForPot.length)];
+                potCopy = potCopy.filter(a => a.name !== team.name);
+
+                if (index === 1) {
+                    group2.push(team);
+                } else {
+                    if (index === 2) {
+                        group3.push(team);
+                    } else {
+                        group4.push(team);
+                    }
+                }
+            }
+        };
+
+        full(pot2, 1);
+        full(pot3, 2);
+        full(pot4, 3);
+
+        let t1; let t2; let t3; let t4;
+
+        this.startDraw = () => {
+            for (let i = 0; i < 8; i++) {
+                t1 = setTimeout(() => {
+                    this.groups[i].push(group1[i]);
+                }, i * 1000 * 0);
+                t2 = setTimeout(() => {
+                    this.groups[i].push(group2[i]);
+                }, (i + 8) * 1000 * 0);
+                t3 = setTimeout(() => this.groups[i].push(group3[i]), (i + 16) * 1000 * 0);
+                t4 = setTimeout(() => this.groups[i].push(group4[i]), (i + 24) * 1000 * 0);
+            }
+        };
+
+        this.drawFast = () => {
+            clearTimeout(t1);
+            clearTimeout(t2);
+            clearTimeout(t3);
+            clearTimeout(t4);
+        };
     }
 
     sortData(index: number) {
         return this.data.filter(a => a.pot === index);
     }
 
-    sortDataPlayoff(index: number) {
-        return [...this.sortedGroups].map(g => g[index]);
+    changeTimeoutLength() {
+
+    }
+
+    sort(data) {
+        if (this.day === 1) {
+            return [...data].sort((a, b) => a.name.localeCompare(b.name));
+        } else {
+            return [...data].sort((a, b) => {
+                if (a.points > b.points) {
+                    return -1;
+                } else {
+                    if (a.points < b.points) {
+                        return 1;
+                    } else {
+                        if (a.pointsPerTeam[b.pot - 1] > b.pointsPerTeam[a.pot - 1]) {
+                            return -1;
+                        } else {
+                            if (a.pointsPerTeam[b.pot - 1] < b.pointsPerTeam[a.pot - 1]) {
+                                return 1;
+
+                            } else {
+                                if (a.goalsDifferencePerTeam[b.pot - 1] > b.goalsDifferencePerTeam[a.pot - 1]) {
+                                    return -1;
+                                } else {
+                                    if (a.goalsDifferencePerTeam[b.pot - 1] < b.goalsDifferencePerTeam[a.pot - 1]) {
+                                        return 1;
+                                    } else {
+                                        if (a.awayGoalsPerTeam[b.pot - 1] > b.awayGoalsPerTeam[a.pot - 1]) {
+                                            return -1;
+                                        } else {
+                                            if (a.awayGoalsPerTeam[b.pot - 1] < b.awayGoalsPerTeam[a.pot - 1]) {
+                                                return 1;
+                                            } else {
+                                                if (a.goals[0] - a.goals[1] > b.goals[0] - b.goals[1]) {
+                                                    return -1;
+                                                } else {
+                                                    if (a.goals[0] - a.goals[1] < b.goals[0] - b.goals[1]) {
+                                                        return 1;
+                                                    } else {
+                                                        if (a.goals[0] > b.goals[0]) {
+                                                            return -1;
+                                                        } else {
+                                                            if (a.goals[0] < b.goals[0]) {
+                                                                return 1;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
 
     simulate(day) {
@@ -120,7 +238,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         }
                     }
 
-                    // save extra data in case of equity
                     this.groups[i][0].goals[0] = this.groups[i][0].goals[0] + matchResult1HomeTeam;
                     this.groups[i][1].goals[0] = this.groups[i][1].goals[0] + matchResult1AwayTeam;
                     this.groups[i][2].goals[0] = this.groups[i][2].goals[0] + matchResult2HomeTeam;
@@ -138,11 +255,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][1].awayGoalsPerTeam[0] = this.groups[i][1].awayGoalsPerTeam[0] + matchResult1AwayTeam;
                     this.groups[i][3].awayGoalsPerTeam[2] = this.groups[i][3].awayGoalsPerTeam[2] + matchResult2AwayTeam;
-
-                    this.results.push(
-                        { match: `${this.groups[i][0].name} - ${this.groups[i][1].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${this.groups[i][2].name} - ${this.groups[i][3].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
                 }
                 break;
             }
@@ -201,11 +313,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][2].awayGoalsPerTeam[1] = this.groups[i][2].awayGoalsPerTeam[1] + matchResult1AwayTeam;
                     this.groups[i][0].awayGoalsPerTeam[3] = this.groups[i][0].awayGoalsPerTeam[3] + matchResult2AwayTeam;
-
-                    this.results.push(
-                        { match: `${this.groups[i][1].name} - ${this.groups[i][2].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${this.groups[i][3].name} - ${this.groups[i][0].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
                 }
                 break;
             }
@@ -246,7 +353,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         }
                     }
 
-                    // save extra data in case of equity
                     this.groups[i][3].goals[0] = this.groups[i][3].goals[0] + matchResult1HomeTeam;
                     this.groups[i][1].goals[0] = this.groups[i][1].goals[0] + matchResult1AwayTeam;
                     this.groups[i][2].goals[0] = this.groups[i][2].goals[0] + matchResult2HomeTeam;
@@ -264,11 +370,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][3].awayGoalsPerTeam[1] = this.groups[i][3].awayGoalsPerTeam[1] + matchResult1AwayTeam;
                     this.groups[i][2].awayGoalsPerTeam[0] = this.groups[i][2].awayGoalsPerTeam[0] + matchResult2AwayTeam;
-
-                    this.results.push(
-                        { match: `${this.groups[i][3].name} - ${this.groups[i][1].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${this.groups[i][2].name} - ${this.groups[i][0].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
                 }
                 break;
             }
@@ -308,7 +409,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         }
                     }
 
-                    // save extra data in case of equity
                     this.groups[i][1].goals[0] = this.groups[i][1].goals[0] + matchResult1HomeTeam;
                     this.groups[i][3].goals[0] = this.groups[i][3].goals[0] + matchResult1AwayTeam;
                     this.groups[i][0].goals[0] = this.groups[i][0].goals[0] + matchResult2HomeTeam;
@@ -326,11 +426,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][1].awayGoalsPerTeam[3] = this.groups[i][1].awayGoalsPerTeam[3] + matchResult1AwayTeam;
                     this.groups[i][2].awayGoalsPerTeam[0] = this.groups[i][2].awayGoalsPerTeam[0] + matchResult2AwayTeam;
-
-                    this.results.push(
-                        { match: `${this.groups[i][1].name} - ${this.groups[i][3].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${this.groups[i][0].name} - ${this.groups[i][2].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
                 }
                 break;
             }
@@ -367,7 +462,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         }
                     }
 
-                    // save extra data in case of equity
                     this.groups[i][3].goals[0] = this.groups[i][3].goals[0] + matchResult1HomeTeam;
                     this.groups[i][2].goals[0] = this.groups[i][2].goals[0] + matchResult1AwayTeam;
                     this.groups[i][1].goals[0] = this.groups[i][1].goals[0] + matchResult2HomeTeam;
@@ -385,11 +479,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][3].awayGoalsPerTeam[2] = this.groups[i][3].awayGoalsPerTeam[2] + matchResult1AwayTeam;
                     this.groups[i][0].awayGoalsPerTeam[1] = this.groups[i][0].awayGoalsPerTeam[1] + matchResult2AwayTeam;
-
-                    this.results.push(
-                        { match: `${this.groups[i][3].name} - ${this.groups[i][2].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${this.groups[i][1].name} - ${this.groups[i][0].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
                 }
                 break;
             }
@@ -426,7 +515,6 @@ export class ExampleLeagueSimulationComponent implements OnInit {
                         }
                     }
 
-                    // save extra data in case of equity
                     this.groups[i][2].goals[0] = this.groups[i][2].goals[0] + matchResult1HomeTeam;
                     this.groups[i][1].goals[0] = this.groups[i][1].goals[0] + matchResult1AwayTeam;
                     this.groups[i][0].goals[0] = this.groups[i][0].goals[0] + matchResult2HomeTeam;
@@ -444,563 +532,50 @@ export class ExampleLeagueSimulationComponent implements OnInit {
 
                     this.groups[i][1].awayGoalsPerTeam[2] = this.groups[i][1].awayGoalsPerTeam[2] + matchResult1AwayTeam;
                     this.groups[i][3].awayGoalsPerTeam[0] = this.groups[i][3].awayGoalsPerTeam[0] + matchResult2AwayTeam;
+                }
+                this.sortDataPlayoff = [this.groups.map(g => this.sort(g)[0]), this.groups.map(g => this.sort(g)[1])];
+                let pot1 = this.groups.map(g => this.sort(g)[0]);
+                let pot2 = this.groups.map(g => this.sort(g)[1]);
 
-                    this.results.push(
-                        { match: `${this.groups[i][2].name} - ${this.groups[i][1].name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${this.groups[i][1].name} - ${this.groups[i][0].name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
+                for (let j = 0; j < 8; j++) {
+                    const team1 = pot1[Math.floor(Math.random() * pot1.length)];
+                    pot1 = pot1.filter(a => a.name !== team1.name);
+
+                    const team2 = pot2.filter(a => a.shortCountryName !== team1.shortCountryName)[Math.floor(Math.random() * pot2.filter(a => a.shortCountryName !== team1.shortCountryName).length)];
+                    pot2 = pot2.filter(a => a.name !== team2.name);
+
+                    this.roundOf16Teams[0].push(team1);
+                    this.roundOf16Teams[1].push(team2);
                 }
                 break;
             }
             case 7: {
-                let pot1 = [...this.sortedGroups].map(g => g[0]);
-                let pot2 = [...this.sortedGroups].map(g => g[1]);
-                this.oneEighths = [...pot1, ...pot2];
-
-                for (let i = 0; i < 8; i++) {
-                    const team1 = pot1[Math.floor(Math.random() * pot1.length)];
-                    pot1 = pot1.filter(a => a.name !== team1.name);
-
-                    const team2 = pot2[Math.floor(Math.random() * pot2.length)];
-                    pot2 = pot2.filter(a => a.name !== team2.name);
-
-                    const matchResult1HomeTeam = this.getRandomNumber(4);
-                    const matchResult1AwayTeam = this.getRandomNumber(4);
-                    const matchResult2HomeTeam = this.getRandomNumber(4);
-                    const matchResult2AwayTeam = this.getRandomNumber(4);
-
-                    this.oneEightsResults.push(
-                        { match: `${team2.name} - ${team1.name}`, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${team1.name} - ${team2.name}`, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
-
-                    if (matchResult2HomeTeam + matchResult1AwayTeam > matchResult1HomeTeam + matchResult2AwayTeam) {
-                        this.quarterfinals.push(team1);
-                        this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                            {
-                                comment: `${team1.name} won
-                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate`,
-                            });
-                    } else {
-                        if (matchResult2HomeTeam + matchResult1AwayTeam < matchResult1HomeTeam + matchResult2AwayTeam) {
-                            this.quarterfinals.push(team2);
-                            this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                {
-                                    comment: `${team2.name} won
-                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate`,
-                                });
-                        } else {
-                            if (matchResult1AwayTeam > matchResult2AwayTeam) {
-                                this.quarterfinals.push(team1);
-                                this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                    {
-                                        comment: `${team1.name} won
-                                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on away goals`,
-                                    });
-                            } else {
-                                if (matchResult1AwayTeam < matchResult2AwayTeam) {
-                                    this.quarterfinals.push(team2);
-                                    this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                        {
-                                            comment: `${team2.name} won
-                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on away goals`,
-                                        });
-                                } else {
-                                    const extraGoals1 = Math.floor(Math.random() * 2);
-                                    const extraGoals2 = Math.floor(Math.random() * 2);
-                                    let penatlyGoals1 = Math.floor(Math.random() * 5);
-                                    let penatlyGoals2 = Math.floor(Math.random() * 5);
-
-                                    if (extraGoals1 > extraGoals2) {
-                                        this.quarterfinals.push(team1);
-                                        this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                            {
-                                                comment:
-                                                    `${team1.name} won
-                                                    ${matchResult2HomeTeam + matchResult1AwayTeam + extraGoals1}:${matchResult1HomeTeam + matchResult2AwayTeam + extraGoals2}
-                                                    on aggregate in extra time
-                                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                    (${extraGoals1}:${extraGoals2})`,
-                                            });
-                                    } else {
-                                        if (extraGoals1 < extraGoals2) {
-                                            this.quarterfinals.push(team2);
-                                            this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                {
-                                                    comment:
-                                                        `${team2.name} won
-                                                        ${matchResult2HomeTeam + matchResult1AwayTeam + extraGoals1}:${matchResult1HomeTeam + matchResult2AwayTeam + extraGoals2}
-                                                        on aggregate in extra time
-                                                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                        (${extraGoals1}:${extraGoals2})`,
-                                                });
-                                        } else {
-                                            if (matchResult1AwayTeam + extraGoals1 > matchResult2AwayTeam) {
-                                                this.quarterfinals.push(team1);
-                                                this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                    {
-                                                        comment: `${team1.name} won on away goals in extra time
-                                                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                        (${extraGoals1}:${extraGoals2})`,
-                                                    });
-                                            } else {
-                                                if (matchResult1AwayTeam + extraGoals1 < matchResult2AwayTeam) {
-                                                    this.quarterfinals.push(team2);
-                                                    this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                        {
-                                                            comment:
-                                                                `${team2.name} won on away goals in extra time
-                                                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                (${extraGoals1}:${extraGoals2})`,
-                                                        });
-                                                } else {
-                                                    if (penatlyGoals1 > penatlyGoals2) {
-                                                        this.quarterfinals.push(team1);
-                                                        this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                            {
-                                                                comment:
-                                                                    `${team1.name} won on penalties
-                                                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                    (${extraGoals1}:${extraGoals2})
-                                                                    Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                            });
-                                                    } else {
-                                                        if (penatlyGoals1 < penatlyGoals2) {
-                                                            this.quarterfinals.push(team2);
-                                                            this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                                {
-                                                                    comment:
-                                                                        `${team2.name} won on penalties
-                                                                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                        (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                });
-                                                        } else {
-                                                            do {
-                                                                penatlyGoals1 = penatlyGoals1 + Math.floor(Math.random() * 1);
-                                                                penatlyGoals2 = penatlyGoals2 + Math.floor(Math.random() * 1);
-                                                            } while (penatlyGoals1 === penatlyGoals2);
-
-                                                            if (penatlyGoals1 > penatlyGoals2) {
-                                                                this.quarterfinals.push(team1);
-                                                                this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                                    {
-                                                                        comment:
-                                                                            `${team1.name} won on penalties
-                                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                            (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                    });
-                                                            } else {
-                                                                this.quarterfinals.push(team2);
-                                                                this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                                    {
-                                                                        comment:
-                                                                            `${team2.name} won on penalties
-                                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                            (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                    });
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                this.quarterfinalTeams = [...this.quarterfinals];
+                const a = this.simulatePlayoff(8);
+                this.roundOf16 = a.result;
+                this.roundOf8Teams = a.teams;
+                this.teamsLeft = [...this.roundOf8Teams].sort((x, y) => 0.5 - Math.random());
+                this.roundOf8Teams = [...this.teamsLeft];
                 break;
             }
             case 8: {
-                for (let i = 0; i < 4; i++) {
-                    const team1 = this.quarterfinals[Math.floor(Math.random() * this.quarterfinals.length)];
-                    this.quarterfinals = this.quarterfinals.filter(a => a.name !== team1.name);
-
-                    const team2 = this.quarterfinals[Math.floor(Math.random() * this.quarterfinals.length)];
-                    this.quarterfinals = this.quarterfinals.filter(a => a.name !== team2.name);
-
-                    const matchResult1HomeTeam = this.getRandomNumber(4);
-                    const matchResult1AwayTeam = this.getRandomNumber(4);
-                    const matchResult2HomeTeam = this.getRandomNumber(4);
-                    const matchResult2AwayTeam = this.getRandomNumber(4);
-
-                    this.quarterfinalsResults.push(
-                        { match: `${team2.name} - ${team1.name} `, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${team1.name} - ${team2.name} `, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
-
-                    if (matchResult2HomeTeam + matchResult1AwayTeam > matchResult1HomeTeam + matchResult2AwayTeam) {
-                        this.semifinals.push(team1);
-                        this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                            {
-                                comment: `${team1.name} won
-                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate`,
-                            });
-                    } else {
-                        if (matchResult2HomeTeam + matchResult1AwayTeam < matchResult1HomeTeam + matchResult2AwayTeam) {
-                            this.semifinals.push(team2);
-                            this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                {
-                                    comment: `${team2.name} won
-                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate`,
-                                });
-                        } else {
-                            if (matchResult1AwayTeam > matchResult2AwayTeam) {
-                                this.semifinals.push(team1);
-                                this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                    { comment: `${team1.name} won on away goals` });
-                            } else {
-                                if (matchResult1AwayTeam < matchResult2AwayTeam) {
-                                    this.semifinals.push(team2);
-                                    this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                        { comment: `${team2.name} won on away goals` });
-                                } else {
-                                    const extraGoals1 = this.getRandomNumber(2);
-                                    const extraGoals2 = this.getRandomNumber(2);
-                                    let penatlyGoals1 = this.getRandomNumber(5);
-                                    let penatlyGoals2 = this.getRandomNumber(5);
-
-                                    if (extraGoals1 > extraGoals2) {
-                                        this.semifinals.push(team1);
-                                        this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                            {
-                                                comment:
-                                                    `${team1.name} won
-                                                    ${matchResult2HomeTeam + matchResult1AwayTeam + extraGoals1}:${matchResult1HomeTeam + matchResult2AwayTeam + extraGoals2}
-                                                    on aggregate in extra time
-                                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                    (${extraGoals1}:${extraGoals2})`,
-                                            });
-                                    } else {
-                                        if (extraGoals1 < extraGoals2) {
-                                            this.semifinals.push(team2);
-                                            this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                                {
-                                                    comment:
-                                                        `${team2.name} won
-                                                        ${matchResult2HomeTeam + matchResult1AwayTeam + extraGoals1}:${matchResult1HomeTeam + matchResult2AwayTeam + extraGoals2}
-                                                        on aggregate in extra time
-                                                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                        (${extraGoals1}:${extraGoals2})`,
-                                                });
-                                        } else {
-                                            if (matchResult1AwayTeam + extraGoals1 > matchResult2AwayTeam) {
-                                                this.semifinals.push(team1);
-                                                this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                                    {
-                                                        comment:
-                                                            `${team1.name} won on away goals in extra time
-                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                            (${extraGoals1}:${extraGoals2})`,
-                                                    });
-                                            } else {
-                                                if (matchResult1AwayTeam + extraGoals1 < matchResult2AwayTeam) {
-                                                    this.semifinals.push(team2);
-                                                    this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                                        {
-                                                            comment:
-                                                                `${team2.name} won on away goals in extra time
-                                                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                (${extraGoals1}:${extraGoals2})`,
-                                                        });
-                                                } else {
-                                                    if (penatlyGoals1 > penatlyGoals2) {
-                                                        this.semifinals.push(team1);
-                                                        this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                                            {
-                                                                comment:
-                                                                    `${team1.name} won on penalties
-                                                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                    (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                            });
-                                                    } else {
-                                                        if (penatlyGoals1 < penatlyGoals2) {
-                                                            this.semifinals.push(team2);
-                                                            this.quarterfinalsResults[i * 2 + 1] = Object.assign(this.quarterfinalsResults[i * 2 + 1],
-                                                                {
-                                                                    comment:
-                                                                        `${team2.name} won on penalties
-                                                                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} (${extraGoals1}:${extraGoals2})
-                                                                        Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                });
-                                                        } else {
-                                                            do {
-                                                                penatlyGoals1 = penatlyGoals1 + Math.floor(Math.random() * 1);
-                                                                penatlyGoals2 = penatlyGoals2 + Math.floor(Math.random() * 1);
-                                                            } while (penatlyGoals1 === penatlyGoals2);
-
-                                                            if (penatlyGoals1 > penatlyGoals2) {
-                                                                this.semifinals.push(team1);
-                                                                this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                                    {
-                                                                        comment:
-                                                                            `${team1.name} won on penalties
-                                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:
-                                                                            ${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                            (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                    });
-                                                            } else {
-                                                                this.semifinals.push(team2);
-                                                                this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                                    {
-                                                                        comment:
-                                                                            `${team2.name} won on penalties
-                                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                            (${extraGoals1}:${extraGoals2})
-                                                                            Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                    });
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                this.semifinalTeams = [...this.semifinals];
+                const a = this.simulatePlayoff(4);
+                this.roundOf8 = a.result;
+                this.roundOf4Teams = a.teams;
+                this.teamsLeft = [...this.roundOf4Teams].sort((x, y) => 0.5 - Math.random());
+                this.roundOf4Teams = [...this.teamsLeft];
                 break;
             }
             case 9: {
-                for (let i = 0; i < 2; i++) {
-                    const team1 = this.semifinals[Math.floor(Math.random() * this.quarterfinals.length)];
-                    this.semifinals = this.semifinals.filter(a => a.name !== team1.name);
-                    const team2 = this.semifinals[Math.floor(Math.random() * this.quarterfinals.length)];
-                    this.semifinals = this.semifinals.filter(a => a.name !== team2.name);
-
-                    const matchResult1HomeTeam = this.getRandomNumber(4);
-                    const matchResult1AwayTeam = this.getRandomNumber(4);
-                    const matchResult2HomeTeam = this.getRandomNumber(4);
-                    const matchResult2AwayTeam = this.getRandomNumber(4);
-
-                    this.semifinalsResults.push(
-                        { match: `${team2.name} - ${team1.name} `, score: [matchResult1HomeTeam, matchResult1AwayTeam] },
-                        { match: `${team1.name} - ${team2.name} `, score: [matchResult2HomeTeam, matchResult2AwayTeam] }
-                    );
-
-                    if (matchResult2HomeTeam + matchResult1AwayTeam > matchResult1HomeTeam + matchResult2AwayTeam) {
-                        this.final.push(team1);
-                        this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                            {
-                                comment: `${team1.name} won
-                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate `,
-                            });
-                    } else {
-                        if (matchResult2HomeTeam + matchResult1AwayTeam < matchResult1HomeTeam + matchResult2AwayTeam) {
-                            this.final.push(team2);
-                            this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                {
-                                    comment: `${team2.name} won
-                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate `,
-                                });
-                        } else {
-                            if (matchResult1AwayTeam > matchResult2AwayTeam) {
-                                this.final.push(team1);
-                                this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                    { comment: `${team1.name} won on away goals` });
-                            } else {
-                                if (matchResult1AwayTeam < matchResult2AwayTeam) {
-                                    this.final.push(team2);
-                                    this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                        { comment: `${team2.name} won on away goals` });
-                                } else {
-                                    const extraGoals1 = this.getRandomNumber(2);
-                                    const extraGoals2 = this.getRandomNumber(2);
-                                    let penatlyGoals1 = this.getRandomNumber(5);
-                                    let penatlyGoals2 = this.getRandomNumber(5);
-
-                                    if (extraGoals1 > extraGoals2) {
-                                        this.final.push(team1);
-                                        this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                            {
-                                                comment:
-                                                    `${team1.name} won on
-                                                    ${matchResult2HomeTeam + matchResult1AwayTeam + extraGoals1}:${matchResult1HomeTeam + matchResult2AwayTeam + extraGoals2}
-                                                    on aggregate aggregate in extra time
-                                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                    (${extraGoals1}:${extraGoals2})`,
-                                            });
-                                    } else {
-                                        if (extraGoals1 < extraGoals2) {
-                                            this.final.push(team2);
-                                            this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                                {
-                                                    comment:
-                                                        `${team2.name} won
-                                                        ${matchResult2HomeTeam + matchResult1AwayTeam + extraGoals1}:${matchResult1HomeTeam + matchResult2AwayTeam + extraGoals2}
-                                                        on aggregate in extra time
-                                                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                        (${extraGoals1}:${extraGoals2})`,
-                                                });
-                                        } else {
-                                            if (matchResult1AwayTeam + extraGoals1 > matchResult2AwayTeam) {
-                                                this.final.push(team1);
-                                                this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                                    {
-                                                        comment:
-                                                            `${team1.name} won on away goals in extra time
-                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                            (${extraGoals1}:${extraGoals2})`,
-                                                    });
-                                            } else {
-                                                if (matchResult1AwayTeam + extraGoals1 < matchResult2AwayTeam) {
-                                                    this.final.push(team2);
-                                                    this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                                        {
-                                                            comment:
-                                                                `${team2.name} won on away goals in extra time
-                                                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                (${extraGoals1}:${extraGoals2})`,
-                                                        });
-                                                } else {
-                                                    if (penatlyGoals1 > penatlyGoals2) {
-                                                        this.final.push(team1);
-                                                        this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                                            {
-                                                                comment:
-                                                                    `${team1.name} won on penalties
-                                                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                    (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                            });
-                                                    } else {
-                                                        if (penatlyGoals1 < penatlyGoals2) {
-                                                            this.final.push(team2);
-                                                            this.semifinalsResults[i * 2 + 1] = Object.assign(this.semifinalsResults[i * 2 + 1],
-                                                                {
-                                                                    comment:
-                                                                        `${team2.name} won on penalties ${matchResult2HomeTeam + matchResult1AwayTeam}:
-                                                                        ${matchResult1HomeTeam + matchResult2AwayTeam} (${extraGoals1}:${extraGoals2})
-                                                                        Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                });
-                                                        } else {
-                                                            do {
-                                                                penatlyGoals1 = penatlyGoals1 + Math.floor(Math.random() * 1);
-                                                                penatlyGoals2 = penatlyGoals2 + Math.floor(Math.random() * 1);
-                                                            } while (penatlyGoals1 === penatlyGoals2);
-
-                                                            if (penatlyGoals1 > penatlyGoals2) {
-                                                                this.final.push(team1);
-                                                                this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                                    {
-                                                                        comment:
-                                                                            `${team1.name} won on penalties
-                                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                            (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                    });
-                                                            } else {
-                                                                this.final.push(team2);
-                                                                this.oneEightsResults[i * 2 + 1] = Object.assign(this.oneEightsResults[i * 2 + 1],
-                                                                    {
-                                                                        comment:
-                                                                            `${team2.name} won on penalties
-                                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
-                                                                            (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
-                                                                    });
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                const a = this.simulatePlayoff(2);
+                this.roundOf4 = a.result;
+                this.roundOf2Teams = a.teams;
                 break;
             }
             case 10: {
-                const finalResultHomeTeam = this.getRandomNumber(4);
-                const finalResultAwayTeam = this.getRandomNumber(4);
-
-                this.finalResults.push({ match: `${this.final[0].name} - ${this.final[1].name} `, score: [finalResultHomeTeam, finalResultAwayTeam] });
-
-                if (finalResultHomeTeam === finalResultAwayTeam) {
-                    const extraGoals1 = this.getRandomNumber(2);
-                    const extraGoals2 = this.getRandomNumber(2);
-
-                    if (extraGoals1 === extraGoals2) {
-                        let penaltyGoals1 = this.getRandomNumber(5);
-                        let penaltyGoals2 = this.getRandomNumber(5);
-
-                        if (penaltyGoals1 === penaltyGoals2) {
-                            do {
-                                penaltyGoals1 = penaltyGoals1 + this.getRandomNumber(1);
-                                penaltyGoals2 = penaltyGoals2 + this.getRandomNumber(1);
-                            } while (penaltyGoals1 === penaltyGoals2);
-                            this.finalResults[0] = Object.assign(this.finalResults[0],
-                                {
-                                    comment: `Extra time ${extraGoals1}:${extraGoals2} Penalties ${penaltyGoals1}:${penaltyGoals2}`,
-                                });
-                        } else {
-                            this.finalResults[0] = Object.assign(this.finalResults[0],
-                                {
-                                    comment: `Extra time ${extraGoals1}:${extraGoals2} Penalties ${penaltyGoals1}:${penaltyGoals2}`,
-                                });
-                        }
-                    } else {
-                        this.finalResults[0] = Object.assign(this.finalResults[0], { comment: `Extra time ${extraGoals1}:${extraGoals2}` });
-                    }
-                }
+                this.roundOf2 = this.simulateFinal();
+                break;
             }
         }
-
-        this.sortedGroups = this.sortedGroups.map(g => g.sort((a, b) => {
-            if (a.points > b.points) {
-                return -1;
-            } else {
-                if (a.points < b.points) {
-                    return 1;
-                } else {
-                    if (a.pointsPerTeam[b.pot - 1] > b.pointsPerTeam[a.pot - 1]) {
-                        return -1;
-                    } else {
-                        if (a.pointsPerTeam[b.pot - 1] < b.pointsPerTeam[a.pot - 1]) {
-                            return 1;
-
-                        } else {
-                            if (a.goalsDifferencePerTeam[b.pot - 1] > b.goalsDifferencePerTeam[a.pot - 1]) {
-                                return -1;
-                            } else {
-                                if (a.goalsDifferencePerTeam[b.pot - 1] < b.goalsDifferencePerTeam[a.pot - 1]) {
-                                    return 1;
-                                } else {
-                                    if (a.awayGoalsPerTeam[b.pot - 1] > b.awayGoalsPerTeam[a.pot - 1]) {
-                                        return -1;
-                                    } else {
-                                        if (a.awayGoalsPerTeam[b.pot - 1] < b.awayGoalsPerTeam[a.pot - 1]) {
-                                            return 1;
-                                        } else {
-                                            if (a.goals[0] - a.goals[1] > b.goals[0] - b.goals[1]) {
-                                                return -1;
-                                            } else {
-                                                if (a.goals[0] - a.goals[1] < b.goals[0] - b.goals[1]) {
-                                                    return 1;
-                                                } else {
-                                                    if (a.goals[0] > b.goals[0]) {
-                                                        return -1;
-                                                    } else {
-                                                        if (a.goals[0] < b.goals[0]) {
-                                                            return 1;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }));
 
         this.day = this.day + 1;
     }
@@ -1009,4 +584,276 @@ export class ExampleLeagueSimulationComponent implements OnInit {
         return Math.floor(Math.random() * max);
     }
 
+    getLogo(club) {
+        return `logo logo-${club.replace(/\s+/g, '-').toLowerCase()}`;
+    }
+
+    simulatePlayoff(stage) {
+        const result = [];
+        this.next = [];
+        let teamsLeft = [...this.teamsLeft];
+        for (let i = 0; i < stage; i++) {
+            let team1;
+            let team2;
+
+            if (stage === 8) {
+                team1 = this.roundOf16Teams[0][i];
+                team2 = this.roundOf16Teams[1][i];
+            } else {
+                team1 = teamsLeft[1];
+                team2 = teamsLeft[0];
+                teamsLeft = teamsLeft.filter(a => a.name !== team1.name && a.name !== team2.name);
+            }
+
+            const matchResult1HomeTeam = this.getRandomNumber(4);
+            const matchResult1AwayTeam = this.getRandomNumber(4);
+            const matchResult2HomeTeam = this.getRandomNumber(4);
+            const matchResult2AwayTeam = this.getRandomNumber(4);
+
+            result.push(
+                {
+                    team1: team2,
+                    team2: team1,
+                    score: [matchResult1HomeTeam, matchResult1AwayTeam],
+                },
+                {
+                    team1,
+                    team2,
+                    score: [matchResult2HomeTeam, matchResult2AwayTeam],
+                }
+            );
+
+            if (matchResult2HomeTeam + matchResult1AwayTeam > matchResult1HomeTeam + matchResult2AwayTeam) {
+                this.next.push(team1);
+                result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                    {
+                        comment: `${team1.name} won
+                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate`,
+                    });
+            } else {
+                if (matchResult2HomeTeam + matchResult1AwayTeam < matchResult1HomeTeam + matchResult2AwayTeam) {
+                    this.next.push(team2);
+                    result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                        {
+                            comment: `${team2.name} won
+                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on aggregate`,
+                        });
+                } else {
+                    if (matchResult1AwayTeam > matchResult2AwayTeam) {
+                        this.next.push(team1);
+                        result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                            {
+                                comment: `${team1.name} won
+                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on away goals`,
+                            });
+                    } else {
+                        if (matchResult1AwayTeam < matchResult2AwayTeam) {
+                            this.next.push(team2);
+                            result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                {
+                                    comment: `${team2.name} won
+                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam} on away goals`,
+                                });
+                        } else {
+                            const extraGoals1 = Math.floor(Math.random() * 2);
+                            const extraGoals2 = Math.floor(Math.random() * 2);
+                            let penatlyGoals1 = Math.floor(Math.random() * 3 + 2);
+                            let penatlyGoals2 = Math.floor(Math.random() * 3 + 2);
+
+                            if (extraGoals1 > extraGoals2) {
+                                this.next.push(team1);
+                                result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                    {
+                                        comment:
+                                            `${team1.name} won
+                                            ${matchResult2HomeTeam + matchResult1AwayTeam + extraGoals1}:${matchResult1HomeTeam + matchResult2AwayTeam + extraGoals2}
+                                            on aggregate in extra time
+                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
+                                            (${extraGoals1}:${extraGoals2})`,
+                                    });
+                            } else {
+                                if (extraGoals1 < extraGoals2) {
+                                    this.next.push(team2);
+                                    result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                        {
+                                            comment:
+                                                `${team2.name} won
+                                                ${matchResult2HomeTeam + matchResult1AwayTeam + extraGoals1}:${matchResult1HomeTeam + matchResult2AwayTeam + extraGoals2}
+                                                on aggregate in extra time
+                                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
+                                                (${extraGoals1}:${extraGoals2})`,
+                                        });
+                                } else {
+                                    if (matchResult1AwayTeam + extraGoals1 > matchResult2AwayTeam) {
+                                        this.next.push(team1);
+                                        result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                            {
+                                                comment: `${team1.name} won on away goals in extra time
+                                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
+                                                (${extraGoals1}:${extraGoals2})`,
+                                            });
+                                    } else {
+                                        if (matchResult1AwayTeam + extraGoals1 < matchResult2AwayTeam) {
+                                            this.next.push(team2);
+                                            result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                                {
+                                                    comment:
+                                                        `${team2.name} won on away goals in extra time
+                                                        ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
+                                                        (${extraGoals1}:${extraGoals2})`,
+                                                });
+                                        } else {
+                                            if (penatlyGoals1 > penatlyGoals2) {
+                                                this.next.push(team1);
+                                                result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                                    {
+                                                        comment:
+                                                            `${team1.name} won on penalties
+                                                            ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
+                                                            (${extraGoals1}:${extraGoals2})
+                                                            Pen. (${penatlyGoals1}:${penatlyGoals2})`,
+                                                    });
+                                            } else {
+                                                if (penatlyGoals1 < penatlyGoals2) {
+                                                    this.next.push(team2);
+                                                    result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                                        {
+                                                            comment:
+                                                                `${team2.name} won on penalties
+                                                                ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
+                                                                (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
+                                                        });
+                                                } else {
+                                                    do {
+                                                        penatlyGoals1 = penatlyGoals1 + Math.floor(Math.random() * 1);
+                                                        penatlyGoals2 = penatlyGoals2 + Math.floor(Math.random() * 1);
+                                                    } while (penatlyGoals1 === penatlyGoals2);
+
+                                                    if (penatlyGoals1 > penatlyGoals2) {
+                                                        this.next.push(team1);
+                                                        result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                                            {
+                                                                comment:
+                                                                    `${team1.name} won on penalties
+                                                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
+                                                                    (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
+                                                            });
+                                                    } else {
+                                                        this.next.push(team2);
+                                                        result[i * 2 + 1] = Object.assign(result[i * 2 + 1],
+                                                            {
+                                                                comment:
+                                                                    `${team2.name} won on penalties
+                                                                    ${matchResult2HomeTeam + matchResult1AwayTeam}:${matchResult1HomeTeam + matchResult2AwayTeam}
+                                                                    (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
+                                                            });
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        this.teamsLeft = this.next;
+
+        return { result, teams: this.next };
+    }
+
+    simulateFinal() {
+        let result = {};
+
+        const team1 = this.teamsLeft[0];
+        const team2 = this.teamsLeft[1];
+
+        const matchResult1HomeTeam = this.getRandomNumber(4);
+        const matchResult1AwayTeam = this.getRandomNumber(4);
+
+        result = {
+            team1,
+            team2,
+            score: [matchResult1HomeTeam, matchResult1AwayTeam],
+        };
+
+        if (matchResult1HomeTeam > matchResult1AwayTeam) {
+            this.winner = team1;
+        } else {
+            this.winner = this.next;
+        }
+
+        if (matchResult1HomeTeam === matchResult1AwayTeam) {
+            const extraGoals1 = Math.floor(Math.random() * 2);
+            const extraGoals2 = Math.floor(Math.random() * 2);
+
+            let penatlyGoals1 = Math.floor(Math.random() * 3 + 2);
+            let penatlyGoals2 = Math.floor(Math.random() * 3 + 2);
+
+            if (extraGoals1 > extraGoals2) {
+                this.winner = team1;
+                result = Object.assign(result,
+                    {
+                        comment: `${team1.name} won ${matchResult1HomeTeam + extraGoals1}:${matchResult1AwayTeam + extraGoals2}
+                                  in extra time (${extraGoals1}:${extraGoals2})`,
+                    });
+            } else {
+                if (extraGoals1 < extraGoals2) {
+                    this.winner = team2;
+                    result = Object.assign(result,
+                        {
+                            comment: `${team2.name} won ${matchResult1HomeTeam + extraGoals1}:${matchResult1AwayTeam + extraGoals2}
+                            in extra time (${extraGoals1}:${extraGoals2})`,
+                        });
+                } else {
+                    if (penatlyGoals1 > penatlyGoals2) {
+                        this.winner = team1;
+                        result = Object.assign(result,
+                            {
+                                comment: `${team1.name} won ${matchResult1HomeTeam + extraGoals1}:${matchResult1AwayTeam + extraGoals2}
+                                          on penalties (${extraGoals1}:${extraGoals2}) Pen. ${penatlyGoals1}: ${penatlyGoals2}`,
+                            });
+                    } else {
+                        if (penatlyGoals1 < penatlyGoals2) {
+                            this.winner = team2;
+                            result = Object.assign(result,
+                                {
+                                    comment: `${team2.name} won ${matchResult1HomeTeam + extraGoals1}:${matchResult1AwayTeam + extraGoals2}
+                                          on penalties (${extraGoals1}:${extraGoals2}) Pen. ${penatlyGoals1}: ${penatlyGoals2}`,
+                                });
+                        } else {
+                            do {
+                                penatlyGoals1 = penatlyGoals1 + Math.floor(Math.random() * 1);
+                                penatlyGoals2 = penatlyGoals2 + Math.floor(Math.random() * 1);
+                            } while (penatlyGoals1 === penatlyGoals2);
+
+                            if (penatlyGoals1 > penatlyGoals2) {
+                                this.winner = team1;
+                                result = Object.assign(result,
+                                    {
+                                        comment:
+                                            `${team1.name} won on penalties
+                                            ${matchResult1HomeTeam}:${matchResult1AwayTeam}
+                                            (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
+                                    });
+                            } else {
+                                this.winner = team2;
+                                result = Object.assign(result,
+                                    {
+                                        comment:
+                                            `${team2.name} won on penalties
+                                            ${matchResult1HomeTeam}:${matchResult1AwayTeam}
+                                            (${extraGoals1}:${extraGoals2}) Pen. (${penatlyGoals1}:${penatlyGoals2})`,
+                                    });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
 }
