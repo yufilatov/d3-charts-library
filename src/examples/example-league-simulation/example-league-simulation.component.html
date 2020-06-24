@@ -23,35 +23,33 @@
     </div>
 </div>
 
-<button (click)="startDraw()" [disabled]="groups[7].length === 4">DRAW</button>
-<!-- <button (click)="drawFast()">DRAW FAST</button> -->
-<button *ngIf="day < 11" (click)="simulate(day)" [disabled]="groups[7].length !== 4">
-  <ng-container *ngIf="day < 7">Simulate Day {{ day }}</ng-container>
-  <ng-container *ngIf="day === 7">Simulate 1/8</ng-container>
-  <ng-container *ngIf="day === 8">Simulate Quarterfinals</ng-container>
-  <ng-container *ngIf="day === 9">Simulate Semifinals</ng-container>
-  <ng-container *ngIf="day === 10">Simulate Final</ng-container>
+<button (click)="startDraw(1)" [disabled]="groups[0].length > 0">DRAW</button>
+<button (click)="drawFast()" [disabled]="groups[7].length === 4">SKIP</button>
+<button *ngIf=" day< 11" (click)="simulate(day)" [disabled]="groups[7].length !==4 ">
+  <ng-container *ngIf="day<7">Simulate Day {{ day }}</ng-container>
+  <ng-container *ngIf="day===7">Simulate 1/8</ng-container>
+  <ng-container *ngIf="day===8">Simulate Quarterfinals</ng-container>
+  <ng-container *ngIf="day===9">Simulate Semifinals</ng-container>
+  <ng-container *ngIf="day===10">Simulate Final</ng-container>
 </button>
 
-<!-- <button (click)="changeTimeoutLength()">SKIP</button> -->
-
-<div *ngIf="day > 1">
+<div *ngIf="day> 1">
     <div *ngFor="let match of results; let i = index">
-        <h5 *ngIf="i === 0">Day 1</h5>
-        <h5 *ngIf="i === 16">Day 2</h5>
-        <h5 *ngIf="i === 32">Day 3</h5>
-        <h5 *ngIf="i === 48">Day 4</h5>
-        <h5 *ngIf="i === 64">Day 5</h5>
-        <h5 *ngIf="i === 80">Day 6</h5>
+        <h5 *ngIf="i===0">Day 1</h5>
+        <h5 *ngIf="i===16">Day 2</h5>
+        <h5 *ngIf="i===32">Day 3</h5>
+        <h5 *ngIf="i===48">Day 4</h5>
+        <h5 *ngIf="i===64">Day 5</h5>
+        <h5 *ngIf="i===80">Day 6</h5>
 
-        <h6 *ngIf="i % 16 === 0">Group A</h6>
-        <h6 *ngIf="i % 16 === 2">Group B</h6>
-        <h6 *ngIf="i % 16 === 4">Group C</h6>
-        <h6 *ngIf="i % 16 === 6">Group D</h6>
-        <h6 *ngIf="i % 16 === 8">Group E</h6>
-        <h6 *ngIf="i % 16 === 10">Group F</h6>
-        <h6 *ngIf="i % 16 === 12">Group G</h6>
-        <h6 *ngIf="i % 16 === 14">Group H</h6>
+        <h6 *ngIf="i%16===0">Group A</h6>
+        <h6 *ngIf="i%16===2">Group B</h6>
+        <h6 *ngIf="i%16===4">Group C</h6>
+        <h6 *ngIf="i%16===6">Group D</h6>
+        <h6 *ngIf="i%16===8">Group E</h6>
+        <h6 *ngIf="i%16===10">Group F</h6>
+        <h6 *ngIf="i%16===12">Group G</h6>
+        <h6 *ngIf="i%16===14">Group H</h6>
         <div style="display: flex; justify-items: center; padding-bottom: 5px;">
             <div [ngClass]="getLogo(match.team1)"></div>
             {{ match.team1 }}

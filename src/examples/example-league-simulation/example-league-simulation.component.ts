@@ -114,35 +114,33 @@ export class ExampleLeagueSimulationComponent implements OnInit {
         full(pot3, 2);
         full(pot4, 3);
 
-        let t1; let t2; let t3; let t4;
+        let t1 = []; let t2 = []; let t3 = []; let t4 = [];
 
-        this.startDraw = () => {
+        this.startDraw = (index) => {
             for (let i = 0; i < 8; i++) {
-                t1 = setTimeout(() => {
-                    this.groups[i].push(group1[i]);
-                }, i * 1000 * 0);
-                t2 = setTimeout(() => {
-                    this.groups[i].push(group2[i]);
-                }, (i + 8) * 1000 * 0);
-                t3 = setTimeout(() => this.groups[i].push(group3[i]), (i + 16) * 1000 * 0);
-                t4 = setTimeout(() => this.groups[i].push(group4[i]), (i + 24) * 1000 * 0);
+                t1.push(setTimeout(() => this.groups[i].push(group1[i]), i * 1000 * index));
+                t2.push(setTimeout(() => this.groups[i].push(group2[i]), (i + 8) * 1000 * index));
+                t3.push(setTimeout(() => this.groups[i].push(group3[i]), (i + 16) * 1000 * index));
+                t4.push(setTimeout(() => this.groups[i].push(group4[i]), (i + 24) * 1000 * index));
             }
         };
 
         this.drawFast = () => {
-            clearTimeout(t1);
-            clearTimeout(t2);
-            clearTimeout(t3);
-            clearTimeout(t4);
+            t2 = t2.map(a => clearTimeout(a));
+            t1 = t1.map(a => clearTimeout(a));
+            t3 = t3.map(a => clearTimeout(a));
+            t4 = t4.map(a => clearTimeout(a));
+
+            for (let i = 0; i < 8; i++) {
+                this.groups[i] = [];
+            }
+
+            this.startDraw(0);
         };
     }
 
     sortData(index: number) {
         return this.data.filter(a => a.pot === index);
-    }
-
-    changeTimeoutLength() {
-
     }
 
     sort(data) {
