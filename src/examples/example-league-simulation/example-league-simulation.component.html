@@ -33,7 +33,12 @@
   <ng-container *ngIf="day===10">Simulate Final</ng-container>
 </button>
 
-<div *ngIf="day> 1">
+<input type="checkbox" checked="true" (change)="checked=!checked" #input>
+<ng-container *ngIf="input.checked">HIDE</ng-container>
+<ng-container *ngIf="!input.checked">SHOW</ng-container>
+RESULTS
+
+<div *ngIf="day> 1 && input.checked">
     <div *ngFor="let match of results; let i = index">
         <h5 *ngIf="i===0">Day 1</h5>
         <h5 *ngIf="i===16">Day 2</h5>
