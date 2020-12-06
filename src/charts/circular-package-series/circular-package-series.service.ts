@@ -68,21 +68,21 @@ export class CircularPackageSeriesService {
                 .radius(d => (size(d.value) + 2.5))
                 .iterations(2));
 
-        const dragStarted = (d) => {
-            if (!d3.event.active) {
+        const dragStarted = (event, d) => {
+            if (!event.active) {
                 simulation.alphaTarget(.03).restart();
             }
             d.fx = d.x;
             d.fy = d.y;
         };
 
-        const dragged = (d) => {
-            d.fx = d3.event.x;
-            d.fy = d3.event.y;
+        const dragged = (event, d) => {
+            d.fx = event.x;
+            d.fy = event.y;
         };
 
-        const dragEnded = (d) => {
-            if (!d3.event.active) {
+        const dragEnded = (event, d) => {
+            if (!event.active) {
                 simulation.alphaTarget(.03);
             }
             d.fx = null;
