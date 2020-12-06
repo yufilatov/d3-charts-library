@@ -6,9 +6,9 @@
 
 .item {
   display: inline-block;
-  height: 220px;
-  width: 250px;
   margin: 5px;
+  padding: 10px;
+  background-color: aliceblue;
 }
 
 .title {
@@ -25,10 +25,12 @@
   justify-content: space-between;
 }
 
-.chart {
+.app-chart {
   width: 200px;
   height: 200px;
+}
 
+.chart {
   &-container {
     width: 100%;
     height: auto;
@@ -37,7 +39,6 @@
   &-title {
     font-weight: 600;
     padding-bottom: 15px;
-    font-family: "Courier New", Courier, monospace;
     padding-right: 50px;
     display: flex;
 
@@ -66,4 +67,8 @@
       margin: 0px 20px;
     }
   }
+}
+
+h5 {
+  margin: 0;
 }

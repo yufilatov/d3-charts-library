@@ -21,7 +21,7 @@ import { IChartSeriesState } from '../common/chart-series';
     encapsulation: ViewEncapsulation.None,
 })
 export class ChartComponent implements AfterViewInit, OnChanges {
-    @HostBinding('class.chart') hostClass = true;
+    @HostBinding('class.app-chart') hostClass = true;
     @Output() rectChange = new EventEmitter<IChartRect>();
     @Output() seriesListChange = new EventEmitter<IChartSeriesState[]>();
     @Input() margin: IChartMargin = CHART_MARGIN_EMPTY;

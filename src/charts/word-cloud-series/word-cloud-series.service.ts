@@ -44,9 +44,11 @@ export class WordCloudSeriesService {
         }
         this.root.selectAll('text').remove();
 
-        const color = d3.scaleOrdinal(d3.schemeCategory10);
-
         const labelStyle = style.compile(ChartStyle.label);
+
+        const fontSize = d3.scaleLinear()
+            .domain([Math.min(...data.map((a) => a.area)), Math.max(...data.map((a) => a.area))])
+            .range([15, rect.width / 10]);
 
         const drawChart = (words) => {
             const draw = ChartDrawFactory(this.root, words);
@@ -66,10 +68,6 @@ export class WordCloudSeriesService {
                         .text(d => d.text),
             });
         };
-
-        const fontSize = d3.scaleLinear()
-            .domain([Math.min(...data.map((a) => a.area)), Math.max(...data.map((a) => a.area))])
-            .range([15, rect.width / 10]);
 
         const layout = cloud()
             .size([rect.width, rect.height])

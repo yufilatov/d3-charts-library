@@ -1,6 +1,10 @@
 @import "../styles/mixins.scss";
 
 .logo {
+  &-deutschland {
+    @include land-logo("deutschland");
+  }
+
   &-baden-wuerttemberg {
     @include land-logo("baden-wuerttemberg");
   }

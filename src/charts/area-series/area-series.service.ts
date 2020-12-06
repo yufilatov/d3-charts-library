@@ -75,18 +75,23 @@ export class AreaSeriesChartService {
         this.root.selectAll('path').remove();
         this.root.selectAll('circle').remove();
 
-        this.root
-            .append('path')
-            .datum(data)
-            .attr('d', line)
-            .classed('line', true)
-            .attr('fill', (d, i) => lineStyle(d, i).fill)
-            .attr('stroke', (d, i) => lineStyle(d, i).stroke)
-            .attr('stroke-width', (d, i) => lineStyle(d, i).strokeWidth);
+        const drawArea = ChartDrawFactory(this.root, [data]);
+        const drawPoints = ChartDrawFactory(this.root, data);
 
-        const draw = ChartDrawFactory(this.root, data);
+        drawArea('.chart-line-area', {
+            create: selection =>
+                selection
+                    .append('path'),
+            update: selection =>
+                selection
+                    .attr('d', line)
+                    .classed('line', true)
+                    .attr('fill', (d, i) => lineStyle(d, i).fill)
+                    .attr('stroke', (d, i) => lineStyle(d, i).stroke)
+                    .attr('stroke-width', (d, i) => lineStyle(d, i).strokeWidth),
+        });
 
-        draw('.chart-line-point', {
+        drawPoints('.chart-line-point', {
             create: selection =>
                 selection
                     .append('circle'),
