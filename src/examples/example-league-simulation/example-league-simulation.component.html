@@ -33,7 +33,7 @@
   <ng-container *ngIf="day===10">Simulate Final</ng-container>
 </button>
 
-<input type="checkbox" checked="true" (change)="checked=!checked" #input>
+<input type="checkbox" checked="true" #input>
 <ng-container *ngIf="input.checked">HIDE</ng-container>
 <ng-container *ngIf="!input.checked">SHOW</ng-container>
 RESULTS

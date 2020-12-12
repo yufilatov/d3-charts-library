@@ -20,7 +20,7 @@ import { ChartPortalPositionStrategy } from '../chart-portal/chart-portal-positi
     encapsulation: ViewEncapsulation.None,
 })
 export class ChartPopupComponent implements AfterContentInit {
-    @ContentChild(TemplateRef, { static: false }) templateRef: TemplateRef<any>;
+    @ContentChild(TemplateRef) templateRef: TemplateRef<any>;
     @Input() for: string;
     @Input() openDelay = 1000;
     @Input() panelClass = 'chart-popup';
