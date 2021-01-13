@@ -1,7 +1,7 @@
 import { Injectable, ElementRef, Renderer2 } from '@angular/core';
-import * as d3 from 'd3';
-import * as _ from 'lodash';
+import { takeWhile } from 'lodash-es';
 import { elementsFromPoint } from '../kit';
+import * as d3 from 'd3';
 export interface IChartLevel {
     id: string;
     level: number;
@@ -73,7 +73,7 @@ export class ChartService {
         const elements = elementsFromPoint(point[0], point[1]);
 
         const isNotRoot = x => x !== svg;
-        const path = _.takeWhile(elements, isNotRoot);
+        const path = takeWhile(elements, isNotRoot);
         return elements.length !== path.length ? path : [];
     }
 }
