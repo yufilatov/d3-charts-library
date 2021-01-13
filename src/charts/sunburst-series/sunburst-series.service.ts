@@ -109,8 +109,7 @@ export class SunburstSeriesChartService {
                     .attr('stroke-width', (d, i) => arcStyle(d, i).strokeWidth)
                     .attr('fill', (d, i) => arcStyle(d, i).fill)
                     .attr('opacity', (d) => shouldHide(d) ? 0 : d.depth === 1 ? 1 : 0.7)
-                    .on('click', (d) => {
-                        const { event } = d3;
+                    .on('click', (event, d) => {
                         event.stopPropagation();
 
                         if (this.selection[0] !== d.data) {
@@ -121,7 +120,9 @@ export class SunburstSeriesChartService {
                             }
                         }
                     })
-                    .on('mouseover', (d, i) => {
+                    .on('mouseover', (event, d) => {
+                        const e = selection.nodes();
+                        const i = e.indexOf(event.path[0]);
                         const arcStyleOver = style.compile<IChartArcStyle>(ChartStyle.arc);
 
                         this.root
@@ -132,7 +133,9 @@ export class SunburstSeriesChartService {
                                 return changeSet.has('fillHover') ? fillHover : fill;
                             });
                     })
-                    .on('mouseleave', (d, i) => {
+                    .on('mouseleave', (event, d) => {
+                        const e = selection.nodes();
+                        const i = e.indexOf(event.path[0]);
                         const arcStyleLeave = style.compile<IChartArcStyle>(ChartStyle.arc);
 
                         this.root
@@ -184,9 +187,7 @@ export class SunburstSeriesChartService {
 
         const zoomStyle = style.compile<IChartZoomStyle>(ChartStyle.zoom);
         const { duration, enabled } = zoomStyle(null);
-        let xd;
-        let yd;
-        let yr;
+        let xd; let yd; let yr;
 
         const arcTween = (node) => {
             const radius = this.getRadius();

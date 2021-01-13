@@ -1,6 +1,6 @@
 import { Component, Input, TemplateRef, NgZone, ContentChild, AfterContentInit, ChangeDetectionStrategy, ViewEncapsulation, Renderer2, HostBinding } from '@angular/core';
 import * as d3 from 'd3';
-import * as _ from 'lodash';
+import { debounce } from 'lodash-es';
 import { ChartPortalService } from '../chart-portal/chart-portal.service';
 import { ChartDisposable } from '../common/chart-disposable';
 import { ChartService } from '../chart/chart.service';
@@ -69,14 +69,12 @@ export class ChartPopupComponent implements AfterContentInit {
         };
 
         this.zone.runOutsideAngular(() => {
-            const showWithDelay = _.debounce(show, this.openDelay);
+            const showWithDelay = debounce(show, this.openDelay);
 
             this.chartService
                 .selectRoot()
-                .on('mousemove', () => {
+                .on('mousemove', (event) => {
                     hide();
-
-                    const { event } = d3;
 
                     position = [event.clientX, event.clientY];
 

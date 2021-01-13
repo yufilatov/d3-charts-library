@@ -14,7 +14,7 @@
   "dependencies": {
     "@angular/animations": "^11.0.4",
     "@angular/common": "^11.0.4",
-    "@angular/compiler": "^11.0.4",
+    "@angular/compiler": "^11.0.8",
     "@angular/core": "^11.0.4",
     "@angular/forms": "^11.0.4",
     "@angular/http": "^7.2.16",
@@ -23,6 +23,7 @@
     "@angular/router": "^11.0.4",
     "d3": "^6.3.1",
     "d3-cloud": "^1.2.5",
+    "lodash-es": "^4.17.20",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.3",
     "zone.js": "~0.11.3"
