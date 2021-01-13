@@ -86,17 +86,23 @@ export class MapSeriesChartService {
                     .attr('fill', (d, i) => pathStyle(d, i).fill)
                     .attr('stroke-width', (d, i) => pathStyle(d, i).strokeWidth)
                     .attr('stroke', (d, i) => pathStyle(d, i).stroke)
-                    .on('mouseover', (d, i) => {
+                    .on('mouseover', (event, d) => {
+                        const e = selection.nodes();
+                        const i = e.indexOf(event.path[0]);
+
                         this.root
                             .selectAll('.chart-map-series-land')
-                            .filter(a => a === d)
+                            .filter(p => p === d)
                             .transition()
                             .delay(100)
                             .attr('fill', pathStyle(d, i).fillHover);
 
                         this.mouseover.emit(d);
                     })
-                    .on('mouseleave', (d, i) => {
+                    .on('mouseleave', (event, d) => {
+                        const e = selection.nodes();
+                        const i = e.indexOf(event.path[0]);
+
                         this.root
                             .selectAll('.chart-map-series-land')
                             .filter(a => a === d)

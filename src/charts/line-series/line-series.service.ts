@@ -84,7 +84,7 @@ export class LineSeriesChartService {
                     .attr('r', (d, i) => circleStyle(d, i).radius)
                     .attr('fill', (d, i) => circleStyle(d, i).fill)
                     .attr('stroke', (d, i) => circleStyle(d, i).stroke)
-                    .on('mouseover', (d, i) => {
+                    .on('mouseover', (event, d, i) => {
                         this.root.selectAll('.circle').filter(n => n === d);
                     }),
         });

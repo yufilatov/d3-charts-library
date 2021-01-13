@@ -65,17 +65,18 @@ export class ChordSeriesChartService {
                     .attr('d', d => arc(d))
                     .attr('fill', (d, i) => arcStyle(d, i).fill)
                     .attr('stroke', (d, i) => arcStyle(d, i).stroke)
-                    .on('mouseover', (d, i) => {
+                    .on('mouseover', (event, d) => {
+                        const e = selection.nodes();
+                        const i = e.indexOf(event.path[0]);
 
                         this.root
                             .selectAll('.chart-chord-chord')
-                            .filter(e => e.source.index !== i && e.target.index !== i)
+                            .filter(p => p.source.index !== i && p.target.index !== i)
                             .transition()
                             .duration(500)
                             .style('opacity', 0);
                     })
                     .on('mouseleave', (d, i) => {
-
                         this.root
                             .selectAll('.chart-chord-chord')
                             .transition()
