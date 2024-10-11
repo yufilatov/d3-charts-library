@@ -1,0 +1,70 @@
+:host {
+  font-size: 20px;
+  font-family: "Proxima Nova Regular";
+  letter-spacing: 1px;
+}
+
+.item {
+  display: inline-block;
+  height: 200px;
+  width: 200px;
+  margin: 5px;
+  background-color: aliceblue;
+}
+
+.title {
+  width: 200px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.stats {
+  justify-content: space-between;
+}
+
+.app-chart {
+  width: 200px;
+  height: 100px;
+}
+
+.chart {
+  &-container {
+    width: 100%;
+    height: auto;
+  }
+
+  &-title {
+    font-weight: 600;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+
+    .win {
+      width: 15px;
+      height: 15px;
+      background-color: #709a28;
+      margin: 0 10px;
+    }
+
+    .draw {
+      width: 15px;
+      height: 15px;
+      background-color: #f7a704;
+      margin: 0 10px;
+    }
+
+    .lost {
+      width: 15px;
+      height: 15px;
+      background-color: #c23612;
+      margin: 0 10px;
+    }
+  }
+}
+
+h5 {
+  margin: 0;
+}

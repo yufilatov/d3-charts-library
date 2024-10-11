@@ -1,0 +1,65 @@
+:host {
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    letter-spacing: 1px;
+}
+
+.header {
+    width: 100%;
+    padding-top: 5px;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+
+    h5 {
+        margin-right: 20px;
+    }
+
+    >div {
+        width: 15px;
+        height: 15px;
+        margin: 0 20px;
+    }
+
+    .win {
+        background-color: #709a28;
+    }
+
+    .draw {
+        background-color: #f7a704;
+    }
+
+    .lost {
+        background-color: #c23612;
+    }
+}
+
+.container {
+    width: 100%;
+    height: auto;
+
+    .chart {
+        display: inline-block;
+        margin: 5px;
+        padding: 10px;
+        background-color: aliceblue;
+
+        &__title {
+            display: flex;
+            justify-content: center;
+            padding-bottom: 10px;
+        }
+
+        &__stats {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        app-chart {
+            width: 200px;
+            height: 200px;
+        }
+    }
+}

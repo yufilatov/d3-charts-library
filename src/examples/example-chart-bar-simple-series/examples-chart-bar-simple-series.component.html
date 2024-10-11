@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="chart-column">
+    <div class="chart-title for">
+      <h5>
+        ENGLISH PREMIER LEAGUE 2018/2019 GOALS FOR
+      </h5>
+      <div class="home"></div>
+      <h5>HOME</h5>
+      <div class="away"></div>
+      <h5>AWAY</h5>
+    </div>
+    <div
+      class="chart-container"
+      *ngFor="let club of (dataFor$ | async); let i = index">
+      <div class="title">{{clubs[i]}}</div>
+      <div class="chart">
+        <app-chart>
+          <app-chart-series
+            type="bar-simple"
+            [data]="club"
+            [style]="styleFor">
+          </app-chart-series>
+        </app-chart>
+      </div>
+      <div class="total">{{club[0] + club[1]}}</div>
+    </div>
+  </div>
+
+  <div class="chart-column">
+    <div class="chart-title against">
+      <h5>ENGLISH PREMIER LEAGUE 2018/2019 GOALS AGAINST</h5>
+      <div class="home"></div>
+      <h5>HOME</h5>
+      <div class="away"></div>
+      <h5>AWAY</h5>
+    </div>
+    <div
+      class="chart-container"
+      *ngFor="let club of (dataAgainst$ | async); let i = index">
+      <div class="title">{{clubs[i]}}</div>
+      <div class="chart">
+        <app-chart>
+          <app-chart-series
+            type="bar-simple"
+            [data]="club"
+            [style]="styleAgainst">
+          </app-chart-series>
+        </app-chart>
+      </div>
+      <div class="total">{{club[0] + club[1]}}</div>
+    </div>
+  </div>
+</div>

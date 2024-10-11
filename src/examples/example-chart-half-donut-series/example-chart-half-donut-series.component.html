@@ -1,0 +1,32 @@
+<div class="chart-title">
+  <h5>ENGLISH PREMIER LEAGUE 2018/2019 GAMES STATISTICS</h5>
+  <div class="win"></div>
+  <h5>WON</h5>
+  <div class="draw"></div>
+  <h5>DRAWN</h5>
+  <div class="lost"></div>
+  <h5>LOST</h5>
+</div>
+
+<div class="chart-container">
+  <div
+    class="item"
+    *ngFor="let chart of data; let i=index">
+    <div class="title">{{chart.club}}</div>
+    <app-chart>
+      <app-chart-series
+        type="half-donut"
+        [style]="style"
+        [data]="[chart.won, chart.drawn, chart.lost]">
+      </app-chart-series>
+    </app-chart>
+    <div class="title stats">
+      <strong>W:</strong>
+      {{chart.won}}
+      <strong>D:  </strong>
+      {{chart.drawn}}
+      <strong>L: </strong>
+      {{chart.lost}}
+    </div>
+  </div>
+</div>

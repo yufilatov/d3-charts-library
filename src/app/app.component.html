@@ -1,0 +1,25 @@
+<div class="header">
+    <a href="#default" class="logo">D3-Chart-Library</a>
+    <div class="header-right">
+        <div>
+            @for(page of pages; track page) {
+                <a [routerLink]="page">{{ page }}</a>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="navigation">
+        <ul>
+            @for(type of types; track type) {
+                <li>
+                    <a [routerLink]="type.path" (click)="onClick($index)" [class.active]="$index === activeChart">{{ type.path }}</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="view">
+        <router-outlet></router-outlet>
+    </div>
+</div>

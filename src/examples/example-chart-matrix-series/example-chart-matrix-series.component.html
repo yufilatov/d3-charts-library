@@ -1,0 +1,17 @@
+<div style="display:flex;  justify-content: flex-start;
+align-items: center;">
+    <h5 style="padding-right: 15px; font-size: 18px;">SORT BY:</h5>
+    <div>
+        <select (change)="onChange($event)">
+            <option [value]="'name'">Name</option>
+            <option [value]="'group'">Group</option>
+            <option [value]="'count'">Count</option>
+        </select>
+    </div>
+</div>
+<div class="chart-container">
+    <app-chart>
+        <app-chart-series type="matrix" [data]="data" [style]="style" [order]="order">
+        </app-chart-series>
+    </app-chart>
+</div>

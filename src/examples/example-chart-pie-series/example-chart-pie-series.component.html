@@ -1,0 +1,26 @@
+<div class="header">
+    <h5>ENGLISH PREMIER LEAGUE 2018/2019 GAMES STATISTICS</h5>
+    <div class="win"></div> WON
+    <div class="draw"></div> DRAWN
+    <div class="lost"></div> LOST
+</div>
+
+<div class="container">
+    @for(chart of data; track chart) {
+        <div class="chart">
+            <div class="chart__title">{{chart.club}}</div>
+            <app-chart>
+                <app-chart-series
+                    type="pie"
+                    [style]="style"
+                    [data]="[chart.won, chart.drawn, chart.lost]"
+                ></app-chart-series>
+            </app-chart>
+            <div class="chart__stats">
+                <strong>W:</strong> {{chart.won}}
+                <strong>D: </strong> {{chart.drawn}}
+                <strong>L: </strong> {{chart.lost}}
+            </div>
+        </div>
+    }
+</div>

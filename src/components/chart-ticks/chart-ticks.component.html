@@ -1,0 +1,5 @@
+<ul>
+    @for(tick of data; track tick) {
+        <li [style.top.px]="scale($index)">{{ tick }}</li>
+    }
+</ul>
